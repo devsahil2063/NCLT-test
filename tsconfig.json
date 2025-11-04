@@ -3,6 +3,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "common-shared": [
+        "./dist/common-shared"
+      ]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -22,5 +27,19 @@
     "typeCheckHostBindings": true,
     "strictTemplates": true
   },
-  "files": []
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/nclt-main/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/nclt-main/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/common-shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/common-shared/tsconfig.spec.json"
+    }
+  ]
 }

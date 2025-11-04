@@ -1,0 +1,17 @@
+@if (sidebarService.hasActiveRoute$ | async) {
+<app-content-header title="ABC Manufacturing Ltd"
+  subtitle="Customer ID: 123456 • Customer Since: 17-Jan-2018 • NPA Date: 2023-05-01">
+</app-content-header>
+}
+<div class="app-layout border-t-[1px] border-gray-200">
+  <div class="app-layout__sidebars">
+    <app-sidebar></app-sidebar>
+    <app-sub-sidebar></app-sub-sidebar>
+  </div>
+  <div class="app-layout__content">
+    <button class="sidebar__toggle" (click)="sidebarService.toggleMode()" pButton icon="pi pi-bars" [text]="true"
+      [rounded]="true" pTooltip="Toggle Compact Mode" tooltipPosition="right" aria-label="Toggle compact mode"
+      [attr.aria-pressed]="(sidebarService.currentMode$ | async) === SidebarMode.COMPACT"></button>
+    <router-outlet />
+  </div>
+</div>

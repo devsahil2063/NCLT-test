@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+:root {
+  // Sidebar dimensions
+  --sidebar-width-normal: 280px;
+  --sidebar-width-compact: 72px;
+  --sub-sidebar-width: 280px;
+
+  // Transitions
+  --sidebar-transition-duration: 300ms;
+  --sidebar-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}

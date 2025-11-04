@@ -1,0 +1,35 @@
+@if (sidebarService.isSubSidebarOpen$ | async) {
+<aside class="sub-sidebar border-r-[1px] border-gray-200" role="navigation" aria-label="Secondary navigation">
+    <div class="sub-sidebar__header">
+        <button class="sub-sidebar__back" (click)="sidebarService.closeSubSidebar()" pButton icon="pi pi-arrow-left"
+            [text]="true" aria-label="Go back to main navigation"></button>
+        <h3 class="sub-sidebar__title" id="sub-sidebar-title">{{ currentSection }}</h3>
+    </div>
+
+    <nav class="sub-sidebar__nav" aria-labelledby="sub-sidebar-title">
+        <ng-container *ngTemplateOutlet="menuTemplate; context: { items: subMenuItems, level: 1 }">
+        </ng-container>
+    </nav>
+</aside>
+}
+
+<!-- Recursive template for nested menus -->
+<ng-template #menuTemplate let-items="items" let-level="level">
+    <ul class="sub-sidebar__menu" [attr.data-level]="level" role="menu">
+        @for (item of items; track item.id) {
+        <li role="none">
+            <div class="menu-item-wrapper" [style.padding-left.px]="(level - 1) * 16">
+                <app-sidebar-item [item]="item" [isCompact]="false"
+                    [isSelected]="(sidebarService.selectedItemId$ | async) === item.id" [nestingLevel]="level"
+                    [isExpanded]="isExpanded(item.id)" (itemClick)="onSubItemClick($event, level)">
+                </app-sidebar-item>
+            </div>
+
+            @if (hasChildren(item) && isExpanded(item.id) && level < maxNestingLevel) { <ng-container
+                *ngTemplateOutlet="menuTemplate; context: { items: item.children, level: level + 1 }">
+                </ng-container>
+                }
+        </li>
+        }
+    </ul>
+</ng-template>

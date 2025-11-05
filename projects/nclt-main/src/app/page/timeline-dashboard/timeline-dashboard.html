@@ -1,0 +1,97 @@
+<div class="p-2 bg-gray-50 min-h-screen">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900">Timeline Dashboard</h2>
+            <p class="text-sm text-gray-500 mt-1">Auto-calculated timelines and deadlines</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+            <!-- Days Since ICD -->
+            <div class="stat-card stat-card-blue">
+                <div class="stat-label">Days Since ICD</div>
+                <div class="stat-value">{{ daysSinceICD }}</div>
+            </div>
+
+            <!-- Days Remaining -->
+            <div class="stat-card stat-card-green">
+                <div class="stat-label">Days Remaining (of 180)</div>
+                <div class="stat-value">{{ daysRemaining }}</div>
+            </div>
+
+            <!-- Status Indicator -->
+            <div class="stat-card stat-card-light-green">
+                <div class="stat-label">Status Indicator</div>
+                <span class="status-badge status-on-track">On Track</span>
+            </div>
+        </div>
+
+        <!-- Key Deadlines Table -->
+        <div class="mb-6">
+            <p-table [value]="keyDeadlines" [tableStyle]="{ 'min-width': '100%' }" class="timeline-table">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th colspan="2">key Deadline</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-deadline>
+                    <tr>
+                        <td class="flex items-center gap-2">
+                            <i class="pi pi-calendar text-gray-400"></i>
+                            <span>{{ deadline.name }}</span>
+                        </td>
+                        <td class="text-right text-gray-600 font-semibold">{{ deadline.date }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <!-- Extension Section -->
+        <div class=" grid grid-cols-2 gap-4 mb-6">
+            <!-- Extension Applied -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Extension Applied
+                </label>
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton name="extension" [value]="true" [(ngModel)]="extensionApplied"
+                            inputId="extension-yes" />
+                        <label for="extension-yes" class="text-sm cursor-pointer">Yes</label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton name="extension" [value]="false" [(ngModel)]="extensionApplied"
+                            inputId="extension-no" />
+                        <label for="extension-no" class="text-sm cursor-pointer">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extended Deadline -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Extended Deadline
+                </label>
+                <p-datepicker [(ngModel)]="extendedDeadline" size="small" dateFormat="dd-M-yy" placeholder="dd-----yyyy"
+                    [showIcon]="true" class="w-full" />
+            </div>
+
+            <!-- Maximum Deadline -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Maximum Deadline (ICD + 330 days)
+                </label>
+                <p-datepicker [(ngModel)]="maximumDeadline" size="small" dateFormat="dd-M-yy" placeholder="dd-----yyyy"
+                    [showIcon]="true" class="w-full" />
+                <p class="text-xs text-gray-500">Auto-calculated if extension applied</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-3">
+            <p-button label="Reset" [outlined]="true" severity="secondary" (click)="onReset()" class="text-sm" />
+            <p-button label="Update Timeline" severity="danger" (click)="onUpdate()" class="text-sm" />
+        </div>
+    </div>
+</div>

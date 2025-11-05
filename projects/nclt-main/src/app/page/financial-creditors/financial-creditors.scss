@@ -1,0 +1,66 @@
+// Financial Creditors Table Styles
+::ng-deep {
+  .financial-creditors-table {
+    border-radius: 0.5rem !important;
+
+    .p-datatable-thead > tr > th {
+      background-color: var(--p-table-header-background);
+      border-bottom: 1px solid var(--p-table-header-border-color) !important;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--p-table-header-color);
+      letter-spacing: 0.05em;
+    }
+
+    .p-datatable-tbody > tr {
+      background-color: var(--p-table-row-background);
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: var(--p-table-row-hover-background);
+      }
+
+      > td {
+        padding: 1rem;
+        font-size: 0.875rem;
+        color: var(--p-table-cell-color);
+
+        &.text-gray-600 {
+          color: var(--p-table-cell-secondary-color);
+        }
+      }
+    }
+
+    // Remove default PrimeNG borders
+    // .p-datatable-table {
+    //   border-collapse: collapse;
+    // }
+
+    // .p-datatable-thead > tr > th,
+    // .p-datatable-tbody > tr > td {
+    //   border: none;
+    // }
+  }
+}
+
+// Security Badge Styles
+.security-badge-secured {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.security-badge-unsecured {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+  background-color: #fee2e2;
+  color: #b91c1c;
+}

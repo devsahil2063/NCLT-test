@@ -1,0 +1,125 @@
+<div class="min-h-screen bg-page p-2 pb-4!">
+    <p-toast />
+
+    <!-- Main Card -->
+    <p-card class="shadow-sm">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-1 page-heading">NCLT Order Details</h2>
+            <p class="text-sm text-body">Admission decision and order information</p>
+        </div>
+
+        <p-divider></p-divider>
+
+        <!-- Form Section -->
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mt-6">
+            <!-- Application Status -->
+            <div class="flex flex-col gap-2">
+                <label for="applicationStatus" class="text-sm font-medium field-label">
+                    Application Status <span class="text-red-500">*</span>
+                </label>
+                <p-select id="applicationStatus" size="small" [(ngModel)]="applicationStatus"
+                    [options]="applicationStatusOptions" optionLabel="label" optionValue="value"
+                    placeholder="Select status" class="w-full" [checkmark]="true"></p-select>
+            </div>
+
+            <!-- Admission Decision -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium field-label">
+                    Admission Decision <span class="text-red-500">*</span>
+                </label>
+                <div class="flex items-center gap-6 mt-2">
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton name="admissionDecision" value="admitted" [(ngModel)]="admissionDecision"
+                            inputId="admitted"></p-radiobutton>
+                        <label for="admitted" class="text-sm cursor-pointer">Admitted</label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton name="admissionDecision" value="rejected" [(ngModel)]="admissionDecision"
+                            inputId="rejected"></p-radiobutton>
+                        <label for="rejected" class="text-sm cursor-pointer">Rejected</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Date -->
+            <div class="flex flex-col gap-2">
+                <label for="orderDate" class="text-sm font-medium field-label">
+                    Order Date <span class="text-red-500">*</span>
+                </label>
+                <p-datepicker id="orderDate" size="small" [(ngModel)]="orderDate" dateFormat="dd-mm-yy"
+                    placeholder="dd----yyyy" [showIcon]="true" class="w-full"></p-datepicker>
+            </div>
+
+            <!-- Order Number -->
+            <div class="flex flex-col gap-2">
+                <label for="orderNumber" class="text-sm font-medium field-label">
+                    Order Number <span class="text-red-500">*</span>
+                </label>
+                <input id="orderNumber" type="text" pSize="small" pInputText [(ngModel)]="orderNumber"
+                    placeholder="NCLT order reference" class="w-full" />
+            </div>
+
+            <!-- Insolvency Commencement Date (ICD) -->
+            <div class="flex flex-col gap-2">
+                <label for="insolvencyCommencementDate" class="text-sm font-medium field-label">
+                    Insolvency Commencement Date (ICD) <span class="text-red-500">*</span>
+                </label>
+                <p-datepicker id="insolvencyCommencementDate" size="small" [(ngModel)]="insolvencyCommencementDate"
+                    dateFormat="dd-mm-yy" placeholder="dd----yyyy" [showIcon]="true" class="w-full"
+                    [class.border-red-500]="admissionDecision === 'admitted' && !insolvencyCommencementDate"></p-datepicker>
+                <small *ngIf="admissionDecision === 'admitted' && !insolvencyCommencementDate"
+                    class="text-red-500 text-xs">
+                    <i class="pi pi-exclamation-triangle mr-1"></i>
+                    Most critical field - All timelines calculated from this date
+                </small>
+            </div>
+
+            <!-- Order Copy (PDF) -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium field-label">
+                    Order Copy (PDF) <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex items-center justify-center py-3 px-4 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:bg-gray-50 transition-colors"
+                    (click)="orderCopyInput.click()">
+                    <input #orderCopyInput type="file" class="hidden" accept=".pdf"
+                        (change)="onOrderCopySelect($event)" />
+                    <div class="flex items-center gap-2 text-gray-600">
+                        <i class="pi pi-upload text-gray-400"></i>
+                        <span class="text-sm">{{ orderCopyFileName || 'Upload order copy' }}</span>
+                    </div>
+                </div>
+                <div *ngIf="orderCopyFileName" class="mt-2">
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm text-gray-700">{{ orderCopyFileName }}</span>
+                        <button (click)="removeOrderCopy()" class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="mt-6" *ngIf="admissionDecision === 'rejected'">
+            <div class="flex flex-col gap-2">
+                <label for="rejectionReason" class="text-sm font-medium field-label">
+                    Rejection Reason (if rejected)
+                </label>
+                <textarea id="rejectionReason" pInputTextarea [(ngModel)]="rejectionReason"
+                    placeholder="Enter rejection reason" rows="4" class="w-full" maxlength="5000"></textarea>
+                <div class="text-xs text-gray-500 text-right">{{ getRejectionReasonCharacterCount() }}/5000 characters
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Action Buttons -->
+        <div class="mt-8 flex justify-end gap-3">
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
+            <p-button label="Save Details" severity="danger" (onClick)="onSave()"></p-button>
+        </div>
+    </p-card>
+</div>

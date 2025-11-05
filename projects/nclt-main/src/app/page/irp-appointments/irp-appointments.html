@@ -1,0 +1,65 @@
+<div class="p-2 bg-gray-50 min-h-screen">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900">IRP Appointment</h2>
+            <p class="text-sm text-gray-500 mt-1">Interim Resolution Professional details</p>
+        </div>
+
+        <!-- Form -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- IRP Name -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    IRP Name <span class="text-red-500">*</span>
+                </label>
+                <input type="text" pInputText pSize="small" [(ngModel)]="irpName" placeholder="Enter IRP name"
+                    class="w-full" />
+            </div>
+
+            <!-- IBBI Registration Number -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    IBBI Registration Number
+                </label>
+                <input type="text" pInputText pSize="small" [(ngModel)]="ibbiRegistrationNumber"
+                    placeholder="Enter registration number" class="w-full" />
+            </div>
+
+            <!-- IRP Contact Number -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    IRP Contact Number <span class="text-red-500">*</span>
+                </label>
+                <input type="text" pInputText pSize="small" [(ngModel)]="irpContactNumber"
+                    placeholder="Enter contact number" class="w-full" />
+            </div>
+
+            <!-- IRP Email -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    IRP Email <span class="text-red-500">*</span>
+                </label>
+                <input type="email" pInputText pSize="small" [(ngModel)]="irpEmail" placeholder="Enter email address"
+                    class="w-full" />
+            </div>
+
+            <!-- IRP Appointment Date -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    IRP Appointment Date <span class="text-red-500">*</span>
+                </label>
+                <p-datepicker [(ngModel)]="irpAppointmentDate" size="small" dateFormat="dd-M-yy"
+                    placeholder="dd-----yyyy" [showIcon]="true" class="w-full" />
+                <p class="text-xs text-gray-500">Usually same as ICD</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-3 mt-6">
+            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" class="text-sm" />
+            <p-button label="Save Details" severity="danger" (click)="onSave()" [disabled]="!isFormValid()"
+                class="text-sm" />
+        </div>
+    </div>
+</div>

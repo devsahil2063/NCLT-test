@@ -1,0 +1,66 @@
+// Custom table styles using theme variables
+::ng-deep {
+  .security-table {
+    .p-datatable-thead > tr > th {
+      background-color: var(--p-table-header-background);
+      border-bottom: 1px solid var(--p-table-header-border-color) !important;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--p-table-header-color);
+      letter-spacing: 0.05em;
+    }
+
+    .p-datatable-tbody > tr {
+      background-color: var(--p-table-row-background);
+      border-bottom: 1px solid var(--p-table-row-border-color);
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: var(--p-table-row-hover-background);
+      }
+
+      > td {
+        padding: 1rem;
+        font-size: 0.875rem;
+        color: var(--p-table-cell-color);
+
+        &.text-gray-600 {
+          color: var(--p-table-cell-secondary-color);
+        }
+      }
+    }
+
+    // Remove default PrimeNG borders
+    .p-datatable-table {
+      border-collapse: collapse;
+    }
+
+    .p-datatable-thead > tr > th,
+    .p-datatable-tbody > tr > td {
+      border: none;
+    }
+  }
+
+  // Custom tab styles
+  .custom-tab {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--p-text-muted-color);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--p-primary-color);
+    }
+
+    &.active {
+      color: var(--p-primary-color);
+      border-bottom-color: var(--p-primary-color);
+    }
+  }
+}

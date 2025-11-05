@@ -21,7 +21,7 @@ body {
 // Custom Tab Component
 .custom-tab {
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  // border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 500;
   transition: all 0.2s ease;
@@ -63,8 +63,210 @@ body {
     color: var(--p-status-resolution-color);
   }
 
+  &.status-active {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+
+  &.status-npa {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+
   &.status-default {
     background-color: #f3f4f6;
     color: #1f2937;
+  }
+}
+
+// Custom Badge Component for Account Types
+.custom-badge {
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: inline-block;
+
+  &.badge-nclt {
+    background-color: #ffe4e1;
+    color: #ff6b4a;
+  }
+
+  &.badge-ilms {
+    background-color: #e8e8e8;
+    color: #4a4a4a;
+  }
+}
+
+// Full width for Date Picker
+p-datepicker {
+  input {
+    flex: 1;
+  }
+}
+
+// Typography Classes
+.page-heading {
+  color: var(--p-text-heading);
+}
+
+.page-subheading {
+  color: var(--p-text-subheading);
+}
+
+.section-heading {
+  color: var(--p-text-section-heading);
+}
+
+.field-label {
+  color: var(--p-text-label);
+}
+
+.text-body {
+  color: var(--p-text-body);
+}
+
+.text-muted {
+  color: var(--p-text-muted);
+}
+
+// Background Classes
+.bg-page {
+  background-color: var(--p-background-page);
+}
+
+// remove padding bottom from dialog header so spacing adjust with sub text
+.p-dialog-header {
+  padding-bottom: 0 !important;
+}
+
+// Stat Card Styles
+.stat-card {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .stat-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  &.stat-card-blue {
+    background-color: var(--p-stat-card-blue-background);
+    color: var(--p-stat-card-blue-text);
+
+    .stat-label {
+      color: var(--p-stat-card-blue-text);
+      opacity: 0.8;
+    }
+  }
+
+  &.stat-card-green {
+    background-color: var(--p-stat-card-green-background);
+    color: var(--p-stat-card-green-text);
+
+    .stat-label {
+      color: var(--p-stat-card-green-text);
+      opacity: 0.8;
+    }
+  }
+
+  &.stat-card-light-green {
+    background-color: var(--p-stat-card-light-green-background);
+    color: var(--p-stat-card-light-green-text);
+
+    .stat-label {
+      color: var(--p-stat-card-light-green-text);
+      opacity: 0.8;
+    }
+  }
+}
+
+// Status Badge for Timeline
+.status-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+
+  &.status-on-track {
+    background-color: var(--p-stat-card-on-track-background);
+    color: var(--p-stat-card-on-track-text);
+  }
+}
+
+// Summary Stat Card Styles
+.summary-stat-card {
+  padding: 2rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  &.summary-stat-card-primary {
+    background: linear-gradient(135deg, #ff5a39 0%, #ff7a5c 100%);
+    border: none;
+
+    &:hover {
+      box-shadow:
+        0 10px 15px -3px rgba(255, 90, 57, 0.3),
+        0 4px 6px -2px rgba(255, 90, 57, 0.2);
+    }
+  }
+}
+
+// Icon Badge Styles
+.icon-badge {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+
+  &.icon-badge-green {
+    background-color: #dcfce7;
+    color: #16a34a;
+  }
+
+  &.icon-badge-red {
+    background-color: #fee2e2;
+    color: #dc2626;
+  }
+
+  &.icon-badge-blue {
+    background-color: #dbeafe;
+    color: #2563eb;
+  }
+
+  &.icon-badge-purple {
+    background-color: #f3e8ff;
+    color: #9333ea;
+  }
+
+  &.icon-badge-yellow {
+    background-color: #fef3c7;
+    color: #d97706;
+  }
+
+  &.icon-badge-white {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
   }
 }

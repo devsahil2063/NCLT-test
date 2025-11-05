@@ -1,0 +1,177 @@
+<div class="min-h-screen bg-page p-2 pb-4!">
+    <p-toast />
+
+    <!-- Main Card -->
+    <p-card class="shadow-sm">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-1 page-heading">Documents</h2>
+            <p class="text-sm text-body">Upload required documents for CIRP application</p>
+        </div>
+
+        <p-divider></p-divider>
+
+        <!-- Document Upload Sections -->
+        <div class="flex flex-col gap-6 mt-6">
+            <!-- Loan Agreement -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium field-label">
+                    Loan Agreement <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50 transition-colors"
+                    (click)="loanAgreementInput.click()" (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'loanAgreement')">
+                    <input #loanAgreementInput type="file" class="hidden" accept=".pdf,.doc,.docx"
+                        (change)="onFileSelect($event, 'loanAgreement')" />
+                    <i class="pi pi-upload text-gray-400 text-2xl mb-3"></i>
+                    <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+                    <p class="text-gray-500 text-sm">PDF, DOC, DOCX (max. 10MB)</p>
+                </div>
+                <div *ngIf="loanAgreementFiles.length > 0" class="mt-2">
+                    <div *ngFor="let file of loanAgreementFiles"
+                        class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm text-gray-700">{{ file.name }}</span>
+                        <button (click)="removeFile('loanAgreement', file)" class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Statement -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium field-label">
+                    Account Statement <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
+                    (click)="accountStatementInput.click()" (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'accountStatement')">
+                    <input #accountStatementInput type="file" class="hidden" accept=".pdf,.doc,.docx"
+                        (change)="onFileSelect($event, 'accountStatement')" />
+                    <i class="pi pi-upload text-gray-400 text-2xl mb-3"></i>
+                    <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+                    <p class="text-gray-500 text-sm">PDF, DOC, DOCX (max. 10MB)</p>
+                </div>
+                <div *ngIf="accountStatementFiles.length > 0" class="mt-2">
+                    <div *ngFor="let file of accountStatementFiles"
+                        class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm text-gray-700">{{ file.name }}</span>
+                        <button (click)="removeFile('accountStatement', file)" class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Board Resolution (Bank) -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium field-label">
+                    Board Resolution (Bank) <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
+                    (click)="boardResolutionInput.click()" (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'boardResolution')">
+                    <input #boardResolutionInput type="file" class="hidden" accept=".pdf,.doc,.docx"
+                        (change)="onFileSelect($event, 'boardResolution')" />
+                    <i class="pi pi-upload text-gray-400 text-2xl mb-3"></i>
+                    <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+                    <p class="text-gray-500 text-sm">PDF, DOC, DOCX (max. 10MB)</p>
+                </div>
+                <div *ngIf="boardResolutionFiles.length > 0" class="mt-2">
+                    <div *ngFor="let file of boardResolutionFiles"
+                        class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm text-gray-700">{{ file.name }}</span>
+                        <button (click)="removeFile('boardResolution', file)" class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demand Notices -->
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <label class="text-sm font-medium field-label">Demand Notices</label>
+                    <span class="text-xs text-gray-500">Multiple files allowed</span>
+                </div>
+                <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
+                    (click)="demandNoticesInput.click()" (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'demandNotices')">
+                    <input #demandNoticesInput type="file" class="hidden" accept=".pdf,.doc,.docx" multiple
+                        (change)="onFileSelect($event, 'demandNotices')" />
+                    <i class="pi pi-upload text-gray-400 text-2xl mb-3"></i>
+                    <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+                    <p class="text-gray-500 text-sm">PDF, DOC, DOCX (max. 10MB)</p>
+                </div>
+                <div *ngIf="demandNoticesFiles.length > 0" class="mt-2">
+                    <div *ngFor="let file of demandNoticesFiles"
+                        class="flex items-center justify-between p-2 bg-gray-50 rounded mb-2">
+                        <span class="text-sm text-gray-700">{{ file.name }}</span>
+                        <button (click)="removeFile('demandNotices', file)" class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NCLT Application Copy -->
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium field-label">
+                    NCLT Application Copy <span class="text-red-500">*</span>
+                </label>
+                <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
+                    (click)="ncltApplicationCopyInput.click()" (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'ncltApplicationCopy')">
+                    <input #ncltApplicationCopyInput type="file" class="hidden" accept=".pdf,.doc,.docx"
+                        (change)="onFileSelect($event, 'ncltApplicationCopy')" />
+                    <i class="pi pi-upload text-gray-400 text-2xl mb-3"></i>
+                    <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+                    <p class="text-gray-500 text-sm">PDF, DOC, DOCX (max. 10MB)</p>
+                </div>
+                <div *ngIf="ncltApplicationCopyFiles.length > 0" class="mt-2">
+                    <div *ngFor="let file of ncltApplicationCopyFiles"
+                        class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                        <span class="text-sm text-gray-700">{{ file.name }}</span>
+                        <button (click)="removeFile('ncltApplicationCopy', file)"
+                            class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Supporting Documents -->
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <label class="text-sm font-medium field-label">Other Supporting Documents</label>
+                    <span class="text-xs text-gray-500">Multiple files allowed</span>
+                </div>
+                <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
+                    (click)="otherSupportingDocumentsInput.click()" (dragover)="onDragOver($event)"
+                    (drop)="onDrop($event, 'otherSupportingDocuments')">
+                    <input #otherSupportingDocumentsInput type="file" class="hidden" accept=".pdf,.doc,.docx" multiple
+                        (change)="onFileSelect($event, 'otherSupportingDocuments')" />
+                    <i class="pi pi-upload text-gray-400 text-2xl mb-3"></i>
+                    <p class="text-gray-700 font-medium mb-1">Click to upload or drag and drop</p>
+                    <p class="text-gray-500 text-sm">PDF, DOC, DOCX (max. 10MB)</p>
+                </div>
+                <div *ngIf="otherSupportingDocumentsFiles.length > 0" class="mt-2">
+                    <div *ngFor="let file of otherSupportingDocumentsFiles"
+                        class="flex items-center justify-between p-2 bg-gray-50 rounded mb-2">
+                        <span class="text-sm text-gray-700">{{ file.name }}</span>
+                        <button (click)="removeFile('otherSupportingDocuments', file)"
+                            class="text-red-500 hover:text-red-700">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-8 flex justify-end gap-3">
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
+            <p-button label="Upload Documents" severity="danger" (onClick)="onUploadDocuments()"></p-button>
+        </div>
+    </p-card>
+</div>

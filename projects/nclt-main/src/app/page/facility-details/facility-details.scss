@@ -1,0 +1,93 @@
+::ng-deep {
+  .facilities-table {
+    .p-datatable-thead > tr > th {
+      background-color: var(--p-table-header-background);
+      border-bottom: 1px solid var(--p-table-header-border-color) !important;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--p-table-header-color);
+      letter-spacing: 0.05em;
+    }
+
+    .p-datatable-tbody > tr {
+      background-color: var(--p-table-row-background);
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: var(--p-table-row-hover-background);
+      }
+
+      > td {
+        padding: 1rem;
+        font-size: 0.875rem;
+        color: var(--p-table-cell-color);
+
+        &.text-gray-600 {
+          color: var(--p-table-cell-secondary-color);
+        }
+      }
+    }
+
+    // Remove default PrimeNG borders
+    .p-datatable-table {
+      border-collapse: collapse;
+    }
+
+    .p-datatable-thead > tr > th,
+    .p-datatable-tbody > tr > td {
+      border: none;
+    }
+  }
+
+  // Paginator custom styles
+  .p-paginator {
+    border: none;
+    padding: 0;
+    background: transparent;
+
+    .p-paginator-pages .p-paginator-page {
+      min-width: 2rem;
+      height: 2rem;
+      border-radius: 0.375rem;
+
+      &.p-highlight {
+        background-color: var(--p-primary-50);
+        color: var(--p-primary-color);
+        border-color: transparent;
+      }
+    }
+
+    .p-paginator-first,
+    .p-paginator-prev,
+    .p-paginator-next,
+    .p-paginator-last {
+      min-width: 2rem;
+      height: 2rem;
+      border-radius: 0.375rem;
+    }
+  }
+
+  // Footer styles
+  .p-4.border-t {
+    background-color: var(--p-table-footer-background);
+    border-top-color: var(--p-table-footer-border-color);
+  }
+
+  // Read-only form styles
+  .readonly-form {
+    input,
+    textarea,
+    .p-datepicker,
+    .p-select {
+      pointer-events: none;
+      opacity: 0.7;
+      background-color: var(--p-inputtext-disabled-background) !important;
+      color: var(--p-inputtext-disabled-color) !important;
+    }
+
+    .p-datepicker-input-icon-container {
+      display: none;
+    }
+  }
+}

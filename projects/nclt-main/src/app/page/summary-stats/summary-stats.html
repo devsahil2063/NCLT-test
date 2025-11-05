@@ -1,0 +1,94 @@
+<div class="p-2 bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <div class="mb-6">
+        <h2 class="text-xl font-semibold text-gray-900">Claims Summary Statistics</h2>
+        <p class="text-sm text-gray-500 mt-1">Overview of all claims in the CIRP process</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-3 gap-4">
+        <!-- Total Financial Creditors -->
+        <div class="summary-stat-card">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="text-sm text-gray-600 mb-2">Total Financial Creditors</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">{{ totalFinancialCreditors }}</div>
+                    <div class="text-xs text-gray-500">Active creditors</div>
+                </div>
+                <div class="icon-badge icon-badge-green">
+                    <i class="pi pi-indian-rupee"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total FC Debt -->
+        <div class="summary-stat-card">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="text-sm text-gray-600 mb-2">Total FC Debt</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">{{ formatCurrency(totalFCDebt) }}</div>
+                    <div class="text-xs text-gray-500">Admitted amount</div>
+                </div>
+                <div class="icon-badge icon-badge-red">
+                    <i class="pi pi-indian-rupee"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Operational Creditors -->
+        <div class="summary-stat-card">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="text-sm text-gray-600 mb-2">Total Operational Creditors</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">{{ totalOperationalCreditors }}</div>
+                    <div class="text-xs text-gray-500">Active creditors</div>
+                </div>
+                <div class="icon-badge icon-badge-blue">
+                    <i class="pi pi-users"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total OC Debt -->
+        <div class="summary-stat-card">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="text-sm text-gray-600 mb-2">Total OC Debt</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">{{ formatCurrency(totalOCDebt) }}</div>
+                    <div class="text-xs text-gray-500">Admitted amount</div>
+                </div>
+                <div class="icon-badge icon-badge-purple">
+                    <i class="pi pi-indian-rupee"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Other Claims -->
+        <div class="summary-stat-card">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="text-sm text-gray-600 mb-2">Total Other Claims</div>
+                    <div class="text-3xl font-bold text-gray-900 mb-1">{{ formatCurrency(totalOtherClaims) }}</div>
+                    <div class="text-xs text-gray-500">Admitted amount</div>
+                </div>
+                <div class="icon-badge icon-badge-yellow">
+                    <i class="pi pi-indian-rupee"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grand Total Claims -->
+        <div class="summary-stat-card summary-stat-card-primary">
+            <div class="flex items-start justify-between">
+                <div class="flex-1">
+                    <div class="text-sm text-white opacity-90 mb-2">Grand Total Claims</div>
+                    <div class="text-3xl font-bold text-white mb-1">{{ formatCurrency(grandTotalClaims) }}</div>
+                    <div class="text-xs text-white opacity-80">Total admitted claims</div>
+                </div>
+                <div class="icon-badge icon-badge-white">
+                    <i class="pi pi-chart-bar"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

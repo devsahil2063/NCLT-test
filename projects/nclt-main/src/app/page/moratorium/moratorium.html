@@ -1,0 +1,58 @@
+<div class="p-2 bg-gray-50 min-h-screen">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-900">Moratorium Details</h2>
+            <p class="text-sm text-gray-500 mt-1">Moratorium period and deadlines</p>
+        </div>
+
+        <!-- Form -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Moratorium Issued -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Moratorium Issued <span class="text-red-500">*</span>
+                </label>
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton name="moratorium" [value]="true" [(ngModel)]="moratoriumIssued"
+                            inputId="moratorium-yes" />
+                        <label for="moratorium-yes" class="text-sm cursor-pointer">Yes</label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <p-radiobutton name="moratorium" [value]="false" [(ngModel)]="moratoriumIssued"
+                            inputId="moratorium-no" />
+                        <label for="moratorium-no" class="text-sm cursor-pointer">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Moratorium Start Date -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Moratorium Start Date
+                </label>
+                <p-datepicker [(ngModel)]="moratoriumStartDate" size="small" dateFormat="dd-M-yy"
+                    placeholder="dd-----yyyy" [showIcon]="true" class="w-full" />
+                <p class="text-xs text-gray-500">Auto-filled (same as ICD)</p>
+            </div>
+
+            <!-- Initial CIRP Deadline -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Initial CIRP Deadline (180 days)
+                </label>
+                <p-datepicker [(ngModel)]="initialCIRPDeadline" size="small" dateFormat="dd-M-yy"
+                    placeholder="dd-----yyyy" [showIcon]="true" class="w-full" />
+                <p class="text-xs text-gray-500">Auto-calculated (ICD + 180 days)</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-3 mt-6">
+            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" class="text-sm" />
+            <p-button label="Save Details" severity="danger" (click)="onSave()" [disabled]="!isFormValid()"
+                class="text-sm" />
+        </div>
+    </div>
+</div>

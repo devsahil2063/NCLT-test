@@ -155,7 +155,7 @@ export class Sidebar implements OnInit, OnDestroy {
                     id: 'banking-arrangement',
                     label: 'Banking Arrangement',
                     icon: 'pi-building',
-                    route: '/cases/banking-arrangement',
+                    route: '/cases/banking-arrangements',
                   },
                   {
                     id: 'guarantor',
@@ -212,6 +212,26 @@ export class Sidebar implements OnInit, OnDestroy {
                         label: 'Application Filing',
                         icon: 'pi-file',
                         route: '/cases/cirp/admission/filing',
+                        children: [
+                          {
+                            id: 'application-details',
+                            label: 'Application Details',
+                            icon: 'pi-file',
+                            route: '/cases/cirp/application/details',
+                          },
+                          {
+                            id: 'applicant-details',
+                            label: 'Applicant Details',
+                            icon: 'pi-user-plus',
+                            route: '/cases/cirp/application/applicant',
+                          },
+                          {
+                            id: 'documents',
+                            label: 'Documents',
+                            icon: 'pi-clock',
+                            route: '/cases/cirp/application/documents',
+                          },
+                        ]
                       },
                       {
                         id: 'admission-order',

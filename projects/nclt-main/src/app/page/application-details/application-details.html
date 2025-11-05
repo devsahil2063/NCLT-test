@@ -1,0 +1,58 @@
+<div class="min-h-screen bg-page p-2 pb-4!">
+    <!-- Main Card -->
+    <p-card class="shadow-sm">
+        <!-- Header -->
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold mb-1 page-heading">Application Details</h2>
+            <p class="text-sm text-body">Enter the CIRP application information</p>
+        </div>
+
+        <p-divider></p-divider>
+
+        <!-- Form Section -->
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mt-6">
+            <!-- Application Number -->
+            <div class="flex flex-col gap-2">
+                <label for="applicationNumber" class="text-sm font-medium field-label">
+                    Application Number <span class="text-red-500">*</span>
+                </label>
+                <input id="applicationNumber" type="text" pInputText pSize="small" [(ngModel)]="applicationNumber"
+                    placeholder="CIRP/BoB/2025/XXXX" class="w-full" />
+            </div>
+
+            <!-- Date of Application Filed -->
+            <div class="flex flex-col gap-2">
+                <label for="dateOfApplicationFiled" class="text-sm font-medium field-label">
+                    Date of Application Filed <span class="text-red-500">*</span>
+                </label>
+                <p-datepicker id="dateOfApplicationFiled" size="small" [(ngModel)]="dateOfApplicationFiled"
+                    dateFormat="dd-mm-yy" placeholder="dd----yyyy" [showIcon]="true" class="w-full"></p-datepicker>
+            </div>
+
+            <!-- NCLT Bench -->
+            <div class="flex flex-col gap-2">
+                <label for="ncltBench" class="text-sm font-medium field-label">
+                    NCLT Bench <span class="text-red-500">*</span>
+                </label>
+                <p-select id="ncltBench" [(ngModel)]="ncltBench" size="small" [options]="ncltBenchOptions"
+                    optionLabel="label" optionValue="value" placeholder="Select NCLT Bench" class="w-full"
+                    [checkmark]="true"></p-select>
+            </div>
+
+            <!-- Default Amount -->
+            <div class="flex flex-col gap-2">
+                <label for="defaultAmount" class="text-sm font-medium field-label">
+                    Default Amount (₹) <span class="text-red-500">*</span>
+                </label>
+                <input id="defaultAmount" type="number" pInputText pSize="small" [(ngModel)]="defaultAmount"
+                    placeholder="Enter amount" class="w-full" />
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-8 flex justify-end gap-3">
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
+            <p-button label="Save Details" severity="danger" (onClick)="onSave()"></p-button>
+        </div>
+    </p-card>
+</div>

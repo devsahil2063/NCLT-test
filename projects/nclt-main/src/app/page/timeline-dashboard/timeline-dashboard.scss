@@ -1,0 +1,41 @@
+// Timeline Dashboard Styles
+::ng-deep {
+  .timeline-table {
+    border: 1px solid var(--p-table-row-border-color);
+    border-radius: 0.5rem;
+    overflow: hidden;
+
+    .p-datatable-tbody > tr {
+      background-color: var(--p-table-row-background);
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: var(--p-table-row-hover-background);
+      }
+
+      > td {
+        padding: 1rem;
+        font-size: 0.875rem;
+        color: var(--p-table-cell-color);
+        border-bottom: 1px solid var(--p-table-row-border-color);
+
+        &:first-child {
+          font-weight: 500;
+        }
+      }
+    }
+
+    // Remove default PrimeNG borders
+    // .p-datatable-table {
+    //   border-collapse: collapse;
+    // }
+
+    // .p-datatable-tbody > tr > td {
+    //   border: none;
+    // }
+
+    // .p-datatable-thead {
+    //   display: none;
+    // }
+  }
+}

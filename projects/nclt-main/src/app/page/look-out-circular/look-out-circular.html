@@ -1,0 +1,134 @@
+<div class="p-2 bg-gray-50 min-h-screen">
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <!-- Question Section -->
+        <div class="mb-6">
+            <label class="block text-gray-900 font-medium mb-3">
+                Look Out Circular Issued? <span class="text-red-500">*</span>
+            </label>
+            <div class="flex gap-3">
+                <p-button label="Yes" [outlined]="isLookOutCircularIssued !== true"
+                    [severity]="isLookOutCircularIssued === true ? 'danger' : 'secondary'" (click)="selectOption(true)"
+                    class="text-sm" />
+                <p-button label="No" [outlined]="isLookOutCircularIssued !== false"
+                    [severity]="isLookOutCircularIssued === false ? 'danger' : 'secondary'"
+                    (click)="selectOption(false)" class="text-sm" />
+            </div>
+        </div>
+
+        <!-- No Option - Remarks Section -->
+        <div *ngIf="isLookOutCircularIssued === false" class="space-y-4">
+            <div>
+                <label class="block text-gray-900 font-medium mb-2">
+                    Remarks (Why LOC is not issued) <span class="text-red-500">*</span>
+                </label>
+                <textarea pInputTextarea [(ngModel)]="remarks"
+                    placeholder="Please provide reason why look out circular is not issued..." rows="6"
+                    class="w-full"></textarea>
+            </div>
+            <div class="flex justify-end">
+                <p-button label="Save" severity="danger" (click)="saveRemarks()" class="text-sm" />
+            </div>
+        </div>
+
+        <!-- Yes Option - Table Section -->
+        <div *ngIf="isLookOutCircularIssued === true" class="space-y-4">
+            <!-- Search and Add Button -->
+            <div class="flex items-center justify-between gap-4">
+                <p-iconfield class="flex-1 max-w-md">
+                    <p-inputicon class="pi pi-search" />
+                    <input class="w-full bg-white!" type="text" pInputText [(ngModel)]="searchText"
+                        placeholder="Search look out circular..." />
+                </p-iconfield>
+
+                <p-button label="Add Look Out Circular" icon="pi pi-plus" severity="danger" class="text-sm"
+                    (click)="openDialog()" />
+            </div>
+
+            <!-- Table -->
+            <p-table [value]="lookOutCirculars" showGridlines [tableStyle]="{ 'min-width': '100%' }"
+                class="look-out-circular-table">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-left">Name</th>
+                        <th class="text-left">Relationship Type</th>
+                        <th class="text-left">Date of Issue</th>
+                        <th class="text-left">Outcome</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-circular>
+                    <tr class="cursor-pointer">
+                        <td>{{ circular.name }}</td>
+                        <td>{{ circular.relationshipType }}</td>
+                        <td>{{ circular.dateOfIssue }}</td>
+                        <td>
+                            <span [ngClass]="getOutcomeClass(circular.outcome)" class="custom-status-badge">
+                                {{ circular.outcome }}
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4" class="text-center text-gray-500 py-8">
+                            No look out circular details added yet. Click "Add Look Out Circular" to get started.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <!-- Add Look Out Circular Dialog -->
+    <p-dialog header="Add Look Out Circular Details" [(visible)]="showDialog" [modal]="true" [closable]="true"
+        [style]="{ width: '900px' }" [draggable]="false" [resizable]="false">
+        <p class="text-gray-600 text-sm mb-6">Fill in the look out circular information</p>
+
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Name -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Name <span class="text-red-500">*</span>
+                </label>
+                <p-select [options]="nameOptions" [(ngModel)]="formData.name" optionLabel="label" optionValue="value"
+                    placeholder="Select guarantor name" class="w-full" (onChange)="onNameChange()" />
+            </div>
+
+            <!-- Relationship Type -->
+            <div class="flex flex-col gap-2">
+                <label class="text-gray-900 font-medium text-sm">
+                    Relationship Type <span class="text-red-500">*</span>
+                </label>
+                <input type="text" pInputText [(ngModel)]="formData.relationshipType"
+                    placeholder="Auto-populated based on guarantor" class="w-full" [disabled]="true" />
+            </div>
+        </div>
+
+        <!-- Date of Issue -->
+        <div class="flex flex-col gap-2 mt-4">
+            <label class="text-gray-900 font-medium text-sm">
+                Date of Issue <span class="text-red-500">*</span>
+            </label>
+            <p-datepicker [(ngModel)]="formData.dateOfIssue" dateFormat="dd-M-yy" placeholder="dd-----yyyy"
+                [showIcon]="true" class="w-full" />
+        </div>
+
+        <!-- Outcome -->
+        <div class="flex flex-col gap-2 mt-4">
+            <label class="text-gray-900 font-medium text-sm">
+                Outcome <span class="text-red-500">*</span>
+            </label>
+            <textarea pInputTextarea [(ngModel)]="formData.outcome" placeholder="Enter outcome details..." rows="5"
+                class="w-full" maxlength="5000"></textarea>
+            <div class="text-xs text-gray-500 text-right">{{ getCharacterCount() }}/5000 characters</div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <div class="flex justify-end gap-3 mt-4">
+                <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="closeDialog()"
+                    class="text-sm" />
+                <p-button label="Add Look Out Circular" icon="pi pi-plus" severity="danger"
+                    (click)="addLookOutCircular()" [disabled]="!isFormValid()" class="text-sm" />
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>

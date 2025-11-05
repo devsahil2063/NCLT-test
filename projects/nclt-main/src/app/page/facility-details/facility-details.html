@@ -1,0 +1,411 @@
+<div class="p-2 bg-page min-h-screen">
+    <!-- Header Section -->
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-semibold page-heading mb-1">Facility Details</h1>
+            <p class="text-md text-body">Manage customer information and related data</p>
+        </div>
+
+    </div>
+
+    <!-- Search and Filter Bar -->
+    <div class="flex items-center justify-between gap-4 mb-4">
+        <p-iconfield class="min-w-lg">
+            <p-inputicon class="pi pi-search" />
+            <input class="w-full bg-white!" type="text" variant="filled" pInputText
+                placeholder="Search by Facility ID, Type..." />
+        </p-iconfield>
+
+        <div class="flex items-center gap-2">
+            <!-- Facility Type Filter -->
+            <p-select [(ngModel)]="selectedFacilityType" [options]="facilityTypeOptions" optionLabel="label"
+                optionValue="value" placeholder="Facility Type" class="text-sm bg-white!" />
+
+            <!-- Branch Code Filter -->
+            <p-select [(ngModel)]="selectedBranchCode" [options]="branchCodeOptions" optionLabel="label"
+                optionValue="value" placeholder="Branch Code" class="text-sm bg-white!" />
+
+            <div>
+                <p-button label="Add Facility" icon="pi pi-plus" severity="danger" (click)="showDialog()" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+        <!-- Table -->
+        <p-table [value]="filteredFacilities" [tableStyle]="{ 'min-width': '100%' }" class="facilities-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="text-left">Account ID</th>
+                    <th class="text-left">Facility Type</th>
+                    <th class="text-left">Branch Code</th>
+                    <th class="text-left" pSortableColumn="originalSanctionAmount">
+                        <div class="flex items-center gap-1 cursor-pointer">
+                            Original Sanction Amount ₹
+                            <p-sortIcon field="originalSanctionAmount" />
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-facility>
+                <tr class="cursor-pointer" (click)="viewFacility(facility)">
+                    <td>
+                        <div class="flex items-center gap-2">
+                            {{ facility.accountId }}
+                            <span *ngIf="facility.isLimitBased"
+                                class="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 rounded">
+                                ILMS
+                            </span>
+                        </div>
+                    </td>
+                    <td>{{ facility.facilityType }}</td>
+                    <td>{{ facility.branchCode }}</td>
+                    <td>₹{{ facility.originalSanctionAmount | number: '1.0-0' }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <!-- Footer with Pagination -->
+    <div class="py-4 flex items-center justify-between">
+        <div class="text-md font-semibold text-muted text-gray-500!">
+            Showing 1 to 10 of {{ filteredFacilities.length }} facilities
+        </div>
+        <p-paginator [first]="first" [rows]="rows" [totalRecords]="filteredFacilities.length"
+            (onPageChange)="onPageChange($event)" [showPageLinks]="true" [showFirstLastIcon]="true"
+            class="text-md font-semibold"></p-paginator>
+    </div>
+
+    <!-- Add New Facility Dialog -->
+    <p-dialog [resizable]="false" [modal]="true" [maximizable]="false" draggable="false" appendTo="body"
+        [(visible)]="dialogVisible" [style]="{ width: '75vw'}" [contentStyle]="{ overflow: 'auto' }">
+        <ng-template pTemplate="header">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-semibold">{{ isReadOnly ? 'View Facility' : 'Add New Facility' }}</span>
+                <span *ngIf="isReadOnly"
+                    class="px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 rounded">ILMS</span>
+            </div>
+        </ng-template>
+        <div class="sticky top-0 py-2 bg-white! z-[1000]">
+            <p class="text-gray-600">
+                {{ isReadOnly ? 'This is a read-only view from ILMS. No changes can be made.' : 'Fill in the facility
+                details below. All fields are required.' }}
+            </p>
+            <p-divider></p-divider>
+        </div>
+
+        <div class="flex flex-col gap-6 mt-1" [class.readonly-form]="isReadOnly"></div>
+        <!-- Basic Information Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Basic Information</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+                <div class="flex flex-col gap-2">
+                    <label for="facilityType" class="text-sm font-medium">Facility Type</label>
+                    <input id="facilityType" type="text" pSize="small" pInputText [(ngModel)]="newFacility.facilityType"
+                        placeholder="Enter facility type" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="accountId" class="text-sm font-medium">Account ID</label>
+                    <input id="accountId" type="text" pSize="small" pInputText [(ngModel)]="newFacility.accountId"
+                        placeholder="Enter account ID" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="branchCode" class="text-sm font-medium">Branch Code</label>
+                    <input id="branchCode" type="text" pSize="small" pInputText [(ngModel)]="newFacility.branchCode"
+                        placeholder="Enter branch code" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="productName" class="text-sm font-medium">Product Name</label>
+                    <input id="productName" type="text" pSize="small" pInputText [(ngModel)]="newFacility.productName"
+                        placeholder="Enter product name" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="sector" class="text-sm font-medium">Sector</label>
+                    <input id="sector" type="text" pSize="small" pInputText [(ngModel)]="newFacility.sector"
+                        placeholder="Enter sector" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="activity" class="text-sm font-medium">Activity</label>
+                    <input id="activity" type="text" pSize="small" pInputText [(ngModel)]="newFacility.activity"
+                        placeholder="Enter activity" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="scheme" class="text-sm font-medium">Scheme</label>
+                    <input id="scheme" type="text" pSize="small" pInputText [(ngModel)]="newFacility.scheme"
+                        placeholder="Enter scheme" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="glCode" class="text-sm font-medium">GL Code</label>
+                    <input id="glCode" type="text" pSize="small" pInputText [(ngModel)]="newFacility.glCode"
+                        placeholder="Enter GL code" class="w-full" [disabled]="isReadOnly" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Interest Details Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Interest Details</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="interestType" class="text-sm font-medium">Interest Type</label>
+                    <input id="interestType" type="text" pSize="small" pInputText [(ngModel)]="newFacility.interestType"
+                        placeholder="Enter interest type" class="w-full" [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="rateOfInterest" class="text-sm font-medium">Rate of Interest (%)</label>
+                    <input id="rateOfInterest" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.rateOfInterest" placeholder="Enter rate" class="w-full"
+                        [disabled]="isReadOnly" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Original Sanction Details Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Original Sanction Details</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="originalSanctionAuthority" class="text-sm font-medium">Original Sanction
+                        Authority</label>
+                    <input id="originalSanctionAuthority" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.originalSanctionAuthority" placeholder="Enter authority" class="w-full"
+                        [disabled]="isReadOnly" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="originalSanctionAuthorityLevel" class="text-sm font-medium">Original Sanction
+                        Authority Level</label>
+                    <input id="originalSanctionAuthorityLevel" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.originalSanctionAuthorityLevel" placeholder="Enter level"
+                        class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="originalSanctionDate" class="text-sm font-medium">Original Sanction Date</label>
+                    <p-datepicker id="originalSanctionDate" [(ngModel)]="newFacility.originalSanctionDate"
+                        dateFormat="dd-mm-yy" placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="originalSanctionAmount" class="text-sm font-medium">Original Sanction Amount
+                        (₹)</label>
+                    <input id="originalSanctionAmount" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.originalSanctionAmount" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="sanctionRefNo" class="text-sm font-medium">Sanction Ref No</label>
+                    <input id="sanctionRefNo" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.sanctionRefNo" placeholder="Enter reference number" class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Last Sanction Details Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Last Sanction Details</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="lastSanctionAuthority" class="text-sm font-medium">Last Sanction Authority</label>
+                    <input id="lastSanctionAuthority" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.lastSanctionAuthority" placeholder="Enter authority" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="lastSanctionAuthorityLevel" class="text-sm font-medium">Last Sanction Authority
+                        Level</label>
+                    <input id="lastSanctionAuthorityLevel" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.lastSanctionAuthorityLevel" placeholder="Enter level" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="lastSanctionDate" class="text-sm font-medium">Last Sanction Date</label>
+                    <p-datepicker id="lastSanctionDate" [(ngModel)]="newFacility.lastSanctionDate" dateFormat="dd-mm-yy"
+                        placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="lastSanctionedAmount" class="text-sm font-medium">Last Sanctioned Amount (₹)</label>
+                    <input id="lastSanctionedAmount" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.lastSanctionedAmount" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="lastSanctionRefNo" class="text-sm font-medium">Last Sanction Ref No</label>
+                    <input id="lastSanctionRefNo" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.lastSanctionRefNo" placeholder="Enter reference number"
+                        class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Disbursement & Acknowledgement Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Disbursement & Acknowledgement</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="disbursementDate" class="text-sm font-medium">Disbursement Date</label>
+                    <p-datepicker id="disbursementDate" [(ngModel)]="newFacility.disbursementDate" dateFormat="dd-mm-yy"
+                        placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="acknowledgementOfDebtDate" class="text-sm font-medium">Acknowledgement of Debt
+                        Date</label>
+                    <p-datepicker id="acknowledgementOfDebtDate" [(ngModel)]="newFacility.acknowledgementOfDebtDate"
+                        dateFormat="dd-mm-yy" placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Provisions & Write-offs Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Provisions & Write-offs</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="provisionAmount" class="text-sm font-medium">Provision Amount (₹)</label>
+                    <input id="provisionAmount" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.provisionAmount" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="twoAmount" class="text-sm font-medium">TWO Amount (₹)</label>
+                    <input id="twoAmount" type="number" pSize="small" pInputText [(ngModel)]="newFacility.twoAmount"
+                        placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="dateOfTWO" class="text-sm font-medium">Date of TWO</label>
+                    <p-datepicker id="dateOfTWO" [(ngModel)]="newFacility.dateOfTWO" dateFormat="dd-mm-yy"
+                        placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- DICGCI/ECGC/NHB Claims Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">DICGCI/ECGC/NHB Claims</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="claimDate" class="text-sm font-medium">Claim Date</label>
+                    <p-datepicker id="claimDate" [(ngModel)]="newFacility.claimDate" dateFormat="dd-mm-yy"
+                        placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="claimEligibleAmount" class="text-sm font-medium">Claim Eligible Amount (₹)</label>
+                    <input id="claimEligibleAmount" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.claimEligibleAmount" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="claimReceived" class="text-sm font-medium">Claim Received (₹)</label>
+                    <input id="claimReceived" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.claimReceived" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="claimReceivedDate" class="text-sm font-medium">Claim Received Date</label>
+                    <p-datepicker id="claimReceivedDate" [(ngModel)]="newFacility.claimReceivedDate"
+                        dateFormat="dd-mm-yy" placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2 col-span-2">
+                    <label for="claimRejectedReason" class="text-sm font-medium">Claim Rejected Reason</label>
+                    <input id="claimRejectedReason" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.claimRejectedReason" placeholder="Enter reason if rejected"
+                        class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- CGTMSE Claims Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">CGTMSE Claims</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="cgtmseClaimDate" class="text-sm font-medium">Claim Date</label>
+                    <p-datepicker id="cgtmseClaimDate" [(ngModel)]="newFacility.cgtmseClaimDate" dateFormat="dd-mm-yy"
+                        placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="cgtmseCoverAmountClaimed" class="text-sm font-medium">Cover - Amount Claimed
+                        (₹)</label>
+                    <input id="cgtmseCoverAmountClaimed" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.cgtmseCoverAmountClaimed" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="cgtmseClaimAmountReceived" class="text-sm font-medium">Claim Amount Received
+                        (₹)</label>
+                    <input id="cgtmseClaimAmountReceived" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.cgtmseClaimAmountReceived" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="cgtmseClaimReceivedDate" class="text-sm font-medium">Claim Received Date</label>
+                    <p-datepicker id="cgtmseClaimReceivedDate" [(ngModel)]="newFacility.cgtmseClaimReceivedDate"
+                        dateFormat="dd-mm-yy" placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="cgtmseClaimRejectedReason" class="text-sm font-medium">Claim Rejected Reason</label>
+                    <input id="cgtmseClaimRejectedReason" type="text" pSize="small" pInputText
+                        [(ngModel)]="newFacility.cgtmseClaimRejectedReason" placeholder="Enter reason if rejected"
+                        class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Balance Information Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Balance Information</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="flex flex-col gap-2">
+                    <label for="lastCreditDate" class="text-sm font-medium">Last Credit Date</label>
+                    <p-datepicker id="lastCreditDate" [(ngModel)]="newFacility.lastCreditDate" dateFormat="dd-mm-yy"
+                        placeholder="dd----yyyy" [showIcon]="true" size="small" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="lastCreditAmount" class="text-sm font-medium">Last Credit Amount (₹)</label>
+                    <input id="lastCreditAmount" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.lastCreditAmount" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="ledgerBalance" class="text-sm font-medium">Ledger Balance (₹)</label>
+                    <input id="ledgerBalance" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.ledgerBalance" placeholder="Enter balance" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="balanceOutstandingAfterRecovery" class="text-sm font-medium">Balance Outstanding
+                        After Recovery (₹)</label>
+                    <input id="balanceOutstandingAfterRecovery" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.balanceOutstandingAfterRecovery" placeholder="Enter balance"
+                        class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="principalLedgerBalance" class="text-sm font-medium">Principal Ledger Balance
+                        (₹)</label>
+                    <input id="principalLedgerBalance" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.principalLedgerBalance" placeholder="Enter balance" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="unappliedInterest" class="text-sm font-medium">Unapplied Interest (₹)</label>
+                    <input id="unappliedInterest" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.unappliedInterest" placeholder="Enter amount" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="legalExpenses" class="text-sm font-medium">Legal Expenses (₹)</label>
+                    <input id="legalExpenses" type="number" pSize="small" pInputText
+                        [(ngModel)]="newFacility.legalExpenses" placeholder="Enter expenses" class="w-full" />
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="total" class="text-sm font-medium">Total (₹)</label>
+                    <input id="total" type="number" pSize="small" pInputText [(ngModel)]="newFacility.total"
+                        placeholder="Enter total" class="w-full" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Details Section -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Other Details</h3>
+            <div class="flex flex-col gap-2">
+                <label for="others" class="text-sm font-medium">Others</label>
+                <textarea id="others" rows="3" pTextarea [(ngModel)]="newFacility.others"
+                    placeholder="Enter any additional information" class="w-full"></textarea>
+            </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <div class="flex justify-between gap-4">
+                <p-button [label]="isReadOnly ? 'Close' : 'Cancel'" [outlined]="true" (click)="dialogVisible = false" />
+                <p-button *ngIf="!isReadOnly" label="Add Facility" icon="pi pi-check" severity="danger"
+                    (click)="addFacility()" />
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>

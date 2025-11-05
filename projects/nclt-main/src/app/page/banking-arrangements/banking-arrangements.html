@@ -1,0 +1,151 @@
+<div class="p-2 bg-gray-50 max-h-screen">
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden ">
+        <!-- Search and Filter Bar -->
+        <div class="flex items-center justify-between gap-4 p-4">
+            <p-iconfield class="flex-1 max-w-md">
+                <p-inputicon class="pi pi-search" />
+                <input class="w-full bg-white!" type="text" variant="filled" pInputText
+                    placeholder="Search by ID, Type, Authority..." />
+            </p-iconfield>
+
+            <div class="flex items-center gap-2">
+                <!-- Type Filter Popover -->
+                <p-button (click)="typePopover.toggle($event)" label="Type" [outlined]="true" icon="pi pi-filter"
+                    iconPos="left" class="text-sm bg-white!" />
+                <p-popover #typePopover>
+                    <div class="flex flex-col gap-3 p-2 min-w-[200px]">
+                        <span class="font-semibold text-gray-900 text-lg">Filter by Type</span>
+                        <div class="flex flex-col gap-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="rounded" />
+                                <span class="text-gray-700">Term Loan</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="rounded" />
+                                <span class="text-gray-700">Cash Credit</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="rounded" />
+                                <span class="text-gray-700">Overdraft</span>
+                            </label>
+                        </div>
+                        <div class="w-full flex justify-between mt-2">
+                            <p-button label="Clear" [outlined]="true" (click)="clearTypeFilter()" />
+                            <p-button label="Apply" (click)="applyTypeFilter()" severity="danger" />
+                        </div>
+                    </div>
+                </p-popover>
+
+                <!-- Status Filter Popover -->
+                <p-button (click)="statusPopover.toggle($event)" label="Status" [outlined]="true" icon="pi pi-filter"
+                    iconPos="left" class="text-sm bg-white!" />
+                <p-popover #statusPopover>
+                    <div class="flex flex-col gap-3 p-2 min-w-[200px]">
+                        <span class="font-semibold text-gray-900 text-lg">Filter by Status</span>
+                        <div class="flex flex-col gap-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="rounded" />
+                                <span class="text-gray-700">Active</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="rounded" />
+                                <span class="text-gray-700">NPA</span>
+                            </label>
+                        </div>
+                        <div class="w-full flex justify-between mt-2">
+                            <p-button label="Clear" [outlined]="true" (click)="clearStatusFilter()" />
+                            <p-button label="Apply" (click)="applyStatusFilter()" severity="danger" />
+                        </div>
+                    </div>
+                </p-popover>
+
+                <!-- Add Bank Button -->
+                <p-button label="Add Bank" icon="pi pi-plus" severity="danger" class="text-sm" (click)="showDialog()" />
+            </div>
+        </div>
+
+        <!-- Table -->
+        <p-table [value]="bankingArrangements" [tableStyle]="{ 'min-width': '100%' }"
+            class="banking-arrangements-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="text-left">ID</th>
+                    <th class="text-left">Arrangement Type</th>
+                    <th class="text-left">Sanction Authority</th>
+                    <th class="text-left">Running Status</th>
+                    <th class="text-left">Sanction Date</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-arrangement>
+                <tr class="cursor-pointer">
+                    <td>{{ arrangement.id }}</td>
+                    <td>{{ arrangement.arrangementType }}</td>
+                    <td>{{ arrangement.sanctionAuthority }}</td>
+                    <td>
+                        <span class="custom-status-badge" [ngClass]="{
+                'status-active': arrangement.runningStatus === 'Active',
+                'status-npa': arrangement.runningStatus === 'NPA',
+                'status-default': arrangement.runningStatus !== 'Active' && arrangement.runningStatus !== 'NPA'
+              }">
+                            {{ arrangement.runningStatus }}
+                        </span>
+                    </td>
+                    <td>{{ arrangement.sanctionDate }}</td>
+                    <td class="text-center">
+                        <p-menu #menu [model]="getMenuItems(arrangement)" [popup]="true" appendTo="body" />
+                        <button (click)="menu.toggle($event)"
+                            class="py-1 px-2 hover:bg-gray-100 rounded transition-colors">
+                            <i class="pi pi-ellipsis-h text-gray-600"></i>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <!-- Add Banking Arrangement Dialog -->
+    <p-dialog header="Add Banking Arrangement" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '40rem' }"
+        [contentStyle]="{ overflow: 'visible' }">
+        <p class="text-gray-500 mb-6">Fill in the banking arrangement details below</p>
+
+        <div class="grid grid-cols-2 gap-6">
+            <!-- Banking Arrangement Type -->
+            <div class="flex flex-col gap-2">
+                <label for="arrangementType" class="font-semibold text-gray-900">Banking Arrangement Type</label>
+                <p-select id="arrangementType" [(ngModel)]="selectedArrangementType" [options]="arrangementTypes"
+                    optionLabel="label" optionValue="value" placeholder="Select arrangement type" class="w-full" />
+            </div>
+
+            <!-- Original Sanction Authority -->
+            <div class="flex flex-col gap-2">
+                <label for="sanctionAuthority" class="font-semibold text-gray-900">Original Sanction Authority</label>
+                <input pInputText id="sanctionAuthority" [(ngModel)]="sanctionAuthority"
+                    placeholder="Enter sanction authority" class="w-full" />
+            </div>
+
+            <!-- Running Status -->
+            <div class="flex flex-col gap-2">
+                <label for="runningStatus" class="font-semibold text-gray-900">Running Status</label>
+                <p-select id="runningStatus" [(ngModel)]="selectedRunningStatus" [options]="runningStatuses"
+                    optionLabel="label" optionValue="value" placeholder="Select running status" class="w-full" />
+            </div>
+
+            <!-- BOB Original Sanction Date -->
+            <div class="flex flex-col gap-2">
+                <label for="sanctionDate" class="font-semibold text-gray-900">BOB Original Sanction Date</label>
+                <p-datepicker id="sanctionDate" [(ngModel)]="sanctionDate" dateFormat="dd-mm-yy"
+                    placeholder="dd----yyyy" [showIcon]="false" class="w-full" />
+            </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <div class="flex justify-end gap-3">
+                <p-button label="Cancel" [outlined]="true" (click)="dialogVisible = false" />
+                <p-button label="Add Banking Arrangement" severity="danger" (click)="dialogVisible = false" />
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>

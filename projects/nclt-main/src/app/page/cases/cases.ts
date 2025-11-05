@@ -13,6 +13,8 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { DatePicker } from 'primeng/datepicker';
 import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { Dialog } from 'primeng/dialog';
+import { Divider } from "primeng/divider";
 
 interface Case {
   caseId: string;
@@ -22,6 +24,12 @@ interface Case {
   dateOfNPA: string;
   panNumber: string;
   status: string;
+}
+
+interface Customer {
+  customerId: string;
+  customerName: string;
+  customerPAN: string;
 }
 
 @Component({
@@ -40,6 +48,8 @@ interface Case {
     InputGroupAddonModule,
     DatePicker,
     Menu,
+    Dialog,
+    Divider
   ],
   templateUrl: './cases.html',
   styleUrl: './cases.scss',
@@ -78,6 +88,25 @@ export class Cases implements OnInit {
 
   menuItems: MenuItem[] = [];
   selectedCase: Case | null = null;
+
+  // Dialog and customer selection
+  dialogVisible: boolean = false;
+  customers: Customer[] = [];
+  selectedCustomer: Customer | null = null;
+  customerSearchTerm: string = '';
+
+  get filteredCustomers(): Customer[] {
+    if (!this.customerSearchTerm) {
+      return this.customers;
+    }
+    const searchLower = this.customerSearchTerm.toLowerCase();
+    return this.customers.filter(
+      (c) =>
+        c.customerId.toLowerCase().includes(searchLower) ||
+        c.customerName.toLowerCase().includes(searchLower) ||
+        c.customerPAN.toLowerCase().includes(searchLower),
+    );
+  }
 
   ngOnInit() {
     this.allCases = [
@@ -182,6 +211,20 @@ export class Cases implements OnInit {
       },
     ];
 
+    // Initialize customers data
+    this.customers = [
+      { customerId: '123456', customerName: 'Anita Mehra', customerPAN: 'ABEPM1234L' },
+      { customerId: '234567', customerName: 'Rajesh Kumar', customerPAN: 'ACFPK5678M' },
+      { customerId: '345678', customerName: 'Priya Singh', customerPAN: 'ADGPS9012N' },
+      { customerId: '456789', customerName: 'Vikram Malhotra', customerPAN: 'AEHVM3456O' },
+      { customerId: '567890', customerName: 'Neha Sharma', customerPAN: 'AFINS7890P' },
+      { customerId: '678901', customerName: 'Amit Patel', customerPAN: 'AGJAP1234Q' },
+      { customerId: '789012', customerName: 'Kavita Desai', customerPAN: 'AHIKD5678R' },
+      { customerId: '890123', customerName: 'Suresh Reddy', customerPAN: 'AILSR9012S' },
+      { customerId: '901234', customerName: 'Meera Joshi', customerPAN: 'AJMMI3456T' },
+      { customerId: '012345', customerName: 'Karan Verma', customerPAN: 'AKNKV7890U' },
+    ];
+
     this.filterCasesByTab();
   }
 
@@ -259,5 +302,19 @@ export class Cases implements OnInit {
 
   deleteCase(caseData: Case) {
     console.log('Delete case', caseData);
+  }
+
+  showDialog() {
+    this.dialogVisible = true;
+    this.selectedCustomer = null;
+    this.customerSearchTerm = '';
+  }
+
+  createCase() {
+    if (this.selectedCustomer) {
+      console.log('Creating case for customer:', this.selectedCustomer);
+      // Add your case creation logic here
+      this.dialogVisible = false;
+    }
   }
 }

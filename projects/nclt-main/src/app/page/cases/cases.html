@@ -8,14 +8,8 @@
     <div class="flex items-center gap-2">
       <div class="flex items-center gap-2">
         <!-- Total O/S Filter Popover -->
-        <p-button
-          (click)="totalOSPopover.toggle($event)"
-          label="Total O/S"
-          [outlined]="true"
-          icon="pi pi-chevron-down"
-          iconPos="right"
-          class="text-sm bg-white!"
-        />
+        <p-button (click)="totalOSPopover.toggle($event)" label="Total O/S" [outlined]="true" icon="pi pi-chevron-down"
+          iconPos="right" class="text-sm bg-white!" />
         <p-popover #totalOSPopover>
           <div class="flex flex-col gap-4 p-4">
             <span class="font-semibold text-gray-900 text-lg">Filter by Total O/S Range</span>
@@ -24,13 +18,7 @@
               <label class="font-medium text-gray-900 block mb-2">Minimum Amount</label>
               <p-inputgroup>
                 <p-inputgroup-addon>₹</p-inputgroup-addon>
-                <input
-                  type="number"
-                  pInputText
-                  [(ngModel)]="minAmount"
-                  placeholder="0"
-                  class="w-full"
-                />
+                <input type="number" pInputText [(ngModel)]="minAmount" placeholder="0" class="w-full" />
               </p-inputgroup>
             </div>
 
@@ -38,13 +26,7 @@
               <label class="font-medium text-gray-900 block mb-2">Maximum Amount</label>
               <p-inputgroup>
                 <p-inputgroup-addon>₹</p-inputgroup-addon>
-                <input
-                  type="number"
-                  pInputText
-                  [(ngModel)]="maxAmount"
-                  placeholder="10,00,000"
-                  class="w-full"
-                />
+                <input type="number" pInputText [(ngModel)]="maxAmount" placeholder="10,00,000" class="w-full" />
               </p-inputgroup>
             </div>
 
@@ -56,38 +38,22 @@
         </p-popover>
 
         <!-- Date of NPA Filter Popover -->
-        <p-button
-          (click)="dateNPAPopover.toggle($event)"
-          label="Date of NPA"
-          [outlined]="true"
-          icon="pi pi-chevron-down"
-          iconPos="right"
-          class="text-sm bg-white!"
-        />
+        <p-button (click)="dateNPAPopover.toggle($event)" label="Date of NPA" [outlined]="true"
+          icon="pi pi-chevron-down" iconPos="right" class="text-sm bg-white!" />
         <p-popover #dateNPAPopover>
           <div class="flex flex-col gap-4 p-4">
             <span class="font-semibold text-gray-900 text-lg">Filter by NPA Date Range</span>
 
             <div>
               <label class="font-medium text-gray-900 block mb-2">From Date</label>
-              <p-datepicker
-                [(ngModel)]="fromDate"
-                dateFormat="dd-mm-yy"
-                placeholder="dd-mm-yyyy"
-                [showIcon]="true"
-                class="w-full"
-              />
+              <p-datepicker [(ngModel)]="fromDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
+                class="w-full" />
             </div>
 
             <div>
               <label class="font-medium text-gray-900 block mb-2">To Date</label>
-              <p-datepicker
-                [(ngModel)]="toDate"
-                dateFormat="dd-mm-yy"
-                placeholder="dd-mm-yyyy"
-                [showIcon]="true"
-                class="w-full"
-              />
+              <p-datepicker [(ngModel)]="toDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
+                class="w-full" />
             </div>
 
             <div class="w-full flex justify-between mt-2">
@@ -97,7 +63,7 @@
           </div>
         </p-popover>
       </div>
-      <p-button label="Add New Case" icon="pi pi-plus" severity="danger" />
+      <p-button label="Add New Case" icon="pi pi-plus" severity="danger" (click)="showDialog()" />
     </div>
   </div>
 
@@ -105,25 +71,16 @@
   <div class="flex items-center gap-4 mb-4">
     <p-iconfield class="bg-white min-w-lg">
       <p-inputicon class="pi pi-search" />
-      <input
-        class="w-full bg-white!"
-        type="text"
-        variant="filled"
-        pInputText
-        placeholder="Search by Case ID, Customer Name, PAN..."
-      />
+      <input class="w-full bg-white!" type="text" variant="filled" pInputText
+        placeholder="Search by Case ID, Customer Name, PAN..." />
     </p-iconfield>
   </div>
 
   <!-- Tabs -->
   <div class="mb-4">
     <div class="flex gap-3">
-      <button
-        *ngFor="let tab of tabs"
-        (click)="activeTab = tab.value"
-        class="custom-tab"
-        [class.active]="activeTab === tab.value"
-      >
+      <button *ngFor="let tab of tabs" (click)="activeTab = tab.value" class="custom-tab"
+        [class.active]="activeTab === tab.value">
         {{ tab.label }}
       </button>
     </div>
@@ -170,10 +127,7 @@
           </td>
           <td>
             <p-menu #menu [model]="getMenuItems(case)" [popup]="true" appendTo="body" />
-            <button
-              (click)="menu.toggle($event)"
-              class="py-1 px-2 hover:bg-gray-100 rounded transition-colors"
-            >
+            <button (click)="menu.toggle($event)" class="py-1 px-2 hover:bg-gray-100 rounded transition-colors">
               <i class="pi pi-ellipsis-h text-gray-600"></i>
             </button>
           </td>
@@ -185,14 +139,53 @@
     <div class="text-md font-semibold text-gray-500">
       Showing 1 to 10 of {{ totalRecords }} customers
     </div>
-    <p-paginator
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="totalRecords"
-      (onPageChange)="onPageChange($event)"
-      [showPageLinks]="true"
-      [showFirstLastIcon]="true"
-      class="text-md font-semibold"
-    ></p-paginator>
+    <p-paginator [first]="first" [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)"
+      [showPageLinks]="true" [showFirstLastIcon]="true" class="text-md font-semibold"></p-paginator>
   </div>
+
+  <!-- Add New Case Dialog -->
+  <p-dialog header="Add New Case" [resizable]="false" [modal]="true" [maximizable]="false" draggable="false"
+    appendTo="body" [(visible)]="dialogVisible" [style]="{ width: '75vw' }" [contentStyle]="{ overflow: 'visible' }">
+    <p class="text-gray-600">Search and select a customer to create a new case</p>
+    <p-divider></p-divider>
+    <div class="flex flex-col gap-4 mt-1">
+      <p-iconfield class="bg-white">
+        <p-inputicon class="pi pi-search" />
+        <input class="w-md bg-white!" type="text" pInputText [(ngModel)]="customerSearchTerm"
+          placeholder="Search by Customer Name, ID, or PAN..." />
+      </p-iconfield>
+
+      <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+        <p-table [value]="filteredCustomers" [(selection)]="selectedCustomer" dataKey="customerId" [scrollable]="true"
+          scrollHeight="410px" [tableStyle]="{ 'min-width': '100%' }" class="customer-selection-table">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 4rem"></th>
+              <th>Customer ID</th>
+              <th>Customer Name</th>
+              <th>Customer PAN</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-customer>
+            <tr (click)="selectedCustomer = customer" class="cursor-pointer">
+              <td>
+                <p-tableRadioButton [value]="customer" />
+              </td>
+              <td>{{ customer.customerId }}</td>
+              <td>{{ customer.customerName }}</td>
+              <td>{{ customer.customerPAN }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-between gap-4">
+        <p-button label="Cancel" [outlined]="true" (click)="dialogVisible = false" />
+        <p-button label="Create Case" icon="pi pi-check" severity="danger" (click)="createCase()"
+          [disabled]="!selectedCustomer" />
+      </div>
+    </ng-template>
+  </p-dialog>
 </div>

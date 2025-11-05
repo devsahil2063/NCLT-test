@@ -32,6 +32,7 @@ import { ComparativeAnalysis } from './page/comparative-analysis/comparative-ana
 import { InternalAssesment } from './page/internal-assesment/internal-assesment';
 import { CocApproval } from './page/coc-approval/coc-approval';
 import { NcltFinalApproval } from './page/nclt-final-approval/nclt-final-approval';
+import { Hearing } from './page/hearing/hearing';
 
 export const routes: Routes = [
   {
@@ -103,126 +104,130 @@ export const routes: Routes = [
   },
   {
     path: 'customers/basic-details',
-    component: BasicDetails
+    component: BasicDetails,
   },
   {
     path: 'customers/facility-details',
-    component: FacilityDetails
+    component: FacilityDetails,
   },
   {
     path: 'customers/other-parties',
-    component: OtherParties
+    component: OtherParties,
   },
   {
     path: 'customers/security-details',
-    component: SecurityDetails
+    component: SecurityDetails,
   },
   {
     path: 'customers/functioning-unit-status',
-    component: FunctioningUnitStatus
+    component: FunctioningUnitStatus,
   },
   {
     path: 'cases/banking-arrangements',
-    component: BankingArrangements
+    component: BankingArrangements,
   },
   {
     path: 'cases/guarantor',
-    component: Guarantor
+    component: Guarantor,
   },
   {
     path: 'cases/security',
-    component: Security
+    component: Security,
   },
   {
     path: 'cases/forensic-audit',
-    component: ForensicAudit
+    component: ForensicAudit,
   },
   {
     path: 'cases/look-out-circular',
-    component: LookOutCircular
+    component: LookOutCircular,
   },
   {
     path: 'cases/sarfaesi-details',
-    component: SARFAESIDetails
+    component: SARFAESIDetails,
   },
   {
     path: 'cases/drt-suit',
-    component: DrtSuit
+    component: DrtSuit,
   },
   {
     path: 'cases/cirp/application/details',
-    component: ApplicationDetails
+    component: ApplicationDetails,
   },
   {
     path: 'cases/cirp/application/applicant',
-    component: ApplicantDetails
+    component: ApplicantDetails,
   },
   {
     path: 'cases/cirp/application/documents',
-    component: ApplicationDocuments
+    component: ApplicationDocuments,
   },
   {
     path: 'cases/cirp/admission/order/nclt',
-    component: NcltOrderDetails
+    component: NcltOrderDetails,
   },
   {
     path: 'cases/cirp/admission/order/irp',
-    component: IrpAppointments
+    component: IrpAppointments,
   },
   {
     path: 'cases/cirp/admission/order/moratorium',
-    component: Moratorium
+    component: Moratorium,
   },
   {
     path: 'cases/cirp/admission/order/timeline',
-    component: TimelineDashboard
+    component: TimelineDashboard,
   },
   {
     path: 'cases/cirp/claims/bank-baroda',
-    component: BobClaim
+    component: BobClaim,
   },
   {
     path: 'cases/cirp/claims/coc-formation',
-    component: CocFormation
+    component: CocFormation,
   },
   {
     path: 'cases/cirp/claims/financial-creditors',
-    component: FinancialCreditors
+    component: FinancialCreditors,
   },
   {
     path: 'cases/cirp/claims/operational-creditors',
-    component: OperationalCreditors
+    component: OperationalCreditors,
   },
   {
     path: 'cases/cirp/claims/other-claims',
-    component: OtherClaims
+    component: OtherClaims,
   },
   {
     path: 'cases/cirp/claims/summary-stats',
-    component: SummaryStats
+    component: SummaryStats,
   },
   {
     path: 'cases/cirp/eoi/expression',
-    component: ExpressionInterest
+    component: ExpressionInterest,
   },
   {
     path: 'cases/cirp/eoi/registry',
-    component: ResolutionPlansRegistery
+    component: ResolutionPlansRegistery,
   },
   {
     path: 'cases/cirp/eoi/comparative-analysis',
-    component: ComparativeAnalysis
+    component: ComparativeAnalysis,
   },
   {
     path: 'cases/cirp/eoi/bank-assessment',
-    component: InternalAssesment
+    component: InternalAssesment,
   },
   {
     path: 'cases/cirp/eoi/coc-approval',
-    component: CocApproval
+    component: CocApproval,
   },
   {
     path: 'cases/cirp/eoi/nclt-approval',
-    component: NcltFinalApproval
+    component: NcltFinalApproval,
+  },
+  {
+    path: 'cases/cirp/hearings',
+    component: Hearing,
   },
 ];

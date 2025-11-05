@@ -1,92 +1,130 @@
 <div class="p-2 bg-gray-50 min-h-screen">
-    <div class="bg-white rounded-lg shadow-sm p-6">
-        <!-- Header -->
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="text-xl font-semibold text-gray-900">Operational Creditors</h2>
-                <p class="text-sm text-gray-500 mt-1">List of all operational creditors and their claims</p>
-            </div>
-            <p-button label="Add Operational Creditor" icon="pi pi-plus" severity="danger" (click)="openAddDialog()"
-                class="text-sm" />
-        </div>
-
+  <div class="bg-white rounded-lg shadow-sm p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-900">Operational Creditors</h2>
+        <p class="text-sm text-gray-500 mt-1">List of all operational creditors and their claims</p>
+      </div>
+      <p-button
+        label="Add Operational Creditor"
+        icon="pi pi-plus"
+        severity="danger"
+        (click)="openAddDialog()"
+        class="text-sm"
+      />
     </div>
-    <!-- Table -->
-    <p-table [value]="creditors" [tableStyle]="{ 'min-width': '100%' }" showGridlines
-        class="mt-6 operational-creditors-table">
-        <ng-template pTemplate="header">
-            <tr>
-                <th class="text-left">Sr. No</th>
-                <th class="text-left">Name of Operational Creditor</th>
-                <th class="text-left">Admitted Claim Amount</th>
-                <th class="text-left">% Share</th>
-                <th class="text-left">Actions</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-creditor>
-            <tr>
-                <td>{{ creditor.srNo }}</td>
-                <td>{{ creditor.name }}</td>
-                <td>₹{{ creditor.admittedAmount | number: '1.2-2' }}</td>
-                <td>{{ creditor.sharePercentage | number: '1.2-2' }}%</td>
-                <td>
-                    <div class="flex items-center gap-2">
-                        <button (click)="openEditDialog(creditor)"
-                            class="p-2 hover:bg-gray-100 rounded transition-colors" title="Edit">
-                            <i class="pi pi-pencil text-gray-600"></i>
-                        </button>
-                        <button (click)="deleteCreditor(creditor)" class="p-2 hover:bg-red-50 rounded transition-colors"
-                            title="Delete">
-                            <i class="pi pi-trash text-red-500"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="5" class="text-center text-gray-500 py-8">
-                    No operational creditors added yet. Click "Add Operational Creditor" to get started.
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+  </div>
+  <!-- Table -->
+  <p-table
+    [value]="creditors"
+    [tableStyle]="{ 'min-width': '100%' }"
+    showGridlines
+    class="mt-6 operational-creditors-table"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-left">Sr. No</th>
+        <th class="text-left">Name of Operational Creditor</th>
+        <th class="text-left">Admitted Claim Amount</th>
+        <th class="text-left">% Share</th>
+        <th class="text-left">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-creditor>
+      <tr>
+        <td>{{ creditor.srNo }}</td>
+        <td>{{ creditor.name }}</td>
+        <td>₹{{ creditor.admittedAmount | number: '1.2-2' }}</td>
+        <td>{{ creditor.sharePercentage | number: '1.2-2' }}%</td>
+        <td>
+          <div class="flex items-center gap-2">
+            <button
+              (click)="openEditDialog(creditor)"
+              class="p-2 hover:bg-gray-100 rounded transition-colors"
+              title="Edit"
+            >
+              <i class="pi pi-pencil text-gray-600"></i>
+            </button>
+            <button
+              (click)="deleteCreditor(creditor)"
+              class="p-2 hover:bg-red-50 rounded transition-colors"
+              title="Delete"
+            >
+              <i class="pi pi-trash text-red-500"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5" class="text-center text-gray-500 py-8">
+          No operational creditors added yet. Click "Add Operational Creditor" to get started.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-    <!-- Add/Edit Operational Creditor Dialog -->
-    <p-dialog [header]="editMode ? 'Edit Operational Creditor' : 'Add Operational Creditor'" [(visible)]="showDialog"
-        [modal]="true" [closable]="true" [style]="{ width: '700px' }" [draggable]="false" [resizable]="false">
-        <p class="text-gray-600 text-sm mb-6">
-            {{ editMode ? 'Update the operational creditor information' : 'Fill in the operational creditor information'
-            }}
-        </p>
+  <!-- Add/Edit Operational Creditor Dialog -->
+  <p-dialog
+    [header]="editMode ? 'Edit Operational Creditor' : 'Add Operational Creditor'"
+    [(visible)]="showDialog"
+    [modal]="true"
+    [closable]="true"
+    [style]="{ width: '1000px' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <p class="text-gray-600 text-sm mb-6">
+      {{
+        editMode
+          ? 'Update operational creditor details and claim information'
+          : 'Enter operational creditor details and claim information'
+      }}
+    </p>
 
-        <div class="flex flex-col gap-4">
-            <!-- Name of Operational Creditor -->
-            <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
-                    Name of Operational Creditor <span class="text-red-500">*</span>
-                </label>
-                <input type="text" pSize="small" pInputText [(ngModel)]="formData.name"
-                    placeholder="Enter creditor name" class="w-full" />
-            </div>
+    <div class="flex flex-col gap-6">
+      <!-- Name of Operational Creditor -->
+      <div class="flex flex-col gap-2">
+        <label class="text-gray-900 font-medium text-sm">
+          Name of Operational Creditor <span class="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          pInputText
+          [(ngModel)]="formData.name"
+          placeholder="Enter creditor name"
+          class="w-full"
+        />
+      </div>
 
-            <!-- Admitted Claim Amount -->
-            <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
-                    Admitted Claim Amount <span class="text-red-500">*</span>
-                </label>
-                <p-inputnumber [(ngModel)]="formData.admittedAmount" size="small" mode="currency" currency="INR"
-                    locale="en-IN" placeholder="Enter admitted amount" class="w-full" />
-            </div>
-        </div>
+      <!-- Admitted Claim Amount -->
+      <div class="flex flex-col gap-2">
+        <label class="text-gray-900 font-medium text-sm">
+          Admitted Claim Amount <span class="text-red-500">*</span>
+        </label>
+        <p-inputnumber
+          [(ngModel)]="formData.admittedAmount"
+          mode="currency"
+          currency="INR"
+          locale="en-IN"
+          placeholder="Enter admitted amount"
+          styleClass="w-full"
+        />
+      </div>
+    </div>
 
-        <ng-template pTemplate="footer">
-            <div class="flex justify-end gap-3 mt-4">
-                <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="closeDialog()"
-                    class="text-sm" />
-                <p-button [label]="editMode ? 'Update Creditor' : 'Add Creditor'" icon="pi pi-check" severity="danger"
-                    (click)="saveCreditor()" [disabled]="!isFormValid()" class="text-sm" />
-            </div>
-        </ng-template>
-    </p-dialog>
+    <ng-template pTemplate="footer">
+      <div class="flex justify-end gap-3 mt-6">
+        <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="closeDialog()" />
+        <p-button
+          [label]="editMode ? 'Update Creditor' : '+ Add Creditor'"
+          severity="danger"
+          (click)="saveCreditor()"
+          [disabled]="!isFormValid()"
+        />
+      </div>
+    </ng-template>
+  </p-dialog>
 </div>

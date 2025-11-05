@@ -1,0 +1,30 @@
+:host {
+  display: block;
+}
+
+// Custom table styles for hearings
+::ng-deep .hearings-table {
+  .p-datatable-thead > tr > th {
+    background-color: var(--p-table-header-background);
+    color: var(--p-table-header-color);
+    border-bottom: 1px solid var(--p-table-header-border-color);
+    padding: 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .p-datatable-tbody > tr {
+    background-color: var(--p-table-row-background);
+    border-bottom: 1px solid var(--p-table-row-border-color);
+
+    &:hover {
+      background-color: var(--p-table-row-hover-background);
+    }
+
+    > td {
+      padding: 1rem;
+      color: var(--p-table-cell-color);
+      font-size: 0.875rem;
+    }
+  }
+}

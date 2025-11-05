@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { Button } from 'primeng/button';
+import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputNumber } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
@@ -22,10 +22,10 @@ interface OperationalCreditor {
     CommonModule,
     FormsModule,
     TableModule,
-    ButtonModule,
-    DialogModule,
+    Button,
+    Dialog,
     InputTextModule,
-    InputNumberModule,
+    InputNumber,
     ToastModule,
   ],
   providers: [MessageService],
@@ -58,7 +58,7 @@ export class OperationalCreditors {
     admittedAmount: null as number | null,
   };
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService) {}
 
   openAddDialog(): void {
     this.editMode = false;
@@ -147,13 +147,9 @@ export class OperationalCreditors {
   }
 
   recalculateShares(): void {
-    const totalAdmitted = this.creditors.reduce(
-      (sum, c) => sum + c.admittedAmount,
-      0
-    );
+    const totalAdmitted = this.creditors.reduce((sum, c) => sum + c.admittedAmount, 0);
     this.creditors.forEach((c) => {
-      c.sharePercentage =
-        totalAdmitted > 0 ? (c.admittedAmount / totalAdmitted) * 100 : 0;
+      c.sharePercentage = totalAdmitted > 0 ? (c.admittedAmount / totalAdmitted) * 100 : 0;
     });
   }
 }

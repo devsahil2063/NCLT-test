@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
+import { TextareaModule } from 'primeng/textarea';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -24,6 +25,7 @@ import { MessageService } from 'primeng/api';
     DividerModule,
     RadioButtonModule,
     ToastModule,
+    TextareaModule,
   ],
   providers: [MessageService],
   templateUrl: './nclt-order-details.html',
@@ -47,7 +49,7 @@ export class NcltOrderDetails {
     { label: 'Withdrawn', value: 'withdrawn' },
   ];
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService) {}
 
   onOrderCopySelect(event: Event): void {
     const input = event.target as HTMLInputElement;

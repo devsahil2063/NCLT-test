@@ -1,1 +1,198 @@
-<p>cases works!</p>
+<div class="p-2 bg-gray-50 min-h-screen">
+  <!-- Header Section -->
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-semibold text-gray-900 mb-1">Cases</h1>
+      <p class="text-md text-gray-600">Manage NCLT cases and proceedings</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2">
+        <!-- Total O/S Filter Popover -->
+        <p-button
+          (click)="totalOSPopover.toggle($event)"
+          label="Total O/S"
+          [outlined]="true"
+          icon="pi pi-chevron-down"
+          iconPos="right"
+          class="text-sm bg-white!"
+        />
+        <p-popover #totalOSPopover>
+          <div class="flex flex-col gap-4 p-4">
+            <span class="font-semibold text-gray-900 text-lg">Filter by Total O/S Range</span>
+
+            <div>
+              <label class="font-medium text-gray-900 block mb-2">Minimum Amount</label>
+              <p-inputgroup>
+                <p-inputgroup-addon>₹</p-inputgroup-addon>
+                <input
+                  type="number"
+                  pInputText
+                  [(ngModel)]="minAmount"
+                  placeholder="0"
+                  class="w-full"
+                />
+              </p-inputgroup>
+            </div>
+
+            <div>
+              <label class="font-medium text-gray-900 block mb-2">Maximum Amount</label>
+              <p-inputgroup>
+                <p-inputgroup-addon>₹</p-inputgroup-addon>
+                <input
+                  type="number"
+                  pInputText
+                  [(ngModel)]="maxAmount"
+                  placeholder="10,00,000"
+                  class="w-full"
+                />
+              </p-inputgroup>
+            </div>
+
+            <div class="w-full flex justify-between mt-2">
+              <p-button label="Clear" [outlined]="true" (click)="clearTotalOSFilter()" />
+              <p-button label="Apply" (click)="applyTotalOSFilter()" severity="danger" />
+            </div>
+          </div>
+        </p-popover>
+
+        <!-- Date of NPA Filter Popover -->
+        <p-button
+          (click)="dateNPAPopover.toggle($event)"
+          label="Date of NPA"
+          [outlined]="true"
+          icon="pi pi-chevron-down"
+          iconPos="right"
+          class="text-sm bg-white!"
+        />
+        <p-popover #dateNPAPopover>
+          <div class="flex flex-col gap-4 p-4">
+            <span class="font-semibold text-gray-900 text-lg">Filter by NPA Date Range</span>
+
+            <div>
+              <label class="font-medium text-gray-900 block mb-2">From Date</label>
+              <p-datepicker
+                [(ngModel)]="fromDate"
+                dateFormat="dd-mm-yy"
+                placeholder="dd-mm-yyyy"
+                [showIcon]="true"
+                class="w-full"
+              />
+            </div>
+
+            <div>
+              <label class="font-medium text-gray-900 block mb-2">To Date</label>
+              <p-datepicker
+                [(ngModel)]="toDate"
+                dateFormat="dd-mm-yy"
+                placeholder="dd-mm-yyyy"
+                [showIcon]="true"
+                class="w-full"
+              />
+            </div>
+
+            <div class="w-full flex justify-between mt-2">
+              <p-button label="Clear" [outlined]="true" (click)="clearDateNPAFilter()" />
+              <p-button label="Apply" (click)="applyDateNPAFilter()" severity="danger" />
+            </div>
+          </div>
+        </p-popover>
+      </div>
+      <p-button label="Add New Case" icon="pi pi-plus" severity="danger" />
+    </div>
+  </div>
+
+  <!-- Search and Filter Bar -->
+  <div class="flex items-center gap-4 mb-4">
+    <p-iconfield class="bg-white min-w-lg">
+      <p-inputicon class="pi pi-search" />
+      <input
+        class="w-full bg-white!"
+        type="text"
+        variant="filled"
+        pInputText
+        placeholder="Search by Case ID, Customer Name, PAN..."
+      />
+    </p-iconfield>
+  </div>
+
+  <!-- Tabs -->
+  <div class="mb-4">
+    <div class="flex gap-3">
+      <button
+        *ngFor="let tab of tabs"
+        (click)="activeTab = tab.value"
+        class="custom-tab"
+        [class.active]="activeTab === tab.value"
+      >
+        {{ tab.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <!-- Table -->
+    <p-table [value]="cases" [tableStyle]="{ 'min-width': '100%' }" styleClass="cases-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-left">Case ID</th>
+          <th class="text-left">Customer ID</th>
+          <th class="text-left">Customer Name</th>
+          <th class="text-left" pSortableColumn="totalOYS">
+            <div class="flex items-center gap-1">
+              Total O/S
+              <p-sortIcon field="totalOYS" />
+            </div>
+          </th>
+          <th class="text-left" pSortableColumn="dateOfNPA">
+            <div class="flex items-center gap-1">
+              Date of NPA
+              <p-sortIcon field="dateOfNPA" />
+            </div>
+          </th>
+          <th class="text-left">PAN Number</th>
+          <th class="text-left">Current Status</th>
+          <th class="text-left"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-case>
+        <tr class="cursor-pointer">
+          <td class="text-[--p-primary-color] font-medium">{{ case.caseId }}</td>
+          <td>{{ case.customerId }}</td>
+          <td>{{ case.customerName }}</td>
+          <td>₹{{ case.totalOYS | number: '1.0-0' }}</td>
+          <td>{{ case.dateOfNPA }}</td>
+          <td>{{ case.panNumber }}</td>
+          <td>
+            <span [class]="getStatusClass(case.status)">
+              {{ case.status }}
+            </span>
+          </td>
+          <td>
+            <p-menu #menu [model]="getMenuItems(case)" [popup]="true" appendTo="body" />
+            <button
+              (click)="menu.toggle($event)"
+              class="py-1 px-2 hover:bg-gray-100 rounded transition-colors"
+            >
+              <i class="pi pi-ellipsis-h text-gray-600"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="py-4 flex items-center justify-between">
+    <div class="text-md font-semibold text-gray-500">
+      Showing 1 to 10 of {{ totalRecords }} customers
+    </div>
+    <p-paginator
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      (onPageChange)="onPageChange($event)"
+      [showPageLinks]="true"
+      [showFirstLastIcon]="true"
+      class="text-md font-semibold"
+    ></p-paginator>
+  </div>
+</div>

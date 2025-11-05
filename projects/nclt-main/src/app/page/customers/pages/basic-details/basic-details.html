@@ -1,0 +1,474 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <!-- Header -->
+  <div class="mb-6 flex items-center gap-4">
+    <p-button
+      icon="pi pi-arrow-left"
+      [text]="true"
+      [rounded]="true"
+      (onClick)="onBack()"
+    ></p-button>
+    <div>
+      <h1 class="text-2xl font-semibold text-gray-800">123456</h1>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <p-card styleClass="shadow-sm">
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-gray-800">Basic Details</h2>
+      <p class="text-sm text-gray-600">View customer information and related data</p>
+    </div>
+
+    <!-- Customer Details Section -->
+    <div class="mb-8">
+      <h3 class="mb-4 text-lg font-semibold text-gray-700">Customer Details</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="customerId" class="text-sm font-medium text-gray-700">Customer ID</label>
+          <input
+            id="customerId"
+            type="text"
+            pInputText
+            [(ngModel)]="customerId"
+            placeholder="123456"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="salutation" class="text-sm font-medium text-gray-700">Salutation</label>
+          <p-select
+            id="salutation"
+            [(ngModel)]="salutation"
+            [options]="salutationOptions"
+            placeholder="Ms"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="customerName" class="text-sm font-medium text-gray-700">Customer Name</label>
+          <input
+            id="customerName"
+            type="text"
+            pInputText
+            [(ngModel)]="customerName"
+            placeholder="Anita Mehra"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="lineOfActivity" class="text-sm font-medium text-gray-700"
+            >Line of Activity</label
+          >
+          <p-select
+            id="lineOfActivity"
+            [(ngModel)]="lineOfActivity"
+            [options]="lineOfActivityOptions"
+            placeholder="Manufacturing"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="segment" class="text-sm font-medium text-gray-700">Segment</label>
+          <p-select
+            id="segment"
+            [(ngModel)]="segment"
+            [options]="segmentOptions"
+            placeholder="MSME"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="panNumber" class="text-sm font-medium text-gray-700">PAN Number</label>
+          <input
+            id="panNumber"
+            type="text"
+            pInputText
+            [(ngModel)]="panNumber"
+            placeholder="ABEPM1234L"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Branch & Organization Details Section -->
+    <div class="mb-8">
+      <h3 class="mb-4 text-lg font-semibold text-gray-700">Branch & Organization Details</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="sunId" class="text-sm font-medium text-gray-700">Sun ID</label>
+          <input
+            id="sunId"
+            type="text"
+            pInputText
+            [(ngModel)]="sunId"
+            placeholder="SOL001234"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="branch" class="text-sm font-medium text-gray-700">Branch</label>
+          <input
+            id="branch"
+            type="text"
+            pInputText
+            [(ngModel)]="branch"
+            placeholder="Mumbai - Fort"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="region" class="text-sm font-medium text-gray-700">Region</label>
+          <input
+            id="region"
+            type="text"
+            pInputText
+            [(ngModel)]="region"
+            placeholder="Western Region"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="zone" class="text-sm font-medium text-gray-700">Zone</label>
+          <input
+            id="zone"
+            type="text"
+            pInputText
+            [(ngModel)]="zone"
+            placeholder="Zone 1"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Account Classification Section -->
+    <div class="mb-8">
+      <h3 class="mb-4 text-lg font-semibold text-gray-700">Account Classification</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="npaDate" class="text-sm font-medium text-gray-700">NPA Date</label>
+          <p-datepicker
+            id="npaDate"
+            [(ngModel)]="npaDate"
+            dateFormat="dd-mm-yy"
+            placeholder="01-05-2025"
+            [showIcon]="true"
+            styleClass="w-full"
+          ></p-datepicker>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="assetClassification" class="text-sm font-medium text-gray-700"
+            >Asset Classification</label
+          >
+          <p-select
+            id="assetClassification"
+            [(ngModel)]="assetClassification"
+            [options]="assetClassificationOptions"
+            placeholder="Substandard"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="tno" class="text-sm font-medium text-gray-700">TNO</label>
+          <p-select
+            id="tno"
+            [(ngModel)]="tno"
+            [options]="yesNoOptions"
+            placeholder="No"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="provisionHeldAsOn" class="text-sm font-medium text-gray-700"
+            >Provision Held as on</label
+          >
+          <p-datepicker
+            id="provisionHeldAsOn"
+            [(ngModel)]="provisionHeldAsOn"
+            dateFormat="dd-mm-yy"
+            placeholder="30-09-2024"
+            [showIcon]="true"
+            styleClass="w-full"
+          ></p-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Fraud & WFD Details Section -->
+    <div class="mb-8">
+      <h3 class="mb-4 text-lg font-semibold text-gray-700">Fraud & WFD Details</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="fraudDeclared" class="text-sm font-medium text-gray-700"
+            >Fraud Declared</label
+          >
+          <p-select
+            id="fraudDeclared"
+            [(ngModel)]="fraudDeclared"
+            [options]="yesNoOptions"
+            placeholder="No"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="dateOfFraudDeclared" class="text-sm font-medium text-gray-700"
+            >Date of Fraud Declared</label
+          >
+          <p-datepicker
+            id="dateOfFraudDeclared"
+            [(ngModel)]="dateOfFraudDeclared"
+            dateFormat="dd-mm-yy"
+            placeholder="dd-mm-yyyy"
+            [showIcon]="true"
+            styleClass="w-full"
+          ></p-datepicker>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="wfdDeclared" class="text-sm font-medium text-gray-700">WFD Declared</label>
+          <p-select
+            id="wfdDeclared"
+            [(ngModel)]="wfdDeclared"
+            [options]="yesNoOptions"
+            placeholder="No"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="dateOfWfdDeclared" class="text-sm font-medium text-gray-700"
+            >Date of WFD Declared</label
+          >
+          <p-datepicker
+            id="dateOfWfdDeclared"
+            [(ngModel)]="dateOfWfdDeclared"
+            dateFormat="dd-mm-yy"
+            placeholder="dd-mm-yyyy"
+            [showIcon]="true"
+            styleClass="w-full"
+          ></p-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Address Details Section -->
+    <div class="mb-8">
+      <h3 class="mb-4 text-lg font-semibold text-gray-700">Address Details</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="addressType" class="text-sm font-medium text-gray-700">Address Type</label>
+          <p-select
+            id="addressType"
+            [(ngModel)]="addressType"
+            [options]="addressTypeOptions"
+            placeholder="Registered"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="addressCategory" class="text-sm font-medium text-gray-700"
+            >Address Category</label
+          >
+          <p-select
+            id="addressCategory"
+            [(ngModel)]="addressCategory"
+            [options]="addressCategoryOptions"
+            placeholder="Commercial"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full"
+          ></p-select>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="addressLine1" class="text-sm font-medium text-gray-700">Address Line 1</label>
+          <input
+            id="addressLine1"
+            type="text"
+            pInputText
+            [(ngModel)]="addressLine1"
+            placeholder="123, Industrial Estate"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="addressLine2" class="text-sm font-medium text-gray-700">Address Line 2</label>
+          <input
+            id="addressLine2"
+            type="text"
+            pInputText
+            [(ngModel)]="addressLine2"
+            placeholder="Andheri East"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="addressLine3" class="text-sm font-medium text-gray-700">Address Line 3</label>
+          <input
+            id="addressLine3"
+            type="text"
+            pInputText
+            [(ngModel)]="addressLine3"
+            placeholder="Near Railway Station"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="pincode" class="text-sm font-medium text-gray-700">Pincode</label>
+          <input
+            id="pincode"
+            type="text"
+            pInputText
+            [(ngModel)]="pincode"
+            placeholder="400069"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="country" class="text-sm font-medium text-gray-700">Country</label>
+          <input
+            id="country"
+            type="text"
+            pInputText
+            [(ngModel)]="country"
+            placeholder="India"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="state" class="text-sm font-medium text-gray-700">State</label>
+          <input
+            id="state"
+            type="text"
+            pInputText
+            [(ngModel)]="state"
+            placeholder="Maharashtra"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="district" class="text-sm font-medium text-gray-700">District</label>
+          <input
+            id="district"
+            type="text"
+            pInputText
+            [(ngModel)]="district"
+            placeholder="Mumbai Suburban"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <p-divider></p-divider>
+
+    <!-- Contact Details Section -->
+    <div class="mb-8">
+      <h3 class="mb-4 text-lg font-semibold text-gray-700">Contact Details</h3>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div class="flex flex-col gap-2">
+          <label for="officeStdCode" class="text-sm font-medium text-gray-700"
+            >Office STD Code</label
+          >
+          <input
+            id="officeStdCode"
+            type="text"
+            pInputText
+            [(ngModel)]="officeStdCode"
+            placeholder="022"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="officePhoneNumber" class="text-sm font-medium text-gray-700"
+            >Office Phone Number</label
+          >
+          <input
+            id="officePhoneNumber"
+            type="text"
+            pInputText
+            [(ngModel)]="officePhoneNumber"
+            placeholder="28765432"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="resStdCode" class="text-sm font-medium text-gray-700">Res STD Code</label>
+          <input
+            id="resStdCode"
+            type="text"
+            pInputText
+            [(ngModel)]="resStdCode"
+            placeholder="022"
+            class="w-full"
+          />
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="resPhoneNumber" class="text-sm font-medium text-gray-700"
+            >Res Phone Number</label
+          >
+          <input
+            id="resPhoneNumber"
+            type="text"
+            pInputText
+            [(ngModel)]="resPhoneNumber"
+            placeholder="26543210"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-8 flex justify-end">
+      <p-button label="Close" [outlined]="true" (onClick)="onClose()"></p-button>
+    </div>
+  </p-card>
+</div>

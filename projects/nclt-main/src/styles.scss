@@ -17,3 +17,54 @@
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
+
+// Custom Tab Component
+.custom-tab {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background-color: white;
+  cursor: pointer;
+  border: 1px solid var(--p-tab-hover-border);
+  color: var(--p-tab-inactive-color);
+
+  &:hover {
+    background-color: var(--p-tab-hover-bg);
+  }
+
+  &.active {
+    color: var(--p-tab-active-color);
+    border-color: var(--p-tab-active-border);
+  }
+}
+
+// Custom Status Badge Component
+.custom-status-badge {
+  padding: 0.125rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-block;
+
+  &.status-filed {
+    background-color: var(--p-status-filed-background);
+    color: var(--p-status-filed-color);
+  }
+
+  &.status-admitted {
+    background-color: var(--p-status-admitted-background);
+    color: var(--p-status-admitted-color);
+  }
+
+  &.status-resolution {
+    background-color: var(--p-status-resolution-background);
+    color: var(--p-status-resolution-color);
+  }
+
+  &.status-default {
+    background-color: #f3f4f6;
+    color: #1f2937;
+  }
+}

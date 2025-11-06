@@ -14,7 +14,7 @@ export const MyPreset = definePreset(Aura, {
       200: '#ffd4c7',
       300: '#ffb8a0',
       400: '#ff8d68',
-      500: '#ff5a39', // Base color
+      500: '#ff6b4a', // Base color
       600: '#f03d1f',
       700: '#d42d15',
       800: '#b02515',
@@ -23,6 +23,13 @@ export const MyPreset = definePreset(Aura, {
     },
     colorScheme: {
       light: {
+        text: {
+          heading: "#190a0a",
+          subheading: "#474747",
+          sectionheading: "#0a0a0a",
+          body: "#787878",
+          muted: "#9d9d9d",
+        },
         primary: {
           color: '{primary.500}',
           contrastColor: '#ffffff',
@@ -57,7 +64,7 @@ export const MyPreset = definePreset(Aura, {
           hoverColor: '{surface.800}',
         },
         table: {
-          headerBackground: '#ffffff',
+          headerBackground: '#f9f9f9',
           headerColor: '{surface.700}',
           headerBorderColor: '{surface.200}',
           rowBackground: '#ffffff',
@@ -77,10 +84,10 @@ export const MyPreset = definePreset(Aura, {
         status: {
           filedBackground: '#dcfce7',
           filedColor: '#16a34a',
-          admittedBackground: '#fef3c7',
+          admittedBackground: '#faebe8',
           admittedColor: '#d97706',
-          resolutionBackground: '#e0e7ff',
-          resolutionColor: '#6366f1',
+          resolutionBackground: '#eee7f2',
+          resolutionColor: '#8840b1',
         },
         statCard: {
           blueBackground: '#eff6ff',
@@ -92,14 +99,14 @@ export const MyPreset = definePreset(Aura, {
           onTrackBackground: '#16a34a',
           onTrackText: '#ffffff',
         },
-        text: {
-          heading: '{surface.900}',
-          subheading: '{surface.800}',
-          sectionHeading: '{surface.700}',
-          label: '{surface.700}',
-          body: '{surface.600}',
-          muted: '{surface.500}',
-        },
+        // text: {
+        //   heading: '{surface.900}',
+        //   subheading: '{surface.800}',
+        //   sectionHeading: '{surface.700}',
+        //   label: '{surface.700}',
+        //   body: '{surface.600}',
+        //   muted: '{surface.500}',
+        // },
         background: {
           page: '{surface.50}',
         },
@@ -125,6 +132,9 @@ export const MyPreset = definePreset(Aura, {
         },
       },
       dark: {
+        title: {
+          heading: "#190a0a",
+        },
         primary: {
           color: '{primary.400}',
           contrastColor: '{primary.950}',

@@ -5,35 +5,20 @@
     <div class="mb-4 flex items-center gap-4">
       <p-iconfield styleClass="bg-white min-w-lg">
         <p-inputicon styleClass="pi pi-search" />
-        <input
-          class="w-full bg-white"
-          type="text"
-          pInputText
-          [(ngModel)]="searchTerm"
-          placeholder="Search hearings..."
-        />
+        <input class="w-full bg-white" type="text" pInputText [(ngModel)]="searchTerm"
+          placeholder="Search hearings..." />
       </p-iconfield>
     </div>
     <div class="flex items-center gap-3">
       <p-button label="Outcome" [outlined]="true" icon="pi pi-filter" styleClass="bg-white" />
       <p-button label="Date Range" [outlined]="true" icon="pi pi-calendar" styleClass="bg-white" />
-      <p-button
-        label="Add Hearing"
-        icon="pi pi-plus"
-        severity="danger"
-        (onClick)="showAddDialog()"
-      />
+      <p-button label="Add Hearing" icon="pi pi-plus" severity="danger" (onClick)="showAddDialog()" />
     </div>
   </div>
 
   <!-- Table Card -->
   <div class="overflow-hidden rounded-lg bg-white shadow-sm mt-6">
-    <p-table
-      [value]="filteredHearings"
-      [tableStyle]="{ 'min-width': '100%' }"
-      showGridlines
-      class="hearings-table"
-    >
+    <p-table [value]="filteredHearings" [tableStyle]="{ 'min-width': '100%' }" showGridlines class="hearings-table">
       <ng-template pTemplate="header">
         <tr>
           <th class="text-left" style="width: 4rem">Action</th>
@@ -48,25 +33,16 @@
         <tr>
           <td>
             <div class="flex items-center gap-2">
-              <button
-                (click)="viewHearing(hearing)"
-                class="rounded p-1.5 text-gray-600 transition-colors hover:bg-gray-100"
-                title="View"
-              >
+              <button (click)="viewHearing(hearing)"
+                class="rounded p-1.5 text-gray-600 transition-colors hover:bg-gray-100" title="View">
                 <i class="pi pi-eye"></i>
               </button>
-              <button
-                (click)="editHearing(hearing)"
-                class="rounded p-1.5 text-gray-600 transition-colors hover:bg-gray-100"
-                title="Edit"
-              >
+              <button (click)="editHearing(hearing)"
+                class="rounded p-1.5 text-gray-600 transition-colors hover:bg-gray-100" title="Edit">
                 <i class="pi pi-pencil"></i>
               </button>
-              <button
-                (click)="deleteHearing(hearing)"
-                class="rounded p-1.5 text-red-600 transition-colors hover:bg-red-50"
-                title="Delete"
-              >
+              <button (click)="deleteHearing(hearing)"
+                class="rounded p-1.5 text-red-600 transition-colors hover:bg-red-50" title="Delete">
                 <i class="pi pi-trash"></i>
               </button>
             </div>
@@ -77,10 +53,8 @@
             <div class="max-w-md truncate">{{ hearing.gistOfHearing }}</div>
           </td>
           <td>
-            <button
-              (click)="downloadCourtOrder(hearing)"
-              class="flex items-center gap-3 text-[--p-primary-color] transition-colors hover:text-[--p-primary-600]"
-            >
+            <button (click)="downloadCourtOrder(hearing)"
+              class="flex items-center gap-3 text-[--p-primary-color] transition-colors hover:text-[--p-primary-600]">
               <i class="pi pi-download"></i>
               <span class="font-medium">Download</span>
             </button>
@@ -102,99 +76,258 @@
   </div>
 
   <!-- Add/Edit Hearing Dialog -->
-  <p-dialog
-    [header]="isEditMode ? 'Edit Hearing' : 'Add New Hearing'"
-    [resizable]="false"
-    [modal]="true"
-    [maximizable]="false"
-    [draggable]="false"
-    appendTo="body"
-    [(visible)]="dialogVisible"
-    [style]="{ width: '600px' }"
-    [contentStyle]="{ overflow: 'visible' }"
-  >
-    <p class="text-gray-600">
-      {{ isEditMode ? 'Update hearing details' : 'Enter hearing details' }}
+  <p-dialog [header]="isEditMode ? 'Edit Hearing' : 'Add Hearing'" [resizable]="false" [modal]="true"
+    [maximizable]="false" [draggable]="false" appendTo="body" [(visible)]="dialogVisible" [style]="{ width: '600px' }"
+    [contentStyle]="{ overflow: 'auto' }">
+    <p class="text-sm text-body">
+      {{ isEditMode ? 'Update hearing details and outcomes' : 'Enter hearing details and outcomes' }}
     </p>
     <p-divider></p-divider>
 
-    <div class="mt-4 flex flex-col gap-4">
-      <!-- Date of Hearing -->
-      <div class="flex flex-col gap-2">
-        <label for="dateOfHearing" class="field-label font-medium">Date of Hearing</label>
-        <p-datepicker
-          id="dateOfHearing"
-          [(ngModel)]="dateOfHearing"
-          dateFormat="dd M yy"
-          placeholder="Select date"
-          [showIcon]="true"
-          styleClass="w-full"
-        />
+    <div class="mt-4 flex flex-col gap-6">
+      <!-- Hearing Details Section -->
+      <div>
+        <h3 class="text-base font-semibold mb-4">Hearing Details</h3>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <!-- Date of Hearing -->
+          <div class="flex flex-col gap-2">
+            <label for="dateOfHearing" class="text-sm font-medium field-label">
+              Date of Hearing <span class="text-red-500">*</span>
+            </label>
+            <p-datepicker id="dateOfHearing" size="small" [(ngModel)]="dateOfHearing" dateFormat="dd----yyyy --:-- --"
+              placeholder="dd----yyyy --:-- --" [showIcon]="true" [showTime]="true" class="w-full" />
+          </div>
+
+          <!-- EC Number of Bank Official's Attended -->
+          <div class="flex flex-col gap-2">
+            <label for="ecNumber" class="text-sm font-medium field-label">
+              EC Number of Bank Official's Attended
+            </label>
+            <input id="ecNumber" type="text" pSize="small" pInputText [(ngModel)]="ecNumber"
+              placeholder="Enter EC number" class="w-full" />
+          </div>
+
+          <!-- Name -->
+          <div class="flex flex-col gap-2">
+            <label for="bankOfficialName" class="text-sm font-medium field-label">Name</label>
+            <input id="bankOfficialName" type="text" pSize="small" pInputText [(ngModel)]="bankOfficialName"
+              placeholder="Bank representative name" class="w-full" />
+          </div>
+
+          <!-- Designation -->
+          <div class="flex flex-col gap-2">
+            <label for="bankOfficialDesignation" class="text-sm font-medium field-label">
+              Designation
+            </label>
+            <input id="bankOfficialDesignation" type="text" pSize="small" pInputText
+              [(ngModel)]="bankOfficialDesignation" placeholder="Enter designation" class="w-full" />
+          </div>
+        </div>
       </div>
 
-      <!-- Time of Hearing -->
-      <div class="flex flex-col gap-2">
-        <label for="timeOfHearing" class="field-label font-medium">Time of Hearing</label>
-        <input
-          id="timeOfHearing"
-          type="time"
-          pInputText
-          [(ngModel)]="timeOfHearing"
-          placeholder="10:30 AM"
-          class="w-full"
-        />
+      <!-- Hearing Outcome Section -->
+      <div>
+        <h3 class="text-base font-semibold mb-4">Hearing Outcome</h3>
+        <div class="flex flex-col gap-4">
+          <!-- Gist of Hearing -->
+          <div class="flex flex-col gap-2">
+            <label for="gistOfHearing" class="text-sm font-medium field-label">
+              Gist of Hearing <span class="text-red-500">*</span>
+            </label>
+            <textarea id="gistOfHearing" pInputTextarea [(ngModel)]="gistOfHearing" placeholder="Enter hearing summary"
+              rows="4" class="w-full"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- Hearing Outcome -->
+            <div class="flex flex-col gap-2">
+              <label for="hearingOutcome" class="text-sm font-medium field-label">
+                Hearing Outcome <span class="text-red-500">*</span>
+              </label>
+              <p-select id="hearingOutcome" size="small" [(ngModel)]="hearingOutcome" [options]="hearingOutcomeOptions"
+                optionLabel="label" optionValue="value" placeholder="Select outcome" class="w-full"
+                [checkmark]="true"></p-select>
+            </div>
+
+            <!-- Next Date of Hearing -->
+            <div class="flex flex-col gap-2">
+              <label for="nextDateOfHearing" class="text-sm font-medium field-label">
+                Next Date of Hearing
+              </label>
+              <p-datepicker id="nextDateOfHearing" size="small" [(ngModel)]="nextDateOfHearing" dateFormat="dd----yyyy"
+                placeholder="dd----yyyy" [showIcon]="true" class="w-full" />
+              <small class="text-xs text-gray-500">Required if Adjourned</small>
+            </div>
+          </div>
+
+          <!-- Reason for Adjournment -->
+          <div class="flex flex-col gap-2">
+            <label for="adjournmentReason" class="text-sm font-medium field-label">
+              Reason for Adjournment (if any)
+            </label>
+            <textarea id="adjournmentReason" pInputTextarea [(ngModel)]="adjournmentReason"
+              placeholder="Enter reason if adjourned" rows="3" class="w-full"></textarea>
+          </div>
+        </div>
       </div>
 
-      <!-- Next Date of Hearing -->
-      <div class="flex flex-col gap-2">
-        <label for="nextDateOfHearing" class="field-label font-medium">Next Date of Hearing</label>
-        <p-datepicker
-          id="nextDateOfHearing"
-          [(ngModel)]="nextDateOfHearing"
-          dateFormat="dd M yy"
-          placeholder="Select date"
-          [showIcon]="true"
-          styleClass="w-full"
-        />
+      <!-- Order Details Section -->
+      <div>
+        <h3 class="text-base font-semibold mb-4">Order Details</h3>
+        <div class="flex flex-col gap-4">
+          <!-- Order Passed -->
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-medium field-label">
+              Order Passed <span class="text-red-500">*</span>
+            </label>
+            <div class="flex items-center gap-6 mt-2">
+              <div class="flex items-center gap-2">
+                <p-radiobutton name="orderPassed" value="yes" [(ngModel)]="orderPassed"
+                  inputId="orderYes"></p-radiobutton>
+                <label for="orderYes" class="text-sm cursor-pointer">Yes</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <p-radiobutton name="orderPassed" value="no" [(ngModel)]="orderPassed"
+                  inputId="orderNo"></p-radiobutton>
+                <label for="orderNo" class="text-sm cursor-pointer">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- Order Date -->
+            <div class="flex flex-col gap-2">
+              <label for="orderDate" class="text-sm font-medium field-label">Order Date</label>
+              <p-datepicker id="orderDate" size="small" [(ngModel)]="orderDate" dateFormat="dd----yyyy"
+                placeholder="dd----yyyy" [showIcon]="true" class="w-full" />
+              <small class="text-xs text-gray-500">If Order Passed = Yes</small>
+            </div>
+
+            <!-- Order Number -->
+            <div class="flex flex-col gap-2">
+              <label for="orderNumber" class="text-sm font-medium field-label">Order Number</label>
+              <input id="orderNumber" type="text" pSize="small" pInputText [(ngModel)]="orderNumber"
+                placeholder="Enter order number" class="w-full" />
+              <small class="text-xs text-gray-500">If Order Passed = Yes</small>
+            </div>
+          </div>
+
+          <!-- Upload Order Copy (PDF) -->
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-medium field-label">Upload Order Copy (PDF)</label>
+            <div
+              class="relative flex items-center justify-center py-8 px-4 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors"
+              (click)="orderCopyInput.click()">
+              <input #orderCopyInput type="file" class="hidden" accept=".pdf" (change)="onOrderCopySelect($event)" />
+              <div class="flex flex-col items-center gap-2 text-gray-600">
+                <i class="pi pi-download text-2xl text-gray-400"></i>
+                <span class="text-sm font-medium">Click to upload or drag and drop</span>
+                <span class="text-xs text-gray-500">PDF (max. 10MB) - If Order Passed = Yes</span>
+              </div>
+            </div>
+            <div *ngIf="orderCopyFileName" class="mt-2">
+              <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                <span class="text-sm text-gray-700">{{ orderCopyFileName }}</span>
+                <button (click)="removeOrderCopy()" class="text-red-500 hover:text-red-700">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Gist of Hearing -->
-      <div class="flex flex-col gap-2">
-        <label for="gistOfHearing" class="field-label font-medium">Gist of Hearing</label>
-        <textarea
-          id="gistOfHearing"
-          pTextarea
-          [(ngModel)]="gistOfHearing"
-          placeholder="Enter hearing summary..."
-          rows="4"
-          class="w-full"
-        ></textarea>
+      <!-- Court Directions Section -->
+      <div>
+        <h3 class="text-base font-semibold mb-4">Court Directions</h3>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <!-- Stayed by Court -->
+          <div class="flex flex-col gap-2">
+            <label for="stayedByCourt" class="text-sm font-medium field-label">Stayed by Court</label>
+            <p-select id="stayedByCourt" size="small" [(ngModel)]="stayedByCourt" [options]="stayedByCourtOptions"
+              optionLabel="label" optionValue="value" placeholder="Select" class="w-full" [checkmark]="true"></p-select>
+          </div>
+
+          <!-- Number of Days -->
+          <div class="flex flex-col gap-2">
+            <label for="numberOfDays" class="text-sm font-medium field-label">Number of Days</label>
+            <input id="numberOfDays" type="text" pSize="small" pInputText [(ngModel)]="numberOfDays"
+              placeholder="Enter number of days" class="w-full" />
+          </div>
+        </div>
       </div>
 
-      <!-- Bank Official Name -->
-      <div class="flex flex-col gap-2">
-        <label for="bankOfficialName" class="field-label font-medium">Name of Bank Official</label>
-        <input
-          id="bankOfficialName"
-          type="text"
-          pInputText
-          [(ngModel)]="bankOfficialName"
-          placeholder="e.g., Rajesh Kumar (DGM)"
-          class="w-full"
-        />
+      <!-- Impact on CIRP Timeline Section -->
+      <div>
+        <h3 class="text-base font-semibold mb-4">Impact on CIRP Timeline</h3>
+        <div class="flex flex-col gap-4">
+          <!-- Does this affect CIRP Timeline? -->
+          <div class="flex flex-col gap-2">
+            <label class="text-sm font-medium field-label">
+              Does this affect CIRP Timeline? <span class="text-red-500">*</span>
+            </label>
+            <div class="flex items-center gap-6 mt-2">
+              <div class="flex items-center gap-2">
+                <p-radiobutton name="affectsCIRPTimeline" value="yes" [(ngModel)]="affectsCIRPTimeline"
+                  inputId="affectsYes"></p-radiobutton>
+                <label for="affectsYes" class="text-sm cursor-pointer">Yes</label>
+              </div>
+              <div class="flex items-center gap-2">
+                <p-radiobutton name="affectsCIRPTimeline" value="no" [(ngModel)]="affectsCIRPTimeline"
+                  inputId="affectsNo"></p-radiobutton>
+                <label for="affectsNo" class="text-sm cursor-pointer">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- Extension Granted -->
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-medium field-label">Extension Granted</label>
+              <div class="flex items-center gap-6 mt-2">
+                <div class="flex items-center gap-2">
+                  <p-radiobutton name="extensionGranted" value="yes" [(ngModel)]="extensionGranted"
+                    inputId="extensionYes"></p-radiobutton>
+                  <label for="extensionYes" class="text-sm cursor-pointer">Yes</label>
+                </div>
+                <div class="flex items-center gap-2">
+                  <p-radiobutton name="extensionGranted" value="no" [(ngModel)]="extensionGranted"
+                    inputId="extensionNo"></p-radiobutton>
+                  <label for="extensionNo" class="text-sm cursor-pointer">No</label>
+                </div>
+              </div>
+              <small class="text-xs text-gray-500">If affects timeline</small>
+            </div>
+
+            <!-- Extension Period (Days) -->
+            <div class="flex flex-col gap-2">
+              <label for="extensionPeriod" class="text-sm font-medium field-label">
+                Extension Period (Days)
+              </label>
+              <input id="extensionPeriod" type="text" pSize="small" pInputText [(ngModel)]="extensionPeriod"
+                placeholder="Enter days" class="w-full" />
+              <small class="text-xs text-gray-500">If extension granted</small>
+            </div>
+          </div>
+
+          <!-- New CIRP Deadline -->
+          <div class="flex flex-col gap-2">
+            <label for="newCIRPDeadline" class="text-sm font-medium field-label">
+              New CIRP Deadline
+            </label>
+            <p-datepicker id="newCIRPDeadline" size="small" [(ngModel)]="newCIRPDeadline" dateFormat="dd----yyyy"
+              placeholder="dd----yyyy" [showIcon]="true" class="w-full" />
+            <small class="text-xs text-gray-500">If extension granted</small>
+          </div>
+        </div>
       </div>
     </div>
 
     <ng-template pTemplate="footer">
-      <div class="flex justify-between gap-4">
+      <div class="flex justify-end gap-3 mt-6">
         <p-button label="Cancel" [outlined]="true" (onClick)="dialogVisible = false" />
-        <p-button
-          [label]="isEditMode ? 'Update' : 'Add Hearing'"
-          icon="pi pi-check"
-          severity="danger"
-          (onClick)="saveHearing()"
-          [disabled]="!dateOfHearing || !timeOfHearing || !nextDateOfHearing || !bankOfficialName"
-        />
+        <p-button [label]="isEditMode ? 'Update' : '+ Add Hearing'" severity="danger" (onClick)="saveHearing()"
+          [disabled]="!dateOfHearing || !gistOfHearing || !hearingOutcome || !orderPassed || !affectsCIRPTimeline" />
       </div>
     </ng-template>
   </p-dialog>

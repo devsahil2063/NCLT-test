@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 /* You can add global styles to this file, and also import other style files */
-@import 'tailwindcss';
-@import 'primeicons/primeicons.css';
+@use './tailwind.css';
+@use 'primeicons/primeicons.css';
 
 :root {
   // Sidebar dimensions
@@ -32,35 +31,50 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+.p-button {
+  @apply w-full text-nowrap text-sm;
+}
+
+.page-heading {
+  @apply text-2xl font-semibold leading-7 text-(--p-text-heading) mb-1;
+}
+
+.page-subheading {
+  @apply text-sm leading-5 font-medium text-(--p-text-subHeading);
+}
+
+.pagination-text {
+  @apply text-[1rem] leading-6 font-medium text-(--p-text-body);
+}
+
+.p-dialog-title {
+  @apply text-[1rem] leading-6 font-medium text-(--p-text-heading);
+}
+
+.popover-headeing {
+  @apply text-(--p-text-sectionheading) text-sm font-semibold;
+}
+
+.modal-label {
+  @apply text-xs text-(--p-text-body) mb-0.5;
+}
+
+.p-inputgroupaddon {
+  padding: 0 !important;
+}
+
 // Custom Tab Component
 .custom-tab {
-  padding: 0.5rem 1rem;
-  // border-radius: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  background-color: white;
-  cursor: pointer;
-  border: 1px solid var(--p-tab-hover-border);
-  color: var(--p-tab-inactive-color);
-
-  &:hover {
-    background-color: var(--p-tab-hover-bg);
-  }
+  @apply py-2 px-4 rounded-md text-[1rem] font-medium transition-all duration-200 ease-in-out bg-white cursor-pointer border border-(--p-tab-hover-border) text-(--p-tab-inactive-color) hover:bg-(--p-tab-hover-bg);
 
   &.active {
-    color: var(--p-tab-active-color);
-    border-color: var(--p-tab-active-border);
+    @apply text-(--p-tab-active-color) border-(--p-tab-active-border);
   }
 }
 
 // Custom Status Badge Component
 .custom-status-badge {
-  padding: 0.125rem 0.75rem;
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  display: inline-block;
+  @apply py-0.5 px-3 rounded-sm text-sm font-medium inline-block;
 
   &.status-filed {
     background-color: var(--p-status-filed-background);
@@ -69,7 +83,7 @@ body {
 
   &.status-admitted {
     background-color: var(--p-status-admitted-background);
-    color: var(--p-status-admitted-color);
+    color: var(--p-primary-color);
   }
 
   &.status-resolution {

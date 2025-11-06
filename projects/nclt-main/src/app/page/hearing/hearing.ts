@@ -11,6 +11,8 @@ import { Dialog } from 'primeng/dialog';
 import { Divider } from 'primeng/divider';
 import { DatePicker } from 'primeng/datepicker';
 import { Textarea } from 'primeng/textarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { SelectModule } from 'primeng/select';
 
 interface HearingData {
   id: string;
@@ -19,6 +21,20 @@ interface HearingData {
   nextDateOfHearing: string;
   gistOfHearing: string;
   bankOfficialName: string;
+  bankOfficialDesignation?: string;
+  ecNumber?: string;
+  hearingOutcome?: string;
+  adjournmentReason?: string;
+  orderPassed?: string;
+  orderDate?: string;
+  orderNumber?: string;
+  orderCopyFileName?: string;
+  stayedByCourt?: string;
+  numberOfDays?: string;
+  affectsCIRPTimeline?: string;
+  extensionGranted?: string;
+  extensionPeriod?: string;
+  newCIRPDeadline?: string;
 }
 
 @Component({
@@ -35,6 +51,8 @@ interface HearingData {
     Divider,
     DatePicker,
     Textarea,
+    RadioButtonModule,
+    SelectModule,
   ],
   templateUrl: './hearing.html',
   styleUrl: './hearing.scss',
@@ -46,30 +64,92 @@ export class Hearing implements OnInit {
   selectedHearing: HearingData | null = null;
   isEditMode: boolean = false;
 
-  // Form fields
+  // Form fields - Hearing Details
   dateOfHearing: Date | null = null;
-  timeOfHearing: string = '';
-  nextDateOfHearing: Date | null = null;
-  gistOfHearing: string = '';
+  ecNumber: string = '';
   bankOfficialName: string = '';
+  bankOfficialDesignation: string = '';
+
+  // Form fields - Hearing Outcome
+  gistOfHearing: string = '';
+  hearingOutcome: string = '';
+  nextDateOfHearing: Date | null = null;
+  adjournmentReason: string = '';
+
+  // Form fields - Order Details
+  orderPassed: string = '';
+  orderDate: Date | null = null;
+  orderNumber: string = '';
+  orderCopyFile: File | null = null;
+  orderCopyFileName: string = '';
+
+  // Form fields - Court Directions
+  stayedByCourt: string = '';
+  numberOfDays: string = '';
+
+  // Form fields - Impact on CIRP Timeline
+  affectsCIRPTimeline: string = '';
+  extensionGranted: string = '';
+  extensionPeriod: string = '';
+  newCIRPDeadline: Date | null = null;
+
+  hearingOutcomeOptions = [
+    { label: 'Adjourned', value: 'adjourned' },
+    { label: 'Disposed', value: 'disposed' },
+    { label: 'Pending', value: 'pending' },
+  ];
+
+  stayedByCourtOptions = [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' },
+    { label: 'Partial', value: 'partial' },
+  ];
 
   ngOnInit() {
     this.hearings = [
       {
         id: '1',
-        dateOfHearing: '15 Jan 2025, 10:30 AM',
+        dateOfHearing: '15 Jan 2025',
         timeOfHearing: '10:30 AM',
-        nextDateOfHearing: '05 Feb 2025',
+        ecNumber: 'EC12345',
+        bankOfficialName: 'Rajesh Kumar',
+        bankOfficialDesignation: 'DGM',
         gistOfHearing: 'Discussion on resolution plan approval. Court asked for additional...',
-        bankOfficialName: 'Rajesh Kumar (DGM)',
+        hearingOutcome: 'adjourned',
+        nextDateOfHearing: '05 Feb 2025',
+        adjournmentReason: 'Additional documents required',
+        orderPassed: 'yes',
+        orderDate: '15 Jan 2025',
+        orderNumber: 'ORD/2025/001',
+        orderCopyFileName: 'order_copy_001.pdf',
+        stayedByCourt: 'no',
+        numberOfDays: '0',
+        affectsCIRPTimeline: 'no',
+        extensionGranted: 'no',
+        extensionPeriod: '',
+        newCIRPDeadline: '',
       },
       {
         id: '2',
-        dateOfHearing: '20 Dec 2024, 2:00 PM',
+        dateOfHearing: '20 Dec 2024',
         timeOfHearing: '2:00 PM',
-        nextDateOfHearing: '15 Jan 2025',
+        ecNumber: 'EC12346',
+        bankOfficialName: 'Priya Sharma',
+        bankOfficialDesignation: 'AGM',
         gistOfHearing: 'Preliminary hearing. Court directed submission of claim proofs...',
-        bankOfficialName: 'Priya Sharma (AGM)',
+        hearingOutcome: 'disposed',
+        nextDateOfHearing: '15 Jan 2025',
+        adjournmentReason: '',
+        orderPassed: 'yes',
+        orderDate: '20 Dec 2024',
+        orderNumber: 'ORD/2024/099',
+        orderCopyFileName: 'order_copy_099.pdf',
+        stayedByCourt: 'yes',
+        numberOfDays: '30',
+        affectsCIRPTimeline: 'yes',
+        extensionGranted: 'yes',
+        extensionPeriod: '30',
+        newCIRPDeadline: '19 Jan 2025',
       },
     ];
   }
@@ -120,10 +200,23 @@ export class Hearing implements OnInit {
 
     // Parse and populate form fields
     this.dateOfHearing = new Date(hearing.dateOfHearing);
-    this.timeOfHearing = hearing.timeOfHearing;
-    this.nextDateOfHearing = new Date(hearing.nextDateOfHearing);
-    this.gistOfHearing = hearing.gistOfHearing;
+    this.ecNumber = hearing.ecNumber || '';
     this.bankOfficialName = hearing.bankOfficialName;
+    this.bankOfficialDesignation = hearing.bankOfficialDesignation || '';
+    this.gistOfHearing = hearing.gistOfHearing;
+    this.hearingOutcome = hearing.hearingOutcome || '';
+    this.nextDateOfHearing = hearing.nextDateOfHearing ? new Date(hearing.nextDateOfHearing) : null;
+    this.adjournmentReason = hearing.adjournmentReason || '';
+    this.orderPassed = hearing.orderPassed || '';
+    this.orderDate = hearing.orderDate ? new Date(hearing.orderDate) : null;
+    this.orderNumber = hearing.orderNumber || '';
+    this.orderCopyFileName = hearing.orderCopyFileName || '';
+    this.stayedByCourt = hearing.stayedByCourt || '';
+    this.numberOfDays = hearing.numberOfDays || '';
+    this.affectsCIRPTimeline = hearing.affectsCIRPTimeline || '';
+    this.extensionGranted = hearing.extensionGranted || '';
+    this.extensionPeriod = hearing.extensionPeriod || '';
+    this.newCIRPDeadline = hearing.newCIRPDeadline ? new Date(hearing.newCIRPDeadline) : null;
   }
 
   deleteHearing(hearing: HearingData) {
@@ -140,10 +233,24 @@ export class Hearing implements OnInit {
 
   resetForm() {
     this.dateOfHearing = null;
-    this.timeOfHearing = '';
-    this.nextDateOfHearing = null;
-    this.gistOfHearing = '';
+    this.ecNumber = '';
     this.bankOfficialName = '';
+    this.bankOfficialDesignation = '';
+    this.gistOfHearing = '';
+    this.hearingOutcome = '';
+    this.nextDateOfHearing = null;
+    this.adjournmentReason = '';
+    this.orderPassed = '';
+    this.orderDate = null;
+    this.orderNumber = '';
+    this.orderCopyFile = null;
+    this.orderCopyFileName = '';
+    this.stayedByCourt = '';
+    this.numberOfDays = '';
+    this.affectsCIRPTimeline = '';
+    this.extensionGranted = '';
+    this.extensionPeriod = '';
+    this.newCIRPDeadline = null;
   }
 
   saveHearing() {
@@ -153,46 +260,55 @@ export class Hearing implements OnInit {
       if (index !== -1) {
         this.hearings[index] = {
           ...this.selectedHearing,
-          dateOfHearing: this.formatDateTime(this.dateOfHearing!, this.timeOfHearing),
-          timeOfHearing: this.timeOfHearing,
-          nextDateOfHearing: this.formatDate(this.nextDateOfHearing!),
-          gistOfHearing: this.gistOfHearing,
+          dateOfHearing: this.formatDate(this.dateOfHearing!),
+          ecNumber: this.ecNumber,
           bankOfficialName: this.bankOfficialName,
+          bankOfficialDesignation: this.bankOfficialDesignation,
+          gistOfHearing: this.gistOfHearing,
+          hearingOutcome: this.hearingOutcome,
+          nextDateOfHearing: this.nextDateOfHearing ? this.formatDate(this.nextDateOfHearing) : '',
+          adjournmentReason: this.adjournmentReason,
+          orderPassed: this.orderPassed,
+          orderDate: this.orderDate ? this.formatDate(this.orderDate) : '',
+          orderNumber: this.orderNumber,
+          orderCopyFileName: this.orderCopyFileName,
+          stayedByCourt: this.stayedByCourt,
+          numberOfDays: this.numberOfDays,
+          affectsCIRPTimeline: this.affectsCIRPTimeline,
+          extensionGranted: this.extensionGranted,
+          extensionPeriod: this.extensionPeriod,
+          newCIRPDeadline: this.newCIRPDeadline ? this.formatDate(this.newCIRPDeadline) : '',
         };
       }
     } else {
       // Add new hearing
       const newHearing: HearingData = {
         id: (this.hearings.length + 1).toString(),
-        dateOfHearing: this.formatDateTime(this.dateOfHearing!, this.timeOfHearing),
-        timeOfHearing: this.timeOfHearing,
-        nextDateOfHearing: this.formatDate(this.nextDateOfHearing!),
-        gistOfHearing: this.gistOfHearing,
+        dateOfHearing: this.formatDate(this.dateOfHearing!),
+        timeOfHearing: '',
+        ecNumber: this.ecNumber,
         bankOfficialName: this.bankOfficialName,
+        bankOfficialDesignation: this.bankOfficialDesignation,
+        gistOfHearing: this.gistOfHearing,
+        hearingOutcome: this.hearingOutcome,
+        nextDateOfHearing: this.nextDateOfHearing ? this.formatDate(this.nextDateOfHearing) : '',
+        adjournmentReason: this.adjournmentReason,
+        orderPassed: this.orderPassed,
+        orderDate: this.orderDate ? this.formatDate(this.orderDate) : '',
+        orderNumber: this.orderNumber,
+        orderCopyFileName: this.orderCopyFileName,
+        stayedByCourt: this.stayedByCourt,
+        numberOfDays: this.numberOfDays,
+        affectsCIRPTimeline: this.affectsCIRPTimeline,
+        extensionGranted: this.extensionGranted,
+        extensionPeriod: this.extensionPeriod,
+        newCIRPDeadline: this.newCIRPDeadline ? this.formatDate(this.newCIRPDeadline) : '',
       };
       this.hearings = [newHearing, ...this.hearings];
     }
 
     this.dialogVisible = false;
     this.resetForm();
-  }
-
-  formatDateTime(date: Date, time: string): string {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}, ${time}`;
   }
 
   formatDate(date: Date): string {
@@ -215,5 +331,32 @@ export class Hearing implements OnInit {
 
   downloadCourtOrder(hearing: HearingData) {
     console.log('Download court order for', hearing);
+  }
+
+  onOrderCopySelect(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      // Validate file size (10MB max)
+      if (file.size > 10485760) {
+        alert('File size exceeds maximum of 10MB');
+        return;
+      }
+
+      // Validate file type
+      if (file.type !== 'application/pdf') {
+        alert('Please upload a PDF file');
+        return;
+      }
+
+      this.orderCopyFile = file;
+      this.orderCopyFileName = file.name;
+    }
+  }
+
+  removeOrderCopy(): void {
+    this.orderCopyFile = null;
+    this.orderCopyFileName = '';
   }
 }

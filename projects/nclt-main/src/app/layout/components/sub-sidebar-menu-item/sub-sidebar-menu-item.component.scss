@@ -1,0 +1,224 @@
+// Sub-Sidebar Menu Item Component Styles
+// Uses BEM naming convention with rounded border selection style
+
+.sub-sidebar-item {
+  position: relative;
+  padding: 0.25rem 0.75rem;
+
+  // Main button element
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: var(--p-sidebar-item-color, var(--p-surface-700));
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-color 150ms ease,
+      transform 150ms ease;
+    text-align: left;
+    font-family: inherit;
+    font-size: 0.9375rem;
+
+    // Hover state
+    &:hover:not(:disabled) {
+      background: var(--p-sidebar-item-hover-background, var(--p-surface-100));
+      border-color: var(--p-surface-200, #e5e7eb);
+    }
+
+    // Focus state - 2px outline for accessibility
+    &:focus-visible {
+      outline: 2px solid var(--p-primary-color);
+      outline-offset: 2px;
+      z-index: 1;
+    }
+
+    // Disabled state
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  // Icon element
+  &__icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    transition: color 150ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    position: relative;
+    z-index: 1;
+
+    // Ensure icon is always visible
+    &::before {
+      display: inline-block;
+      font-family: 'primeicons';
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+
+  // Label text
+  &__label {
+    flex: 1;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Badge for notification counts
+  &__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.375rem;
+    background: var(--p-primary-color);
+    color: var(--p-primary-contrast-color);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  // Chevron icon for expandable items
+  &__chevron {
+    font-size: 0.875rem;
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+
+    // Rotated state when expanded
+    &--expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  // Selected state styling with rounded border (like the image)
+  &--selected > &__button {
+    background: var(--p-sidebar-item-selected-background, rgba(255, 90, 57, 0.08));
+    color: var(--p-sidebar-item-selected-color, var(--p-primary-600));
+    border: 2px solid var(--p-sidebar-item-selected-border, var(--p-primary-500));
+    border-radius: 0.5rem;
+    font-weight: 600;
+
+    .sub-sidebar-item__icon {
+      color: var(--p-sidebar-item-selected-color, var(--p-primary-600));
+      font-weight: bold;
+    }
+
+    .sub-sidebar-item__label {
+      font-weight: 600;
+      color: var(--p-sidebar-item-selected-color, var(--p-primary-600));
+    }
+
+    // Ensure selected state is visible during hover
+    &:hover {
+      background: var(--p-sidebar-item-selected-background, rgba(255, 90, 57, 0.12));
+      border-color: var(--p-sidebar-item-selected-border, var(--p-primary-500));
+    }
+  }
+
+  // Disabled state
+  &--disabled {
+    opacity: 0.6;
+  }
+
+  // Children container for nested items
+  &__children {
+    overflow: hidden;
+    will-change: height, opacity;
+    margin-top: 0.25rem;
+
+    // Ensure icons in children are visible during animation
+    * {
+      will-change: auto;
+    }
+
+    .sub-sidebar-item__icon {
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: inline-flex !important;
+    }
+  }
+
+  // Visual hierarchy based on nesting level
+  // Level 1: Full size and opacity
+  &[data-nesting-level='1'] {
+    > .sub-sidebar-item__button {
+      font-size: 0.9375rem !important;
+      opacity: 1;
+    }
+
+    .sub-sidebar-item__label {
+      font-size: 0.9375rem !important;
+    }
+  }
+
+  // Level 2: Slightly smaller and reduced opacity
+  &[data-nesting-level='2'] {
+    > .sub-sidebar-item__button {
+      font-size: 0.9375rem !important;
+      opacity: 0.95;
+    }
+
+    .sub-sidebar-item__label {
+      font-size: 0.9375rem !important;
+    }
+
+    .sub-sidebar-item__icon {
+      font-size: 1.125rem !important;
+    }
+  }
+
+  // Level 3+: More reduced
+  &[data-nesting-level='3'],
+  &[data-nesting-level='4'],
+  &[data-nesting-level='5'] {
+    > .sub-sidebar-item__button {
+      font-size: 0.875rem !important;
+      opacity: 0.9;
+    }
+
+    .sub-sidebar-item__label {
+      font-size: 0.875rem !important;
+    }
+
+    .sub-sidebar-item__icon {
+      font-size: 1.125rem !important;
+    }
+  }
+
+  // Selected items always maintain full opacity
+  &--selected {
+    > .sub-sidebar-item__button {
+      opacity: 1 !important;
+    }
+  }
+}
+
+// Reduced motion support for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .sub-sidebar-item__button,
+  .sub-sidebar-item__icon,
+  .sub-sidebar-item__chevron {
+    transition: none;
+  }
+}

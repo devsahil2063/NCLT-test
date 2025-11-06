@@ -1,0 +1,37 @@
+<div class="sub-sidebar-item" [class.sub-sidebar-item--selected]="isSelected"
+    [class.sub-sidebar-item--has-children]="hasChildren" [class.sub-sidebar-item--disabled]="item.disabled"
+    [attr.data-nesting-level]="nestingLevel" [style.padding-left.rem]="nestingLevel > 1 ? nestingLevel * 0.25 : null">
+    <button class="sub-sidebar-item__button" (click)="onClick()" [attr.aria-label]="item.label"
+        [attr.aria-expanded]="hasChildren ? isExpanded : null" [attr.aria-current]="isSelected ? 'page' : null"
+        [attr.aria-disabled]="item.disabled ? 'true' : null" [disabled]="item.disabled" pRipple>
+        <i [class]="'pi ' + item.icon" class="sub-sidebar-item__icon"></i>
+
+        <span class="sub-sidebar-item__label">
+            {{ item.label }}
+        </span>
+
+        @if (item.badge) {
+        <span class="sub-sidebar-item__badge" [attr.aria-label]="item.badge + ' items'">
+            {{ item.badge }}
+        </span>
+        }
+
+        @if (hasChildren) {
+        <i class="pi pi-chevron-down sub-sidebar-item__chevron"
+            [class.sub-sidebar-item__chevron--expanded]="isExpanded">
+        </i>
+        }
+    </button>
+
+    <!-- Nested children (recursive) -->
+    @if (hasChildren && isExpanded) {
+    <div class="sub-sidebar-item__children" [@expandCollapse]>
+        @for (child of item.children; track child.id) {
+        <app-sub-sidebar-menu-item [item]="child" [isSelected]="isChildSelected(child.id)"
+            [isExpanded]="isChildExpanded(child.id)" [nestingLevel]="nestingLevel + 1" [selectedItemId]="selectedItemId"
+            [expandedItemIds]="expandedItemIds" (itemClick)="onChildClick($event)">
+        </app-sub-sidebar-menu-item>
+        }
+    </div>
+    }
+</div>

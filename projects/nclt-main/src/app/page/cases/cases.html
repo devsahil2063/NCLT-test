@@ -113,7 +113,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-case>
-        <tr class="cursor-pointer">
+        <tr class="cursor-pointer" (click)="navigateToCustomer()">
           <td class="text-[--p-primary-color] font-medium">{{ case.caseId }}</td>
           <td>{{ case.customerId }}</td>
           <td>{{ case.customerName }}</td>

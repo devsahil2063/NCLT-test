@@ -1,0 +1,65 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface-0);
+  border-bottom: 1px solid var(--surface-border);
+  height: 60px;
+  flex-shrink: 0;
+
+  &__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 150ms ease;
+
+    &:hover {
+      background: var(--surface-100);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    // PrimeNG button overrides
+    &.p-button {
+      padding: 0;
+      min-width: 40px;
+    }
+  }
+
+  &__title {
+    flex: 1;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+
+    // Hide title on very small screens to save space
+    @media (max-width: 360px) {
+      display: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+// Dark mode support
+:host-context(.my-app-dark) {
+  .app-header {
+    background: var(--surface-ground);
+    border-bottom-color: var(--surface-border);
+  }
+}

@@ -1,34 +1,49 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { PrimeNG } from 'primeng/config';
-import { LayoutComponents } from './layout/layout-module';
-import { SidebarMode, SidebarService } from './layout/services/sidebar.service';
 import { CommonModule } from '@angular/common';
-import { ContentHeaderComponent } from './layout/components/content-header/content-header';
 import { combineLatest, filter, map, Observable, startWith } from 'rxjs';
+
+// New sidebar components
+import { AppSidebarComponent } from './layout/components/app-sidebar/app-sidebar.component';
+import { AppSubSidebarComponent } from './layout/components/app-sub-sidebar/app-sub-sidebar.component';
+import { AppHeaderComponent } from './layout/components/app-header/app-header.component';
+import { NavigationService } from './layout/services/navigation.service';
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonModule, TooltipModule, ...LayoutComponents, CommonModule, ContentHeaderComponent],
+  imports: [
+    RouterOutlet,
+    ButtonModule,
+    TooltipModule,
+    CommonModule,
+    AppSidebarComponent,
+    AppSubSidebarComponent,
+    AppHeaderComponent
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   protected readonly title = signal('nclt-main');
-  readonly SidebarMode = SidebarMode;
 
   // Observable to check if warning banner should be shown
   showWarningBanner$!: Observable<boolean>;
 
-  constructor(private primeng: PrimeNG, private router: Router, public sidebarService: SidebarService,
+
+
+  constructor(
+    private primeng: PrimeNG,
+    private router: Router,
+    public navigationService: NavigationService
   ) {
     // Initialize observable in constructor after dependencies are injected
     this.showWarningBanner$ = combineLatest([
-      this.sidebarService.isSubSidebarOpen$,
+      this.navigationService.isSubSidebarOpen$,
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
         map(() => this.router.url.includes('cases')),
@@ -41,6 +56,42 @@ export class App implements OnInit {
 
   ngOnInit() {
     this.primeng.ripple.set(true);
+  }
+
+  ngOnDestroy() {
+    // Cleanup handled by component lifecycle
+  }
+
+  /**
+   * Handles keyboard events for accessibility
+   * Escape key closes sub-sidebar or main sidebar in overlay mode
+   */
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      // Get current state synchronously
+      combineLatest([
+        this.navigationService.isSubSidebarOpen$,
+        this.navigationService.isMainSidebarVisible$,
+        this.navigationService.positioningMode$
+      ]).pipe(
+        map(([isSubSidebarOpen, isMainSidebarVisible, positioningMode]) => {
+          // Close sub-sidebar first if it's open
+          if (isSubSidebarOpen) {
+            this.navigationService.closeSubSidebar();
+            event.preventDefault();
+            return;
+          }
+
+          // Close main sidebar if in overlay mode and visible
+          if (positioningMode === 'overlay' && isMainSidebarVisible) {
+            this.navigationService.hideMainSidebar();
+            event.preventDefault();
+            return;
+          }
+        })
+      ).subscribe().unsubscribe();
+    }
   }
 
   toggleDarkMode() {

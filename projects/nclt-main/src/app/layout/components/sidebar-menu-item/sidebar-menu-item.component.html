@@ -1,0 +1,39 @@
+<div class="sidebar-item" [class.sidebar-item--compact]="isCompact" [class.sidebar-item--selected]="isSelected"
+    [class.sidebar-item--has-children]="hasChildren" [class.sidebar-item--disabled]="item.disabled"
+    [style.padding-left.rem]="nestingLevel > 1 ? nestingLevel * 0.5 : null">
+    <button class="sidebar-item__button" [pTooltip]="isCompact ? item.label : ''" tooltipPosition="right"
+        [showDelay]="300" (click)="onClick()" [attr.aria-label]="item.label"
+        [attr.aria-expanded]="hasChildren ? isExpanded : null" [attr.aria-current]="isSelected ? 'page' : null"
+        [attr.aria-disabled]="item.disabled ? 'true' : null" [disabled]="item.disabled" pRipple>
+        <i [class]="'pi ' + item.icon" class="sidebar-item__icon"></i>
+
+        @if (!isCompact) {
+        <span class="sidebar-item__label">
+            {{ item.label }}
+        </span>
+        }
+
+        @if (item.badge && !isCompact) {
+        <span class="sidebar-item__badge" [attr.aria-label]="item.badge + ' items'">
+            {{ item.badge }}
+        </span>
+        }
+
+        <!-- @if (hasChildren && !isCompact) {
+        <i class="pi pi-chevron-down sidebar-item__chevron" [class.sidebar-item__chevron--expanded]="isExpanded">
+        </i>
+        } -->
+    </button>
+
+    <!-- Nested children (recursive) -->
+    @if (hasChildren && isExpanded && !isCompact) {
+    <div class="sidebar-item__children" [@expandCollapse]>
+        @for (child of item.children; track child.id) {
+        <app-sidebar-menu-item [item]="child" [isCompact]="false" [isSelected]="isChildSelected(child.id)"
+            [isExpanded]="isChildExpanded(child.id)" [nestingLevel]="nestingLevel + 1" [selectedItemId]="selectedItemId"
+            [expandedItemIds]="expandedItemIds" (itemClick)="onChildClick($event)">
+        </app-sidebar-menu-item>
+        }
+    </div>
+    }
+</div>

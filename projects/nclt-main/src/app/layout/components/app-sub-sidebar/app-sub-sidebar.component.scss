@@ -1,0 +1,137 @@
+// Sub-Sidebar Component Styles
+// Uses BEM naming convention for maintainability
+
+.sub-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: var(--sub-sidebar-width, 280px);
+  background: var(--p-sidebar-background, var(--p-surface-0));
+  border-right: 1px solid var(--p-sidebar-border-color, var(--p-surface-200));
+
+  // Positioning modes
+  &--relative {
+    position: relative;
+    flex-shrink: 0;
+    height: 100vh;
+    animation: slideInRight 300ms ease-out;
+  }
+
+  &--overlay {
+    position: fixed;
+    top: 0px;
+    left: var(--sidebar-width-compact, 72px);
+    height: 100vh;
+    z-index: var(--p-sidebar-z-index-sub-sidebar, 1001);
+    animation: slideInLeft 300ms ease-out;
+    box-shadow: 2px 0 rgba(0, 0, 0, 0.15);
+  }
+
+  // Header section
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--p-sidebar-border-color, var(--p-surface-200));
+    min-height: 64px;
+    flex-shrink: 0;
+  }
+
+  // Back button
+  &__back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  // Title
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--p-sidebar-item-color, var(--p-surface-700));
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Navigation section
+  &__nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.5rem 0;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--p-surface-300);
+      border-radius: 3px;
+
+      &:hover {
+        background: var(--p-surface-400);
+      }
+    }
+
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: var(--p-surface-300) transparent;
+  }
+}
+
+// Slide in animation from right (for relative mode)
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Slide in animation from left (for overlay mode)
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Reduced motion support for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .sub-sidebar {
+    animation: none;
+  }
+
+  @keyframes slideInRight {
+    from,
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInLeft {
+    from,
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}

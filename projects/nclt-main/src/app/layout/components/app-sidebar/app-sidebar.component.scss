@@ -1,0 +1,229 @@
+// Main Sidebar Component Styles
+// BEM naming convention: sidebar, sidebar__element, sidebar--modifier
+// Note: Sidebar-specific theme variables (--p-sidebar-*) will be added in task 17
+
+// Backdrop for overlay mode
+.sidebar-backdrop {
+  position: fixed;
+  top: 0px; // Below header
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999; // Below sidebar (1000)
+  animation: fadeIn 200ms ease-out;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: var(--p-sidebar-background, var(--p-content-background));
+  border-right: 1px solid var(--p-sidebar-border-color, var(--p-content-border-color));
+  transition: width var(--sidebar-transition-duration, 300ms)
+    var(--sidebar-transition-timing, cubic-bezier(0.4, 0, 0.2, 1));
+  overflow: hidden;
+
+  // Display modes - width transitions with 300ms cubic-bezier
+  &--normal {
+    width: var(--sidebar-width-normal);
+  }
+
+  &--compact {
+    width: var(--sidebar-width-compact);
+  }
+
+  // Positioning modes
+  &--relative {
+    position: relative;
+    flex-shrink: 0;
+    height: 100vh;
+  }
+
+  &--overlay {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    height: 100vh;
+    z-index: var(--p-sidebar-z-index-overlay, 1000);
+    transform: translateX(-100%);
+    transition: transform var(--sidebar-transition-duration, 300ms)
+      var(--sidebar-transition-timing, cubic-bezier(0.4, 0, 0.2, 1));
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+
+    &.sidebar--visible {
+      transform: translateX(0);
+    }
+  }
+
+  // Header section
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid var(--p-sidebar-border-color, var(--p-content-border-color));
+    min-height: 64px;
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    overflow: hidden;
+  }
+
+  &__logo-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Logo text fade-out in compact mode
+  &__logo-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--p-primary-color);
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 200ms ease;
+
+    .sidebar--compact & {
+      opacity: 0;
+      width: 0;
+    }
+  }
+
+  &__toggle {
+    flex-shrink: 0;
+
+    &:focus-visible {
+      outline: 2px solid var(--p-primary-color);
+      outline-offset: 2px;
+    }
+  }
+
+  // Navigation section with custom scrollbar
+  &__nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0.5rem 0;
+
+    // Custom scrollbar styling
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--p-surface-300);
+      border-radius: 3px;
+
+      &:hover {
+        background: var(--p-surface-400);
+      }
+    }
+
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: var(--p-surface-300) transparent;
+  }
+
+  &__section {
+    padding: 0.5rem 0;
+  }
+
+  // Section titles with fade-out in compact mode
+  &__section-title {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--p-surface-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 1;
+    transition: opacity 200ms ease;
+
+    .sidebar--compact & {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  }
+
+  // Footer section
+  &__footer {
+    border-top: 1px solid var(--p-sidebar-border-color, var(--p-content-border-color));
+    padding: 1rem;
+    flex-shrink: 0;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 150ms ease;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--p-sidebar-item-color, var(--p-content-color));
+
+    &:hover {
+      background: var(--p-sidebar-item-hover-background, var(--p-content-hover-background));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--p-primary-color);
+      outline-offset: -2px;
+    }
+  }
+
+  // User name fade-out in compact mode
+  &__user-name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 1;
+    transition: opacity 200ms ease;
+
+    .sidebar--compact & {
+      opacity: 0;
+      width: 0;
+    }
+  }
+}
+
+// Reduced motion support - disable animations for users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar__logo-text,
+  .sidebar__section-title,
+  .sidebar__user-name,
+  .sidebar__user {
+    transition: none;
+  }
+
+  .sidebar--overlay {
+    transition: none;
+  }
+}

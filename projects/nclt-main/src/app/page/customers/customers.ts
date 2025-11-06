@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputGroup } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { DatePicker } from 'primeng/datepicker';
+import { Router } from '@angular/router';
 
 interface Customer {
   customerId: string;
@@ -40,6 +41,8 @@ interface Customer {
   styleUrl: './customers.scss',
 })
 export class Customers implements OnInit {
+  constructor(private router: Router) { }
+
   customers: Customer[] = [];
   totalRecords: number = 150;
   rows: number = 10;
@@ -150,4 +153,9 @@ export class Customers implements OnInit {
     // Apply filter logic here
     console.log('Applying Date NPA filter:', this.fromDate, this.toDate);
   }
+
+  navigateToCustomer(customer: any): void {
+    this.router.navigate(['/customers/basic-details']);
+  }
+
 }

@@ -15,6 +15,7 @@ import { Menu } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { Dialog } from 'primeng/dialog';
 import { Divider } from "primeng/divider";
+import { Router } from '@angular/router';
 
 interface Case {
   caseId: string;
@@ -55,6 +56,8 @@ interface Customer {
   styleUrl: './cases.scss',
 })
 export class Cases implements OnInit {
+  constructor(private router: Router) { }
+
   allCases: Case[] = [];
   cases: Case[] = [];
   totalRecords: number = 200;
@@ -316,5 +319,10 @@ export class Cases implements OnInit {
       // Add your case creation logic here
       this.dialogVisible = false;
     }
+  }
+
+
+  navigateToCustomer(): void {
+    this.router.navigate(['/cases/banking-arrangements']);
   }
 }

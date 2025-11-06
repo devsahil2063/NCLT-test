@@ -9,49 +9,28 @@
   <div class="flex items-center gap-4 mb-4">
     <p-iconfield class="min-w-lg">
       <p-inputicon class="pi pi-search" />
-      <input
-        class="w-full bg-white!"
-        type="text"
-        variant="filled"
-        pInputText
-        placeholder="Search By Customer ID, Name, PAN..."
-      />
+      <input class="w-full bg-white!" type="text" variant="filled" pInputText
+        placeholder="Search By Customer ID, Name, PAN..." />
     </p-iconfield>
 
     <div class="flex items-center gap-2">
       <!-- Total O/S Filter Popover -->
-      <p-button
-        (click)="totalOSPopover.toggle($event)"
-        label="Total O/S"
-        [outlined]="true"
-        icon="pi pi-chevron-down"
-        iconPos="right"
-        class="text-sm bg-white!"
-      />
+      <p-button (click)="totalOSPopover.toggle($event)" label="Total O/S" [outlined]="true" icon="pi pi-chevron-down"
+        iconPos="right" class="text-sm bg-white!" />
       <p-popover #totalOSPopover>
         <div class="flex flex-col gap-4 p-4">
           <span class="font-semibold text-gray-900 text-lg">Filter by Total O/S Range</span>
 
           <div>
             <label class="font-medium text-gray-900 block mb-2">From Date</label>
-            <p-datepicker
-              [(ngModel)]="fromDate"
-              dateFormat="dd-mm-yy"
-              placeholder="dd-mm-yyyy"
-              [showIcon]="true"
-              class="w-full"
-            />
+            <p-datepicker [(ngModel)]="fromDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
+              class="w-full" />
           </div>
 
           <div>
             <label class="font-medium text-gray-900 block mb-2">To Date</label>
-            <p-datepicker
-              [(ngModel)]="toDate"
-              dateFormat="dd-mm-yy"
-              placeholder="dd-mm-yyyy"
-              [showIcon]="true"
-              class="w-full"
-            />
+            <p-datepicker [(ngModel)]="toDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
+              class="w-full" />
           </div>
 
           <div class="w-full flex justify-between mt-2">
@@ -62,38 +41,22 @@
       </p-popover>
 
       <!-- Date of NPA Filter Popover -->
-      <p-button
-        (click)="dateNPAPopover.toggle($event)"
-        label="Date of NPA"
-        [outlined]="true"
-        icon="pi pi-chevron-down"
-        iconPos="right"
-        class="text-sm bg-white!"
-      />
+      <p-button (click)="dateNPAPopover.toggle($event)" label="Date of NPA" [outlined]="true" icon="pi pi-chevron-down"
+        iconPos="right" class="text-sm bg-white!" />
       <p-popover #dateNPAPopover>
         <div class="flex flex-col gap-4 p-4">
           <span class="font-semibold text-gray-900 text-lg">Filter by NPA Date Range</span>
 
           <div>
             <label class="font-medium text-gray-900 block mb-2">From Date</label>
-            <p-datepicker
-              [(ngModel)]="fromDate"
-              dateFormat="dd-mm-yy"
-              placeholder="dd-mm-yyyy"
-              [showIcon]="true"
-              class="w-full"
-            />
+            <p-datepicker [(ngModel)]="fromDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
+              class="w-full" />
           </div>
 
           <div>
             <label class="font-medium text-gray-900 block mb-2">To Date</label>
-            <p-datepicker
-              [(ngModel)]="toDate"
-              dateFormat="dd-mm-yy"
-              placeholder="dd-mm-yyyy"
-              [showIcon]="true"
-              class="w-full"
-            />
+            <p-datepicker [(ngModel)]="toDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
+              class="w-full" />
           </div>
 
           <div class="w-full flex justify-between mt-2">
@@ -108,11 +71,7 @@
   <!-- Table Card -->
   <div class="bg-white rounded-lg shadow-sm overflow-hidden">
     <!-- Table -->
-    <p-table
-      [value]="customers"
-      [tableStyle]="{ 'min-width': '100%' }"
-      styleClass="customers-table"
-    >
+    <p-table [value]="customers" [tableStyle]="{ 'min-width': '100%' }" styleClass="customers-table">
       <ng-template pTemplate="header">
         <tr>
           <th class="text-left">Customer ID</th>
@@ -135,7 +94,8 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-customer>
-        <tr class="cursor-pointer">
+
+        <tr class="cursor-pointer" (click)="navigateToCustomer(customer)">
           <td>{{ customer.customerId }}</td>
           <td>{{ customer.customerName }}</td>
           <td>₹{{ customer.totalOYS | number: '1.0-0' }}</td>
@@ -151,14 +111,7 @@
     <div class="text-md font-semibold text-gray-500">
       Showing 1 to 10 of {{ totalRecords }} customers
     </div>
-    <p-paginator
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="totalRecords"
-      (onPageChange)="onPageChange($event)"
-      [showPageLinks]="true"
-      [showFirstLastIcon]="true"
-      class="text-md font-semibold"
-    ></p-paginator>
+    <p-paginator [first]="first" [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)"
+      [showPageLinks]="true" [showFirstLastIcon]="true" class="text-md font-semibold"></p-paginator>
   </div>
 </div>

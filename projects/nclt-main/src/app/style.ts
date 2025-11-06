@@ -103,6 +103,26 @@ export const MyPreset = definePreset(Aura, {
         background: {
           page: '{surface.50}',
         },
+        sidebar: {
+          // Dimensions
+          widthNormal: '280px',
+          widthCompact: '72px',
+          subSidebarWidth: '280px',
+          // Colors
+          background: '{surface.0}',
+          borderColor: '{surface.200}',
+          itemColor: '{surface.700}',
+          itemHoverBackground: '{surface.100}',
+          itemSelectedBackground: '{primary.50}',
+          itemSelectedColor: '{primary.600}',
+          itemSelectedBorder: '{primary.500}',
+          // Transitions
+          transitionDuration: '300ms',
+          transitionTiming: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          // Z-index
+          zIndexOverlay: '1000',
+          zIndexSubSidebar: '1001',
+        },
       },
       dark: {
         primary: {
@@ -184,6 +204,26 @@ export const MyPreset = definePreset(Aura, {
         },
         background: {
           page: '{surface.50}',
+        },
+        sidebar: {
+          // Dimensions (same as light mode)
+          widthNormal: '280px',
+          widthCompact: '72px',
+          subSidebarWidth: '280px',
+          // Colors - Dark Mode
+          background: '{surface.50}',
+          borderColor: '{surface.200}',
+          itemColor: '{surface.700}',
+          itemHoverBackground: '{surface.100}',
+          itemSelectedBackground: 'rgba(255, 90, 57, 0.16)',
+          itemSelectedColor: '{primary.400}',
+          itemSelectedBorder: '{primary.400}',
+          // Transitions (same as light mode)
+          transitionDuration: '300ms',
+          transitionTiming: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          // Z-index (same as light mode)
+          zIndexOverlay: '1000',
+          zIndexSubSidebar: '1001',
         },
       },
     },

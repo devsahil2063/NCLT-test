@@ -1,0 +1,24 @@
+@if (isOpen) {
+<aside class="sub-sidebar" [class.sub-sidebar--relative]="positioningMode === 'relative'"
+    [class.sub-sidebar--overlay]="positioningMode === 'overlay'" role="navigation" aria-label="Secondary navigation"
+    [attr.aria-hidden]="!isOpen">
+    <!-- Header -->
+    <div class="sub-sidebar__header">
+        <button class="sub-sidebar__back" (click)="onBackClick()" pButton [text]="true" [rounded]="true"
+            aria-label="Go back to main menu">
+            <i class="pi pi-arrow-left"></i>
+        </button>
+        <h2 class="sub-sidebar__title">{{ title }}</h2>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sub-sidebar__nav" aria-label="Submenu">
+        @for (item of items; track item.id) {
+        <app-sub-sidebar-menu-item [item]="item" [isSelected]="isItemSelected(item.id)"
+            [isExpanded]="isItemExpanded(item.id)" [nestingLevel]="1" [selectedItemId]="selectedItemId"
+            [expandedItemIds]="expandedItems" (itemClick)="onItemClick($event)">
+        </app-sub-sidebar-menu-item>
+        }
+    </nav>
+</aside>
+}

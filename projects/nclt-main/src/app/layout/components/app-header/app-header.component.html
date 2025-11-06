@@ -1,0 +1,14 @@
+<!-- Header only visible in overlay mode (mobile) -->
+@if (positioningMode === 'overlay') {
+<header class="app-header">
+    <!-- Hamburger menu button -->
+    <button class="app-header__hamburger" pButton type="button" (click)="onHamburgerClick($event)"
+        [attr.aria-label]="'Toggle navigation menu'">
+        <i class="pi pi-bars"></i>
+    </button>
+    <!-- Right side actions (placeholder for future features) -->
+    <div class="app-header__actions">
+        <!-- Future: theme toggle, notifications, user menu, etc. -->
+    </div>
+</header>
+}

@@ -1,7 +1,5 @@
-import { Sidebar } from './components/sidebar/sidebar';
-import { SubSidebarComponent } from './components/sub-sidebar/sub-sidebar';
+// Old sidebar components have been removed
+// New sidebar components (AppSidebarComponent, AppSubSidebarComponent) are standalone
+// and imported directly where needed
 
-export const LayoutComponents = [
-  Sidebar,
-  SubSidebarComponent
-];
+export const LayoutComponents: any[] = [];

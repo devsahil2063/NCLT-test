@@ -1,0 +1,166 @@
+// Sidebar Menu Item Component Styles
+// Uses BEM naming convention for maintainability
+
+.sidebar-item {
+  position: relative;
+
+  // Main button element
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background: transparent;
+    color: var(--p-sidebar-item-color, var(--p-surface-700));
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      border-left 150ms ease;
+    text-align: left;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 0.9375rem;
+
+    // Hover state - uses theme variables
+    &:hover:not(:disabled) {
+      background: var(--p-sidebar-item-hover-background, var(--p-surface-100));
+    }
+
+    // Focus state - 2px outline for accessibility
+    &:focus-visible {
+      outline: 2px solid var(--p-primary-color);
+      outline-offset: -2px;
+      z-index: 1;
+    }
+
+    // Disabled state
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  // Icon element
+  &__icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    transition: color 150ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    position: relative;
+    z-index: 1;
+
+    // Ensure icon is always visible
+    &::before {
+      display: inline-block;
+      font-family: 'primeicons';
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+
+  // Label text
+  &__label {
+    flex: 1;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Badge for notification counts
+  &__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.375rem;
+    background: var(--p-primary-color);
+    color: var(--p-primary-contrast-color);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  // Chevron icon for expandable items
+  &__chevron {
+    font-size: 0.875rem;
+    transition: transform 200ms ease;
+    flex-shrink: 0;
+
+    // Rotated state when expanded
+    &--expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  // Selected state styling with left border (original design)
+  &--selected > &__button {
+    background: var(--p-sidebar-item-selected-background, var(--p-primary-50));
+    color: var(--p-sidebar-item-selected-color, var(--p-primary-600));
+    border-right: 5px solid var(--p-sidebar-item-selected-border, var(--p-primary-500));
+    padding-left: calc(1rem - 3px);
+
+    .sidebar-item__icon {
+      color: var(--p-sidebar-item-selected-color, var(--p-primary-600));
+    }
+  }
+
+  // Compact mode - centered icon only
+  &--compact > &__button {
+    justify-content: center;
+    padding: 0.75rem;
+  }
+
+  // Disabled state
+  &--disabled {
+    opacity: 0.6;
+  }
+
+  // Children container for nested items
+  &__children {
+    overflow: hidden;
+    will-change: height, opacity;
+
+    // Ensure icons in children are visible during animation
+    * {
+      will-change: auto;
+    }
+
+    .sidebar-item__icon {
+      opacity: 1 !important;
+      visibility: visible !important;
+      display: inline-flex !important;
+    }
+  }
+
+  // Nested items have smaller font size
+  &:not(:first-child) {
+    .sidebar-item__button {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Reduced motion support for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-item__button,
+  .sidebar-item__icon,
+  .sidebar-item__chevron {
+    transition: none;
+  }
+}

@@ -9,24 +9,44 @@
   <div class="flex flex-col md:flex-row items-center gap-4 mb-4">
     <p-iconfield class="w-full md:max-w-md">
       <p-inputicon class="pi pi-search" />
-      <input class="w-full bg-white! placeholder:text-(--p-text-muted)!" type="text" variant="filled" pInputText
-        placeholder="Search By Customer ID, Name, PAN..." pSize="small" />
+      <input
+        class="w-full bg-white! placeholder:text-(--p-text-muted)!"
+        type="text"
+        variant="filled"
+        pInputText
+        placeholder="Search By Customer ID, Name, PAN..."
+        pSize="small"
+      />
     </p-iconfield>
 
     <div class="flex items-center justify-between gap-2 w-full md:w-auto">
       <!-- Total O/S Filter Popover -->
-      <p-button (click)="totalOSPopover.toggle($event)" label="Total O/S" variant="outlined" icon="pi pi-chevron-down"
-        iconPos="right" class="text-sm bg-white! flex-1" size="small" />
+      <p-button
+        (click)="totalOSPopover.toggle($event)"
+        label="Total O/S"
+        variant="outlined"
+        icon="pi pi-chevron-down"
+        iconPos="right"
+        class="text-sm bg-white! flex-1"
+        size="small"
+      />
       <!-- Date of NPA Filter Popover -->
-      <p-button (click)="dateNPAPopover.toggle($event)" label="Date of NPA" variant="outlined" icon="pi pi-chevron-down"
-        iconPos="right" class="text-sm bg-white! flex-1" size="small" />
+      <p-button
+        (click)="dateNPAPopover.toggle($event)"
+        label="Date of NPA"
+        variant="outlined"
+        icon="pi pi-chevron-down"
+        iconPos="right"
+        class="text-sm bg-white! flex-1"
+        size="small"
+      />
     </div>
   </div>
 
   <!-- Table Card -->
   <div class="bg-white rounded-lg shadow-sm overflow-hidden">
     <!-- Table -->
-    <p-table [value]="customers" [tableStyle]="{ 'min-width': '100%' }" class="customers-table">
+    <p-table [value]="customers" [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
       <ng-template pTemplate="header">
         <tr>
           <th class="text-left">Customer ID</th>
@@ -49,7 +69,6 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-customer>
-
         <tr class="cursor-pointer" (click)="navigateToCustomer(customer)">
           <td>{{ customer.customerId }}</td>
           <td>{{ customer.customerName }}</td>
@@ -61,12 +80,18 @@
     </p-table>
     <!-- Footer with Pagination -->
   </div>
-  <div class="py-4 flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 justify-between">
-    <div class="pagination-text">
-      Showing 1 to 10 of {{ totalRecords }} customers
-    </div>
-    <p-paginator [first]="first" [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)"
-      [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
+  <div
+    class="py-4 flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 justify-between"
+  >
+    <div class="pagination-text">Showing 1 to 10 of {{ totalRecords }} customers</div>
+    <p-paginator
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      (onPageChange)="onPageChange($event)"
+      [showPageLinks]="true"
+      [showFirstLastIcon]="true"
+    ></p-paginator>
   </div>
 </div>
 
@@ -77,14 +102,24 @@
 
     <div>
       <label class="font-medium text-gray-900 block mb-2">From Date</label>
-      <p-datepicker [(ngModel)]="fromDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
-        class="w-full" />
+      <p-datepicker
+        [(ngModel)]="fromDate"
+        dateFormat="dd-mm-yy"
+        placeholder="dd-mm-yyyy"
+        [showIcon]="true"
+        class="w-full"
+      />
     </div>
 
     <div>
       <label class="font-medium text-gray-900 block mb-2">To Date</label>
-      <p-datepicker [(ngModel)]="toDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
-        class="w-full" />
+      <p-datepicker
+        [(ngModel)]="toDate"
+        dateFormat="dd-mm-yy"
+        placeholder="dd-mm-yyyy"
+        [showIcon]="true"
+        class="w-full"
+      />
     </div>
 
     <div class="w-full flex justify-between mt-2">
@@ -100,14 +135,24 @@
 
     <div>
       <label class="font-medium text-gray-900 block mb-2">From Date</label>
-      <p-datepicker [(ngModel)]="fromDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
-        class="w-full" />
+      <p-datepicker
+        [(ngModel)]="fromDate"
+        dateFormat="dd-mm-yy"
+        placeholder="dd-mm-yyyy"
+        [showIcon]="true"
+        class="w-full"
+      />
     </div>
 
     <div>
       <label class="font-medium text-gray-900 block mb-2">To Date</label>
-      <p-datepicker [(ngModel)]="toDate" dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true"
-        class="w-full" />
+      <p-datepicker
+        [(ngModel)]="toDate"
+        dateFormat="dd-mm-yy"
+        placeholder="dd-mm-yyyy"
+        [showIcon]="true"
+        class="w-full"
+      />
     </div>
 
     <div class="w-full flex justify-between mt-2">

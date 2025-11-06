@@ -1,34 +1,46 @@
 <div class="p-2 bg-gray-50 min-h-screen">
-    <!-- Search and Filter Bar -->
-    <div class="flex items-center justify-between gap-4 mb-4">
-        <p-iconfield class="min-w-lg">
-            <p-inputicon class="pi pi-search" />
-            <input class="w-full bg-white!" type="text" variant="filled" pInputText
-                placeholder="Search by Name, PAN..." />
-        </p-iconfield>
+  <!-- Search and Filter Bar -->
+  <div class="flex items-center justify-between gap-4 mb-4">
+    <p-iconfield class="min-w-lg">
+      <p-inputicon class="pi pi-search" />
+      <input
+        class="w-full bg-white!"
+        type="text"
+        variant="filled"
+        pInputText
+        placeholder="Search by Name, PAN..."
+      />
+    </p-iconfield>
 
-        <p-select [(ngModel)]="selectedRelation" [options]="relations" optionLabel="label" optionValue="value"
-            placeholder="Relation" class="bg-white!" (onChange)="onRelationChange()" />
-    </div>
+    <p-select
+      [(ngModel)]="selectedRelation"
+      [options]="relations"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Relation"
+      class="bg-white!"
+      (onChange)="onRelationChange()"
+    />
+  </div>
 
-    <!-- Table Card -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-        <!-- Table -->
-        <p-table [value]="otherParties" [tableStyle]="{ 'min-width': '100%' }" Class="other-parties-table">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th class="text-left">Name</th>
-                    <th class="text-left">Relation</th>
-                    <th class="text-left">PAN</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-party>
-                <tr>
-                    <td>{{ party.name }}</td>
-                    <td>{{ party.relation }}</td>
-                    <td>{{ party.panNumber }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
+  <!-- Table Card -->
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <!-- Table -->
+    <p-table [value]="otherParties" [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-left">Name</th>
+          <th class="text-left">Relation</th>
+          <th class="text-left">PAN</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-party>
+        <tr>
+          <td>{{ party.name }}</td>
+          <td>{{ party.relation }}</td>
+          <td>{{ party.panNumber }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>

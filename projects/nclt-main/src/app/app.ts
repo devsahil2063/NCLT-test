@@ -12,8 +12,6 @@ import { AppSubSidebarComponent } from './layout/components/app-sub-sidebar/app-
 import { AppHeaderComponent } from './layout/components/app-header/app-header.component';
 import { NavigationService } from './layout/services/navigation.service';
 
-
-
 @Component({
   selector: 'app-root',
   imports: [
@@ -23,10 +21,10 @@ import { NavigationService } from './layout/services/navigation.service';
     CommonModule,
     AppSidebarComponent,
     AppSubSidebarComponent,
-    AppHeaderComponent
+    AppHeaderComponent,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App implements OnInit, OnDestroy {
   protected readonly title = signal('nclt-main');
@@ -34,24 +32,29 @@ export class App implements OnInit, OnDestroy {
   // Observable to check if warning banner should be shown
   showWarningBanner$!: Observable<boolean>;
 
-
+  // Observable to check if customer header should be shown
+  showCustomerHeader$!: Observable<boolean>;
 
   constructor(
     private primeng: PrimeNG,
     private router: Router,
-    public navigationService: NavigationService
+    public navigationService: NavigationService,
   ) {
-    // Initialize observable in constructor after dependencies are injected
-    this.showWarningBanner$ = combineLatest([
-      this.navigationService.isSubSidebarOpen$,
-      this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd),
-        map(() => this.router.url.includes('cases')),
-        startWith(this.router.url.includes('cases'))
-      )
-    ]).pipe(
-      map(([isSubSidebarOpen, isCasesRoute]) => isSubSidebarOpen && isCasesRoute)
+    // Initialize observables in constructor after dependencies are injected
+    const casesRouteCheck$ = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => this.router.url.includes('cases')),
+      startWith(this.router.url.includes('cases')),
     );
+
+    // Show customer header when sub-sidebar is open and on cases route
+    this.showCustomerHeader$ = combineLatest([
+      this.navigationService.isSubSidebarOpen$,
+      casesRouteCheck$,
+    ]).pipe(map(([isSubSidebarOpen, isCasesRoute]) => isSubSidebarOpen && isCasesRoute));
+
+    // Show warning banner when sub-sidebar is open and on cases route
+    this.showWarningBanner$ = this.showCustomerHeader$;
   }
 
   ngOnInit() {
@@ -73,24 +76,27 @@ export class App implements OnInit, OnDestroy {
       combineLatest([
         this.navigationService.isSubSidebarOpen$,
         this.navigationService.isMainSidebarVisible$,
-        this.navigationService.positioningMode$
-      ]).pipe(
-        map(([isSubSidebarOpen, isMainSidebarVisible, positioningMode]) => {
-          // Close sub-sidebar first if it's open
-          if (isSubSidebarOpen) {
-            this.navigationService.closeSubSidebar();
-            event.preventDefault();
-            return;
-          }
+        this.navigationService.positioningMode$,
+      ])
+        .pipe(
+          map(([isSubSidebarOpen, isMainSidebarVisible, positioningMode]) => {
+            // Close sub-sidebar first if it's open
+            if (isSubSidebarOpen) {
+              this.navigationService.closeSubSidebar();
+              event.preventDefault();
+              return;
+            }
 
-          // Close main sidebar if in overlay mode and visible
-          if (positioningMode === 'overlay' && isMainSidebarVisible) {
-            this.navigationService.hideMainSidebar();
-            event.preventDefault();
-            return;
-          }
-        })
-      ).subscribe().unsubscribe();
+            // Close main sidebar if in overlay mode and visible
+            if (positioningMode === 'overlay' && isMainSidebarVisible) {
+              this.navigationService.hideMainSidebar();
+              event.preventDefault();
+              return;
+            }
+          }),
+        )
+        .subscribe()
+        .unsubscribe();
     }
   }
 
@@ -98,5 +104,4 @@ export class App implements OnInit, OnDestroy {
     const element = document.querySelector('html');
     element?.classList.toggle('my-app-dark');
   }
-
 }

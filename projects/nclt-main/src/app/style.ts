@@ -24,11 +24,11 @@ export const MyPreset = definePreset(Aura, {
     colorScheme: {
       light: {
         text: {
-          heading: "#190a0a",
-          subheading: "#474747",
-          sectionheading: "#0a0a0a",
-          body: "#787878",
-          muted: "#9d9d9d",
+          heading: '#190a0a',
+          subheading: '#474747',
+          sectionheading: '#0a0a0a',
+          body: '#787878',
+          muted: '#9d9d9d',
         },
         primary: {
           color: '{primary.500}',
@@ -99,6 +99,12 @@ export const MyPreset = definePreset(Aura, {
           onTrackBackground: '#16a34a',
           onTrackText: '#ffffff',
         },
+        override: {
+          fieldDisabledBackground: '#fcfcfc',
+          fieldDisabledColor: '#9e9e9e',
+          fieldFilledBackground: '#fafafa',
+          border: '#e0e0e0',
+        },
         // text: {
         //   heading: '{surface.900}',
         //   subheading: '{surface.800}',
@@ -133,7 +139,7 @@ export const MyPreset = definePreset(Aura, {
       },
       dark: {
         title: {
-          heading: "#190a0a",
+          heading: '#190a0a',
         },
         primary: {
           color: '{primary.400}',

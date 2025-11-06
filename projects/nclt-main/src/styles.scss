@@ -31,6 +31,15 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+// .p-inputtext {
+//   &.disbled {
+//     @apply bg-(--p-override-fieldDisabledBackground)! text-(--p-override-fieldDisabledColor)!;
+//   }
+//   &.filled {
+//     @apply bg-(--p-override-fieldFilledBackground)!;
+//   }
+// }
+
 .p-button {
   @apply w-full text-nowrap text-sm;
 }
@@ -41,6 +50,10 @@ body {
 
 .page-subheading {
   @apply text-sm leading-5 font-medium text-(--p-text-subHeading);
+}
+
+.section-heading {
+  @apply text-[1rem] leading-6 font-semibold text-(--p-text-sectionheading);
 }
 
 .pagination-text {
@@ -61,6 +74,10 @@ body {
 
 .p-inputgroupaddon {
   padding: 0 !important;
+}
+
+.field-label {
+  @apply text-[0.75rem] leading-5 font-medium text-(--p-text-label);
 }
 
 // Custom Tab Component
@@ -107,6 +124,37 @@ body {
   }
 }
 
+// Custome Class for Tables
+.custom-table {
+  .p-datatable-thead > tr > th {
+    @apply border-b border-(--p-table-header-border-color)! p-4! text-sm font-semibold text-(--p-text-sectionheading) leading-[0.05em];
+  }
+
+  .p-datatable-tbody > tr {
+    @apply transition-all duration-150 ease-in-out;
+
+    > td {
+      @apply py-2 px-4 text-sm font-medium text-(--p-text-body);
+    }
+
+    &:hover {
+      @apply bg-(--p-table-row-hover-background);
+    }
+  }
+
+  .p-datatable-table {
+    @apply border-collapse;
+  }
+  Semibold .p-datatable-thead > tr > th,
+  .p-datatable-tbody > tr > td {
+    @apply border-none;
+  }
+}
+
+.p-paginator {
+  @apply border-0 p-0 bg-transparent font-semibold;
+}
+
 // Custom Badge Component for Account Types
 .custom-badge {
   padding: 0.125rem 0.5rem;
@@ -140,10 +188,6 @@ p-datepicker {
 
 .page-subheading {
   color: var(--p-text-subheading);
-}
-
-.section-heading {
-  color: var(--p-text-section-heading);
 }
 
 .field-label {

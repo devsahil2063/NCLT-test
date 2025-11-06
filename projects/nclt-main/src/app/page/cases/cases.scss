@@ -1,51 +1,5 @@
 // Custom table styles using theme variables
 ::ng-deep {
-  .cases-table {
-    .p-datatable-thead > tr > th {
-      border-bottom: 1px solid var(--p-table-header-border-color) !important;
-      padding: 0.75rem 1rem;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--p-text-sectionheading);
-      letter-spacing: 0.05em;
-    }
-
-    .p-datatable-tbody > tr {
-      background-color: var(--p-table-row-background);
-      // border-bottom: 1px solid var(--p-table-row-border-color);
-      transition: background-color 0.15s ease;
-
-      &:hover {
-        background-color: var(--p-table-row-hover-background);
-      }
-
-      > td {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: var(--p-text-body);
-      }
-    }
-
-    // Remove default PrimeNG borders
-    .p-datatable-table {
-      border-collapse: collapse;
-    }
-
-    .p-datatable-thead > tr > th,
-    .p-datatable-tbody > tr > td {
-      border: none;
-    }
-  }
-
-  // Paginator custom styles
-  .p-paginator {
-    border: none;
-    padding: 0;
-    background: transparent;
-    font-weight: 600;
-  }
-
   // Customer selection table styles
   .customer-selection-table {
     .p-datatable-thead > tr > th {

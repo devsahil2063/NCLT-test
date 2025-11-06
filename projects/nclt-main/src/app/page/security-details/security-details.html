@@ -1,345 +1,585 @@
 <div class="p-2 bg-gray-50 min-h-screen">
-    <!-- Header Section -->
-    <div class="mb-6">
-        <h1 class="text-3xl font-semibold text-gray-900 mb-1">Security Details</h1>
-        <p class="text-md text-gray-600">Manage customer information and related data</p>
+  <!-- Header Section -->
+  <div class="mb-6">
+    <h1 class="page-heading">Security Details</h1>
+    <p class="page-subheading">Manage customer information and related data</p>
+  </div>
+
+  <!-- Search and Filter Bar -->
+  <div class="flex items-center justify-between gap-4 mb-4">
+    <p-iconfield class="min-w-lg">
+      <p-inputicon class="pi pi-search" />
+      <input
+        class="w-full bg-white!"
+        type="text"
+        variant="filled"
+        pInputText
+        placeholder="Search by Type, Description..."
+      />
+    </p-iconfield>
+
+    <div class="flex items-center gap-2">
+      <!-- Nature Filter -->
+      <p-select
+        [(ngModel)]="selectedNature"
+        [options]="natureOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Nature"
+        class="bg-white!"
+      />
+
+      <!-- Type Filter -->
+      <p-select
+        [(ngModel)]="selectedType"
+        [options]="typeOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Type"
+        class="bg-white!"
+      />
+
+      <!-- Value Filter -->
+      <p-select
+        [(ngModel)]="selectedValue"
+        [options]="valueOptions"
+        optionLabel="label"
+        optionValue="value"
+        placeholder="Value"
+        class="bg-white!"
+      />
+
+      <!-- Add Security Button -->
+      <p-button label="Add Security" icon="pi pi-plus" severity="danger" (click)="showDialog()" />
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <!-- Table -->
+    <p-table [value]="securities" [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-left">Account ID</th>
+          <th class="text-left">Security ID</th>
+          <th class="text-left">Security Nature</th>
+          <th class="text-left">Security Type</th>
+          <th class="text-left">Description</th>
+          <th class="text-left" pSortableColumn="value">Value <p-sortIcon field="value" /></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-security>
+        <tr class="cursor-pointer">
+          <td>
+            <div class="flex items-center gap-2">
+              {{ security.accountId }}
+              <span *ngIf="security.badge" [class]="getBadgeClass(security.badge)">
+                {{ security.badge }}
+              </span>
+            </div>
+          </td>
+          <td>{{ security.securityId }}</td>
+          <td>{{ security.securityNature }}</td>
+          <td>{{ security.securityType }}</td>
+          <td>{{ security.description }}</td>
+          <td>{{ security.value ? '₹' + (security.value | number: '1.0-0') : '' }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Add New Security Dialog -->
+  <p-toast />
+  <p-dialog
+    header="Add New Security"
+    [resizable]="false"
+    [modal]="true"
+    [maximizable]="false"
+    draggable="false"
+    appendTo="body"
+    [(visible)]="dialogVisible"
+    [style]="{ width: '75vw' }"
+    [contentStyle]="{ overflow: 'auto' }"
+  >
+    <div class="sticky top-0 py-2 bg-white! z-[1000]">
+      <p class="text-gray-600">Fill in the security details below</p>
+      <p-divider></p-divider>
     </div>
 
-    <!-- Search and Filter Bar -->
-    <div class="flex items-center justify-between gap-4 mb-4">
-        <p-iconfield class="min-w-lg">
-            <p-inputicon class="pi pi-search" />
-            <input class="w-full bg-white!" type="text" variant="filled" pInputText
-                placeholder="Search by Type, Description..." />
-        </p-iconfield>
+    <!-- Tabs -->
+    <div class="mb-4">
+      <div class="flex gap-3 border-b border-gray-200">
+        <button
+          (click)="activeTab = 'details'"
+          class="custom-tab"
+          [class.active]="activeTab === 'details'"
+        >
+          Security Details
+        </button>
+        <button
+          (click)="activeTab = 'valuations'"
+          class="custom-tab"
+          [class.active]="activeTab === 'valuations'"
+        >
+          <div class="flex items-center gap-2">
+            Valuations
+            <span
+              *ngIf="valuations.length > 0"
+              class="px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700 rounded-full"
+            >
+              {{ valuations.length }}
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
 
-        <div class="flex items-center gap-2">
-            <!-- Nature Filter -->
-            <p-select [(ngModel)]="selectedNature" [options]="natureOptions" optionLabel="label" optionValue="value"
-                placeholder="Nature" class="bg-white bg-white!" />
+    <!-- Tab Content -->
+    <div>
+      <!-- Security Details Tab -->
+      <div *ngIf="activeTab === 'details'">
+        <div class="flex flex-col gap-6 mt-4">
+          <!-- Basic Information Section -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Basic Information</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div class="flex flex-col gap-2">
+                <label for="securityType" class="text-sm font-medium">Security Type</label>
+                <p-select
+                  id="securityType"
+                  size="small"
+                  [(ngModel)]="newSecurity.securityType"
+                  [options]="securityTypeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select Security Type"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="accountId" class="text-sm font-medium">Account ID</label>
+                <input
+                  id="accountId"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.accountId"
+                  placeholder="Enter Account ID"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="securityChargeType" class="text-sm font-medium"
+                  >Security Charge Type</label
+                >
+                <p-select
+                  id="securityChargeType"
+                  size="small"
+                  [(ngModel)]="newSecurity.securityChargeType"
+                  [options]="chargeTypeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select Charge Type"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="valueAtTimeOfSanction" class="text-sm font-medium"
+                  >Value at the Time of Sanction</label
+                >
+                <input
+                  id="valueAtTimeOfSanction"
+                  type="number"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.valueAtTimeOfSanction"
+                  placeholder="Enter Value"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="securityNature" class="text-sm font-medium">Security Nature</label>
+                <p-select
+                  id="securityNature"
+                  size="small"
+                  [(ngModel)]="newSecurity.securityNature"
+                  [options]="securityNatureOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Select Security Nature"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="typesOfAssets" class="text-sm font-medium">Types of Assets</label>
+                <input
+                  id="typesOfAssets"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.typesOfAssets"
+                  placeholder="Enter Asset Type"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="valuationDateAtTimeOfSanction" class="text-sm font-medium"
+                  >Valuation Date at the Time of Sanction</label
+                >
+                <p-datepicker
+                  id="valuationDateAtTimeOfSanction"
+                  [(ngModel)]="newSecurity.valuationDateAtTimeOfSanction"
+                  dateFormat="dd-mm-yy"
+                  placeholder="dd-mm-yyyy"
+                  [showIcon]="true"
+                  size="small"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2 md:col-span-2">
+                <label for="description" class="text-sm font-medium">Description</label>
+                <input
+                  id="description"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.description"
+                  placeholder="Enter Description"
+                  class="w-full"
+                />
+              </div>
+            </div>
+          </div>
 
-            <!-- Type Filter -->
-            <p-select [(ngModel)]="selectedType" [options]="typeOptions" optionLabel="label" optionValue="value"
-                placeholder="Type" class="bg-white bg-white!" />
-
-            <!-- Value Filter -->
-            <p-select [(ngModel)]="selectedValue" [options]="valueOptions" optionLabel="label" optionValue="value"
-                placeholder="Value" class="bg-white bg-white!" />
-
-            <!-- Add Security Button -->
-            <p-button label="Add Security" icon="pi pi-plus" severity="danger" (click)="showDialog()" />
+          <!-- Property & Registry Information Section -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Property & Registry Information</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div class="flex flex-col gap-2">
+                <label for="eAuctionPropertyId" class="text-sm font-medium"
+                  >e Auction Property ID</label
+                >
+                <input
+                  id="eAuctionPropertyId"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.eAuctionPropertyId"
+                  placeholder="Enter Property ID"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="cersaiRegistryNo" class="text-sm font-medium"
+                  >CERSAI Registry No.</label
+                >
+                <input
+                  id="cersaiRegistryNo"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.cersaiRegistryNo"
+                  placeholder="Enter Registry No."
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="cersaiRegistryDate" class="text-sm font-medium"
+                  >CERSAI Registry Date</label
+                >
+                <p-datepicker
+                  id="cersaiRegistryDate"
+                  [(ngModel)]="newSecurity.cersaiRegistryDate"
+                  dateFormat="dd-mm-yy"
+                  placeholder="dd-mm-yyyy"
+                  [showIcon]="true"
+                  size="small"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="modificationNo" class="text-sm font-medium">Modification No.</label>
+                <input
+                  id="modificationNo"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.modificationNo"
+                  placeholder="Enter Modification No."
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="modificationDate" class="text-sm font-medium">Modification Date</label>
+                <p-datepicker
+                  id="modificationDate"
+                  [(ngModel)]="newSecurity.modificationDate"
+                  dateFormat="dd-mm-yy"
+                  placeholder="dd-mm-yyyy"
+                  [showIcon]="true"
+                  size="small"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="satisfactionNo" class="text-sm font-medium">Satisfaction No.</label>
+                <input
+                  id="satisfactionNo"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.satisfactionNo"
+                  placeholder="Enter Satisfaction No."
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="satisfactionDate" class="text-sm font-medium">Satisfaction Date</label>
+                <p-datepicker
+                  id="satisfactionDate"
+                  [(ngModel)]="newSecurity.satisfactionDate"
+                  dateFormat="dd-mm-yy"
+                  placeholder="dd-mm-yyyy"
+                  [showIcon]="true"
+                  size="small"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="bankSharePercent" class="text-sm font-medium">Bank Share %</label>
+                <input
+                  id="bankSharePercent"
+                  type="number"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.bankSharePercent"
+                  placeholder="Enter Bank Share %"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="reservePrice" class="text-sm font-medium">Reserve Price</label>
+                <input
+                  id="reservePrice"
+                  type="number"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.reservePrice"
+                  placeholder="Enter Reserve Price"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="actualSellingPrice" class="text-sm font-medium"
+                  >Actual Selling Price</label
+                >
+                <input
+                  id="actualSellingPrice"
+                  type="number"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newSecurity.actualSellingPrice"
+                  placeholder="Enter Actual Selling Price"
+                  class="w-full"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Table Card -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-        <!-- Table -->
-        <p-table [value]="securities" [tableStyle]="{ 'min-width': '100%' }" class="security-details-table">
-            <ng-template pTemplate="header">
+      <!-- Valuations Tab -->
+      <div *ngIf="activeTab === 'valuations'">
+        <div class="flex flex-col gap-6 mt-4">
+          <!-- Add New Valuation Section -->
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Add New Valuation</h3>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+              <div class="flex flex-col gap-2">
+                <label for="valuationAmount" class="text-sm font-medium">Amount (₹)</label>
+                <input
+                  id="valuationAmount"
+                  type="number"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newValuation.amount"
+                  placeholder="Enter amount"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="valuationDate" class="text-sm font-medium">Date</label>
+                <p-datepicker
+                  id="valuationDate"
+                  [(ngModel)]="newValuation.date"
+                  dateFormat="dd-mm-yy"
+                  placeholder="dd-mm-yyyy"
+                  [showIcon]="true"
+                  size="small"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="valuerName" class="text-sm font-medium">Valuer Name</label>
+                <input
+                  id="valuerName"
+                  type="text"
+                  pSize="small"
+                  pInputText
+                  [(ngModel)]="newValuation.valuerName"
+                  placeholder="Enter valuer name"
+                  class="w-full"
+                />
+              </div>
+              <div class="flex items-end">
+                <p-button
+                  label="Add Valuation"
+                  icon="pi pi-plus"
+                  (click)="addValuation()"
+                  class="w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Valuation History Section -->
+          <div class="bg-white rounded-lg">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold">Valuation History</h3>
+              <span class="text-sm text-gray-600">{{ valuations.length }} Valuations</span>
+            </div>
+
+            <p-table
+              [value]="valuations"
+              dataKey="id"
+              editMode="row"
+              [tableStyle]="{ 'min-width': '100%' }"
+            >
+              <ng-template pTemplate="header">
                 <tr>
-                    <th class="text-left">Account ID</th>
-                    <th class="text-left">Security ID</th>
-                    <th class="text-left">Security Nature</th>
-                    <th class="text-left">Security Type</th>
-                    <th class="text-left">Description</th>
-                    <th class="text-left" pSortableColumn="value">Value <p-sortIcon field="value" /></th>
+                  <th class="text-left">Amount (₹)</th>
+                  <th class="text-left">Date</th>
+                  <th class="text-left">Valuer Name</th>
+                  <th class="text-left" style="width: 12%">Actions</th>
                 </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-security>
-                <tr class="cursor-pointer">
-                    <td>
-                        <div class="flex items-center gap-2">
-                            {{ security.accountId }}
-                            <span *ngIf="security.badge" [class]="getBadgeClass(security.badge)">
-                                {{ security.badge }}
-                            </span>
-                        </div>
-                    </td>
-                    <td>{{ security.securityId }}</td>
-                    <td>{{ security.securityNature }}</td>
-                    <td>{{ security.securityType }}</td>
-                    <td>{{ security.description }}</td>
-                    <td>{{ security.value ? '₹' + (security.value | number: '1.0-0') : '' }}</td>
+              </ng-template>
+              <ng-template pTemplate="body" let-valuation let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="valuation">
+                  <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <input
+                          pInputText
+                          type="number"
+                          [(ngModel)]="valuation.amount"
+                          class="w-full"
+                        />
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        ₹{{ valuation.amount | number: '1.0-0' }}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+                  <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <p-datepicker
+                          [(ngModel)]="valuation.date"
+                          dateFormat="dd-mm-yy"
+                          [showIcon]="true"
+                          size="small"
+                          class="w-full"
+                        />
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{ valuation.date | date: 'dd MMM yyyy' }}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+                  <td>
+                    <p-cellEditor>
+                      <ng-template pTemplate="input">
+                        <input
+                          pInputText
+                          type="text"
+                          [(ngModel)]="valuation.valuerName"
+                          class="w-full"
+                        />
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                        {{ valuation.valuerName }}
+                      </ng-template>
+                    </p-cellEditor>
+                  </td>
+                  <td>
+                    <div class="flex items-center justify-center gap-2">
+                      <button
+                        *ngIf="!editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        pInitEditableRow
+                        icon="pi pi-pencil"
+                        (click)="onRowEditInit(valuation)"
+                        text
+                        rounded
+                        severity="secondary"
+                      ></button>
+                      <button
+                        *ngIf="editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        pSaveEditableRow
+                        icon="pi pi-check"
+                        (click)="onRowEditSave(valuation)"
+                        text
+                        rounded
+                        severity="success"
+                      ></button>
+                      <button
+                        *ngIf="editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        pCancelEditableRow
+                        icon="pi pi-times"
+                        (click)="onRowEditCancel(valuation, ri)"
+                        text
+                        rounded
+                        severity="secondary"
+                      ></button>
+                      <button
+                        *ngIf="!editing"
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-trash"
+                        (click)="deleteValuation(valuation)"
+                        text
+                        rounded
+                        severity="danger"
+                      ></button>
+                    </div>
+                  </td>
                 </tr>
-            </ng-template>
-        </p-table>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Add New Security Dialog -->
-    <p-toast />
-    <p-dialog header="Add New Security" [resizable]="false" [modal]="true" [maximizable]="false" draggable="false"
-        appendTo="body" [(visible)]="dialogVisible" [style]="{ width: '75vw' }" [contentStyle]="{ overflow: 'auto' }">
-        <div class="sticky top-0 py-2 bg-white! z-[1000]">
-            <p class="text-gray-600">Fill in the security details below</p>
-            <p-divider></p-divider>
-        </div>
-
-        <!-- Tabs -->
-        <div class="mb-4">
-            <div class="flex gap-3 border-b border-gray-200">
-                <button (click)="activeTab = 'details'" class="custom-tab" [class.active]="activeTab === 'details'">
-                    Security Details
-                </button>
-                <button (click)="activeTab = 'valuations'" class="custom-tab"
-                    [class.active]="activeTab === 'valuations'">
-                    <div class="flex items-center gap-2">
-                        Valuations
-                        <span *ngIf="valuations.length > 0"
-                            class="px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700 rounded-full">
-                            {{ valuations.length }}
-                        </span>
-                    </div>
-                </button>
-            </div>
-        </div>
-
-        <!-- Tab Content -->
-        <div>
-            <!-- Security Details Tab -->
-            <div *ngIf="activeTab === 'details'">
-                <div class="flex flex-col gap-6 mt-4">
-                    <!-- Basic Information Section -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-4">Basic Information</h3>
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                            <div class="flex flex-col gap-2">
-                                <label for="securityType" class="text-sm font-medium">Security Type</label>
-                                <p-select id="securityType" size="small" [(ngModel)]="newSecurity.securityType"
-                                    [options]="securityTypeOptions" optionLabel="label" optionValue="value"
-                                    placeholder="Select Security Type" class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="accountId" class="text-sm font-medium">Account ID</label>
-                                <input id="accountId" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.accountId" placeholder="Enter Account ID" class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="securityChargeType" class="text-sm font-medium">Security Charge
-                                    Type</label>
-                                <p-select id="securityChargeType" size="small"
-                                    [(ngModel)]="newSecurity.securityChargeType" [options]="chargeTypeOptions"
-                                    optionLabel="label" optionValue="value" placeholder="Select Charge Type"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="valueAtTimeOfSanction" class="text-sm font-medium">Value at the Time of
-                                    Sanction</label>
-                                <input id="valueAtTimeOfSanction" type="number" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.valueAtTimeOfSanction" placeholder="Enter Value"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="securityNature" class="text-sm font-medium">Security Nature</label>
-                                <p-select id="securityNature" size="small" [(ngModel)]="newSecurity.securityNature"
-                                    [options]="securityNatureOptions" optionLabel="label" optionValue="value"
-                                    placeholder="Select Security Nature" class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="typesOfAssets" class="text-sm font-medium">Types of Assets</label>
-                                <input id="typesOfAssets" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.typesOfAssets" placeholder="Enter Asset Type"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="valuationDateAtTimeOfSanction" class="text-sm font-medium">Valuation
-                                    Date at the Time of Sanction</label>
-                                <p-datepicker id="valuationDateAtTimeOfSanction"
-                                    [(ngModel)]="newSecurity.valuationDateAtTimeOfSanction" dateFormat="dd-mm-yy"
-                                    placeholder="dd-mm-yyyy" [showIcon]="true" size="small" class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2 md:col-span-2">
-                                <label for="description" class="text-sm font-medium">Description</label>
-                                <input id="description" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.description" placeholder="Enter Description"
-                                    class="w-full" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Property & Registry Information Section -->
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-4">Property & Registry Information</h3>
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                            <div class="flex flex-col gap-2">
-                                <label for="eAuctionPropertyId" class="text-sm font-medium">e Auction Property
-                                    ID</label>
-                                <input id="eAuctionPropertyId" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.eAuctionPropertyId" placeholder="Enter Property ID"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="cersaiRegistryNo" class="text-sm font-medium">CERSAI Registry
-                                    No.</label>
-                                <input id="cersaiRegistryNo" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.cersaiRegistryNo" placeholder="Enter Registry No."
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="cersaiRegistryDate" class="text-sm font-medium">CERSAI Registry
-                                    Date</label>
-                                <p-datepicker id="cersaiRegistryDate" [(ngModel)]="newSecurity.cersaiRegistryDate"
-                                    dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true" size="small"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="modificationNo" class="text-sm font-medium">Modification No.</label>
-                                <input id="modificationNo" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.modificationNo" placeholder="Enter Modification No."
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="modificationDate" class="text-sm font-medium">Modification Date</label>
-                                <p-datepicker id="modificationDate" [(ngModel)]="newSecurity.modificationDate"
-                                    dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true" size="small"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="satisfactionNo" class="text-sm font-medium">Satisfaction No.</label>
-                                <input id="satisfactionNo" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.satisfactionNo" placeholder="Enter Satisfaction No."
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="satisfactionDate" class="text-sm font-medium">Satisfaction Date</label>
-                                <p-datepicker id="satisfactionDate" [(ngModel)]="newSecurity.satisfactionDate"
-                                    dateFormat="dd-mm-yy" placeholder="dd-mm-yyyy" [showIcon]="true" size="small"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="bankSharePercent" class="text-sm font-medium">Bank Share %</label>
-                                <input id="bankSharePercent" type="number" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.bankSharePercent" placeholder="Enter Bank Share %"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="reservePrice" class="text-sm font-medium">Reserve Price</label>
-                                <input id="reservePrice" type="number" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.reservePrice" placeholder="Enter Reserve Price"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="actualSellingPrice" class="text-sm font-medium">Actual Selling
-                                    Price</label>
-                                <input id="actualSellingPrice" type="number" pSize="small" pInputText
-                                    [(ngModel)]="newSecurity.actualSellingPrice"
-                                    placeholder="Enter Actual Selling Price" class="w-full" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Valuations Tab -->
-            <div *ngIf="activeTab === 'valuations'">
-                <div class="flex flex-col gap-6 mt-4">
-                    <!-- Add New Valuation Section -->
-                    <div class=" bg-gray-50 p-4 rounded-lg">
-                        <h3 class="text-lg font-semibold mb-4">Add New Valuation</h3>
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
-                            <div class="flex flex-col gap-2">
-                                <label for="valuationAmount" class="text-sm font-medium">Amount (₹)</label>
-                                <input id="valuationAmount" type="number" pSize="small" pInputText
-                                    [(ngModel)]="newValuation.amount" placeholder="Enter amount" class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="valuationDate" class="text-sm font-medium">Date</label>
-                                <p-datepicker id="valuationDate" [(ngModel)]="newValuation.date" dateFormat="dd-mm-yy"
-                                    placeholder="dd-mm-yyyy" [showIcon]="true" size="small" class="w-full" />
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <label for="valuerName" class="text-sm font-medium">Valuer Name</label>
-                                <input id="valuerName" type="text" pSize="small" pInputText
-                                    [(ngModel)]="newValuation.valuerName" placeholder="Enter valuer name"
-                                    class="w-full" />
-                            </div>
-                            <div class="flex items-end">
-                                <p-button label="Add Valuation" icon="pi pi-plus" (click)="addValuation()"
-                                    class="w-full" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Valuation History Section -->
-                    <div class="bg-white rounded-lg">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold">Valuation History</h3>
-                            <span class="text-sm text-gray-600">{{ valuations.length }} Valuations</span>
-                        </div>
-
-                        <p-table [value]="valuations" dataKey="id" editMode="row"
-                            [tableStyle]="{ 'min-width': '100%' }">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th class="text-left">Amount (₹)</th>
-                                    <th class="text-left">Date</th>
-                                    <th class="text-left">Valuer Name</th>
-                                    <th class="text-left" style="width: 12%">Actions</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-valuation let-editing="editing" let-ri="rowIndex">
-                                <tr [pEditableRow]="valuation">
-                                    <td>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <input pInputText type="number" [(ngModel)]="valuation.amount"
-                                                    class="w-full" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                ₹{{ valuation.amount | number: '1.0-0' }}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <p-datepicker [(ngModel)]="valuation.date" dateFormat="dd-mm-yy"
-                                                    [showIcon]="true" size="small" class="w-full" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{ valuation.date | date: 'dd MMM yyyy' }}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td>
-                                        <p-cellEditor>
-                                            <ng-template pTemplate="input">
-                                                <input pInputText type="text" [(ngModel)]="valuation.valuerName"
-                                                    class="w-full" />
-                                            </ng-template>
-                                            <ng-template pTemplate="output">
-                                                {{ valuation.valuerName }}
-                                            </ng-template>
-                                        </p-cellEditor>
-                                    </td>
-                                    <td>
-                                        <div class="flex items-center justify-center gap-2">
-                                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
-                                                icon="pi pi-pencil" (click)="onRowEditInit(valuation)" text rounded
-                                                severity="secondary"></button>
-                                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
-                                                icon="pi pi-check" (click)="onRowEditSave(valuation)" text rounded
-                                                severity="success"></button>
-                                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
-                                                icon="pi pi-times" (click)="onRowEditCancel(valuation, ri)" text rounded
-                                                severity="secondary"></button>
-                                            <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                                                (click)="deleteValuation(valuation)" text rounded
-                                                severity="danger"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <ng-template pTemplate="footer">
-            <div class="flex justify-between gap-4">
-                <p-button label="Cancel" [outlined]="true" (click)="dialogVisible = false" />
-                <p-button label="Add Security" icon="pi pi-check" severity="danger" (click)="addSecurity()" />
-            </div>
-        </ng-template>
-    </p-dialog>
+    <ng-template pTemplate="footer">
+      <div class="flex justify-between gap-4">
+        <p-button label="Cancel" [outlined]="true" (click)="dialogVisible = false" />
+        <p-button
+          label="Add Security"
+          icon="pi pi-check"
+          severity="danger"
+          (click)="addSecurity()"
+        />
+      </div>
+    </ng-template>
+  </p-dialog>
 </div>

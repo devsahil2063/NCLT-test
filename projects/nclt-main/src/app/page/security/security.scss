@@ -1,20 +1,21 @@
 // Custom table styles using theme variables
 ::ng-deep {
   .custom-table {
-    border-radius: 0;
+    border-radius: 1rem !important;
+    overflow: hidden !important;
+
     .p-datatable-thead > tr > th {
       background-color: var(--p-table-header-background);
-      border-bottom: 1px solid var(--p-table-header-border-color) !important;
-      border-top: 1px solid var(--p-table-header-border-color) !important;
-      padding: 1.5rem;
+      border: 1px solid var(--p-table-header-border-color) !important;
+      padding: 1.5rem !important;
+      white-space: nowrap;
+      min-width: 120px;
     }
 
     .p-datatable-tbody > tr {
-      border-bottom: 1px solid var(--p-table-row-border-color);
-      > td {
-        padding: 1rem;
-        font-size: 0.875rem;
-      }
+      background-color: var(--p-table-row-background);
+      transition: background-color 0.15s ease;
+      border: 1px solid var(--p-table-header-border-color) !important;
     }
   }
 

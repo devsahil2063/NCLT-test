@@ -5,8 +5,8 @@
     <p-card class="shadow-sm">
         <!-- Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold mb-1 page-heading">NCLT Order Details</h2>
-            <p class="text-sm text-body">Admission decision and order information</p>
+            <h2 class="section-heading">NCLT Order Details</h2>
+            <p class="section-subheading">Admission decision and order information</p>
         </div>
 
         <p-divider></p-divider>
@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mt-6">
             <!-- Application Status -->
             <div class="flex flex-col gap-2">
-                <label for="applicationStatus" class="text-sm font-medium field-label">
+                <label for="applicationStatus" class="field-label">
                     Application Status <span class="text-red-500">*</span>
                 </label>
                 <p-select id="applicationStatus" size="small" [(ngModel)]="applicationStatus"
@@ -25,7 +25,7 @@
 
             <!-- Admission Decision -->
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium field-label">
+                <label class="field-label">
                     Admission Decision <span class="text-red-500">*</span>
                 </label>
                 <div class="flex items-center gap-6 mt-2">
@@ -44,7 +44,7 @@
 
             <!-- Order Date -->
             <div class="flex flex-col gap-2">
-                <label for="orderDate" class="text-sm font-medium field-label">
+                <label for="orderDate" class="field-label">
                     Order Date <span class="text-red-500">*</span>
                 </label>
                 <p-datepicker id="orderDate" size="small" [(ngModel)]="orderDate" dateFormat="dd-mm-yy"
@@ -62,7 +62,7 @@
 
             <!-- Insolvency Commencement Date (ICD) -->
             <div class="flex flex-col gap-2">
-                <label for="insolvencyCommencementDate" class="text-sm font-medium field-label">
+                <label for="insolvencyCommencementDate" class="field-label">
                     Insolvency Commencement Date (ICD) <span class="text-red-500">*</span>
                 </label>
                 <p-datepicker id="insolvencyCommencementDate" size="small" [(ngModel)]="insolvencyCommencementDate"
@@ -77,7 +77,7 @@
 
             <!-- Order Copy (PDF) -->
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium field-label">
+                <label class="field-label">
                     Order Copy (PDF) <span class="text-red-500">*</span>
                 </label>
                 <div class="relative flex items-center justify-center py-3 px-4 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:bg-gray-50 transition-colors"
@@ -100,11 +100,9 @@
             </div>
         </div>
 
-
-
         <div class="mt-6" *ngIf="admissionDecision === 'rejected'">
             <div class="flex flex-col gap-2">
-                <label for="rejectionReason" class="text-sm font-medium field-label">
+                <label for="rejectionReason" class="field-label">
                     Rejection Reason (if rejected)
                 </label>
                 <textarea id="rejectionReason" pInputTextarea [(ngModel)]="rejectionReason"
@@ -114,12 +112,10 @@
             </div>
         </div>
 
-
-
         <!-- Action Buttons -->
         <div class="mt-8 flex justify-end gap-3">
-            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
-            <p-button label="Save Details" severity="danger" (onClick)="onSave()"></p-button>
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()" size="small"></p-button>
+            <p-button label="Save Details" severity="danger" (onClick)="onSave()" size="small"></p-button>
         </div>
     </p-card>
 </div>

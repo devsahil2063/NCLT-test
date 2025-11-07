@@ -19,16 +19,8 @@
           <label for="status" class="field-label">
             Status <span class="text-red-500">*</span>
           </label>
-          <p-select
-            id="status"
-            [(ngModel)]="status"
-            [options]="statusOptions"
-            placeholder="Select Status"
-            optionLabel="label"
-            optionValue="value"
-            class="w-full"
-            [checkmark]="true"
-          ></p-select>
+          <p-select id="status" [(ngModel)]="status" [options]="statusOptions" placeholder="Select Status"
+            optionLabel="label" optionValue="value" class="w-full" [checkmark]="true" size="small"></p-select>
         </div>
 
         <!-- Not Running Since When (conditional) -->
@@ -36,33 +28,18 @@
           <label for="notRunningSince" class="field-label">
             Not Running Since When <span class="text-red-500">*</span>
           </label>
-          <p-datepicker
-            id="notRunningSince"
-            [(ngModel)]="notRunningSince"
-            dateFormat="dd-mm-yy"
-            placeholder="dd----yyyy"
-            [showIcon]="true"
-            class="w-full"
-          ></p-datepicker>
+          <p-datepicker id="notRunningSince" [(ngModel)]="notRunningSince" dateFormat="dd-mm-yy"
+            placeholder="dd----yyyy" [showIcon]="true" class="w-full" size="small"></p-datepicker>
         </div>
 
         <!-- Remarks (conditional - shown for all except Running) -->
-        <div
-          class="flex flex-col gap-2"
-          [ngClass]="{ 'md:col-span-2': status !== 'Not Running' }"
-          *ngIf="status && status !== 'Running'"
-        >
+        <div class="flex flex-col gap-2" [ngClass]="{ 'md:col-span-2': status !== 'Not Running' }"
+          *ngIf="status && status !== 'Running'">
           <label for="remarks" class="field-label">
             Remarks <span class="text-red-500">*</span>
           </label>
-          <textarea
-            id="remarks"
-            pInputTextarea
-            [(ngModel)]="remarks"
-            placeholder="Enter remarks"
-            rows="4"
-            class="w-full"
-          ></textarea>
+          <textarea id="remarks" pInputTextarea [(ngModel)]="remarks" placeholder="Enter remarks" rows="4"
+            class="w-full" size="small"></textarea>
         </div>
       </div>
     </div>

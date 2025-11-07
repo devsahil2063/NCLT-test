@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
 
 @Component({
   selector: 'app-moratorium',
@@ -16,6 +17,7 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     RadioButtonModule,
     ToastModule,
+    Card
   ],
   providers: [MessageService],
   templateUrl: './moratorium.html',

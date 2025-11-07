@@ -1,16 +1,16 @@
 <div class="p-2 bg-gray-50 min-h-screen">
-    <div class="bg-white rounded-lg shadow-sm p-6">
+    <p-card class="shadow-sm">
         <!-- Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold text-gray-900">CoC Formation</h2>
-            <p class="text-sm text-gray-500 mt-1">Committee of Creditors formation details</p>
+            <h2 class="section-heading">CoC Formation</h2>
+            <p class="section-subheading">Committee of Creditors formation details</p>
         </div>
 
         <!-- Form -->
         <div class="grid grid-cols-2 gap-4">
             <!-- CoC Formation Date -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     CoC Formation Date <span class="text-red-500">*</span>
                 </label>
                 <p-datepicker [(ngModel)]="cocFormationDate" size="small" dateFormat="dd-M-yy" placeholder="dd-----yyyy"
@@ -19,7 +19,7 @@
 
             <!-- First CoC Meeting Date -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     First CoC Meeting Date
                 </label>
                 <p-datepicker [(ngModel)]="firstCocMeetingDate" size="small" dateFormat="dd-M-yy"
@@ -29,9 +29,9 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-end gap-3 mt-6">
-            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" class="text-sm" />
+            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" size="small" />
             <p-button label="Save CoC Details" severity="danger" (click)="onSave()" [disabled]="!isFormValid()"
-                class="text-sm" />
+                size="small" />
         </div>
-    </div>
+    </p-card>
 </div>

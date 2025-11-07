@@ -13,6 +13,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { Textarea } from 'primeng/textarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectModule } from 'primeng/select';
+import { Card } from 'primeng/card';
 
 interface HearingData {
   id: string;
@@ -53,6 +54,7 @@ interface HearingData {
     Textarea,
     RadioButtonModule,
     SelectModule,
+    Card
   ],
   templateUrl: './hearing.html',
   styleUrl: './hearing.scss',

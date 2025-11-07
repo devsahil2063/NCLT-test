@@ -10,6 +10,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { DialogModule } from 'primeng/dialog';
 import { Select } from 'primeng/select';
 import { DatePicker } from 'primeng/datepicker';
+import { Divider } from 'primeng/divider';
 
 interface LookOutCircularData {
   name: string;
@@ -32,6 +33,7 @@ interface LookOutCircularData {
     DialogModule,
     Select,
     DatePicker,
+    Divider
   ],
   templateUrl: './look-out-circular.html',
   styleUrl: './look-out-circular.scss',

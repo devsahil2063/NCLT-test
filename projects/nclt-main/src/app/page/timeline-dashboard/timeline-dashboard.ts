@@ -7,6 +7,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
 
 interface KeyDeadline {
   name: string;
@@ -23,6 +24,7 @@ interface KeyDeadline {
     RadioButtonModule,
     TableModule,
     ToastModule,
+    Card
   ],
   providers: [MessageService],
   templateUrl: './timeline-dashboard.html',

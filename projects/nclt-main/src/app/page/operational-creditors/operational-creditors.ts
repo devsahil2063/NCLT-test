@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumber } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
+import { Divider } from 'primeng/divider';
 
 interface OperationalCreditor {
   srNo: number;
@@ -27,6 +29,8 @@ interface OperationalCreditor {
     InputTextModule,
     InputNumber,
     ToastModule,
+    Card,
+    Divider
   ],
   providers: [MessageService],
   templateUrl: './operational-creditors.html',
@@ -58,7 +62,7 @@ export class OperationalCreditors {
     admittedAmount: null as number | null,
   };
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService) { }
 
   openAddDialog(): void {
     this.editMode = false;

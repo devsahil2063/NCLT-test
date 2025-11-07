@@ -56,6 +56,10 @@ body {
   @apply text-[1rem] leading-6 font-semibold text-(--p-text-sectionheading);
 }
 
+.section-subheading {
+  @apply text-sm leading-5 font-medium text-(--p-text-body);
+}
+
 .pagination-text {
   @apply text-[1rem] leading-6 font-medium text-(--p-text-body);
 }

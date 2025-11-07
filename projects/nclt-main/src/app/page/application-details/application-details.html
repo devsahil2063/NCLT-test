@@ -3,8 +3,8 @@
     <p-card class="shadow-sm">
         <!-- Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold mb-1 page-heading">Application Details</h2>
-            <p class="text-sm text-body">Enter the CIRP application information</p>
+            <h2 class="section-heading">Application Details</h2>
+            <p class="section-subheading">Enter the CIRP application information</p>
         </div>
 
         <p-divider></p-divider>
@@ -13,7 +13,7 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mt-6">
             <!-- Application Number -->
             <div class="flex flex-col gap-2">
-                <label for="applicationNumber" class="text-sm font-medium field-label">
+                <label for="applicationNumber" class="field-label">
                     Application Number <span class="text-red-500">*</span>
                 </label>
                 <input id="applicationNumber" type="text" pInputText pSize="small" [(ngModel)]="applicationNumber"
@@ -22,7 +22,7 @@
 
             <!-- Date of Application Filed -->
             <div class="flex flex-col gap-2">
-                <label for="dateOfApplicationFiled" class="text-sm font-medium field-label">
+                <label for="dateOfApplicationFiled" class="field-label">
                     Date of Application Filed <span class="text-red-500">*</span>
                 </label>
                 <p-datepicker id="dateOfApplicationFiled" size="small" [(ngModel)]="dateOfApplicationFiled"
@@ -31,7 +31,7 @@
 
             <!-- NCLT Bench -->
             <div class="flex flex-col gap-2">
-                <label for="ncltBench" class="text-sm font-medium field-label">
+                <label for="ncltBench" class="field-label">
                     NCLT Bench <span class="text-red-500">*</span>
                 </label>
                 <p-select id="ncltBench" [(ngModel)]="ncltBench" size="small" [options]="ncltBenchOptions"
@@ -41,7 +41,7 @@
 
             <!-- Default Amount -->
             <div class="flex flex-col gap-2">
-                <label for="defaultAmount" class="text-sm font-medium field-label">
+                <label for="defaultAmount" class="field-label">
                     Default Amount (₹) <span class="text-red-500">*</span>
                 </label>
                 <input id="defaultAmount" type="number" pInputText pSize="small" [(ngModel)]="defaultAmount"
@@ -51,8 +51,8 @@
 
         <!-- Action Buttons -->
         <div class="mt-8 flex justify-end gap-3">
-            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
-            <p-button label="Save Details" severity="danger" (onClick)="onSave()"></p-button>
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()" size="small"></p-button>
+            <p-button label="Save Details" severity="danger" (onClick)="onSave()" size="small"></p-button>
         </div>
     </p-card>
 </div>

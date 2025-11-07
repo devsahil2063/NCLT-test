@@ -1,8 +1,8 @@
 <div class="p-2 bg-gray-50 min-h-screen">
     <!-- Header -->
     <div class="mb-6">
-        <h2 class="text-xl font-semibold text-gray-900">Expression of Interest (EOI)</h2>
-        <p class="text-sm text-gray-500 mt-1">Manage EOI publication and submission details</p>
+        <h2 class="section-heading">Expression of Interest (EOI)</h2>
+        <p class="section-subheading">Manage EOI publication and submission details</p>
     </div>
     <div class="bg-white rounded-lg shadow-sm p-6">
 
@@ -10,7 +10,7 @@
         <div class="grid grid-cols-2 gap-4">
             <!-- Date of Publication -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Date of Publication <span class="text-red-500">*</span>
                 </label>
                 <p-datepicker size="small" [(ngModel)]="dateOfPublication" dateFormat="dd-M-yy"
@@ -19,7 +19,7 @@
 
             <!-- Republication -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Republication <span class="text-red-500">*</span>
                 </label>
                 <p-select size="small" [options]="republicationOptions" [(ngModel)]="republication" optionLabel="label"
@@ -28,7 +28,7 @@
 
             <!-- EOI Submission Deadline -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     EOI Submission Deadline <span class="text-red-500">*</span>
                 </label>
                 <p-datepicker size="small" [(ngModel)]="eoiSubmissionDeadline" dateFormat="dd-M-yy"
@@ -37,7 +37,7 @@
 
             <!-- Total EOIs Received -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Total EOIs Received
                 </label>
                 <p-inputnumber size="small" [(ngModel)]="totalEOIsReceived" placeholder="5" [min]="0" class="w-full" />
@@ -46,9 +46,9 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-end gap-3 mt-6">
-            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" class="text-sm" />
+            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" size="small" />
             <p-button label="Save Changes" severity="danger" (click)="onSave()" [disabled]="!isFormValid()"
-                class="text-sm" />
+                size="small" />
         </div>
     </div>
 </div>

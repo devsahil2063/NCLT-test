@@ -10,6 +10,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { DialogModule } from 'primeng/dialog';
 import { Select } from 'primeng/select';
 import { DatePicker } from 'primeng/datepicker';
+import { Divider } from 'primeng/divider';
 
 interface ForensicAuditData {
   conductedBy: string;
@@ -35,6 +36,7 @@ interface ForensicAuditData {
     DialogModule,
     Select,
     DatePicker,
+    Divider
   ],
   templateUrl: './forensic-audit.html',
   styleUrl: './forensic-audit.scss',

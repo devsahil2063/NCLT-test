@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
+import { Divider } from 'primeng/divider';
 
 interface OtherClaim {
   srNo: number;
@@ -27,6 +29,8 @@ interface OtherClaim {
     InputTextModule,
     InputNumberModule,
     ToastModule,
+    Card,
+    Divider
   ],
   providers: [MessageService],
   templateUrl: './other-claims.html',

@@ -1,78 +1,57 @@
 <div class="p-2 bg-gray-50 min-h-screen">
-  <div class="bg-white rounded-lg shadow-sm p-6">
+  <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
     <!-- Question Section -->
     <div class="mb-6">
-      <label class="block text-gray-900 font-medium mb-3">
+      <h3 class="section-heading mb-3">
         Forensic Audit Done? <span class="text-red-500">*</span>
-      </label>
+      </h3>
       <div class="flex gap-3">
-        <p-button
-          label="Yes"
-          [outlined]="isForensicAuditDone !== true"
-          [severity]="isForensicAuditDone === true ? 'danger' : 'secondary'"
-          (click)="selectOption(true)"
-          class="text-sm"
-        />
-        <p-button
-          label="No"
-          [outlined]="isForensicAuditDone !== false"
-          [severity]="isForensicAuditDone === false ? 'danger' : 'secondary'"
-          (click)="selectOption(false)"
-          class="text-sm"
-        />
+        <p-button label="Yes" [outlined]="isForensicAuditDone !== true"
+          [severity]="isForensicAuditDone === true ? 'danger' : 'secondary'" (click)="selectOption(true)"
+          size="small" />
+        <p-button label="No" [outlined]="isForensicAuditDone !== false"
+          [severity]="isForensicAuditDone === false ? 'danger' : 'secondary'" (click)="selectOption(false)"
+          size="small" />
       </div>
     </div>
+
 
     <!-- No Option - Remarks Section -->
     <div *ngIf="isForensicAuditDone === false" class="space-y-4">
       <div>
-        <label class="block text-gray-900 font-medium mb-2">
+        <label class="section-heading">
           Remarks (Why FA is not done) <span class="text-red-500">*</span>
         </label>
-        <textarea
-          pInputTextarea
-          [(ngModel)]="remarks"
-          placeholder="Please provide reason why forensic audit is not conducted..."
-          rows="6"
-          class="w-full"
-        ></textarea>
+        <textarea pInputTextarea [(ngModel)]="remarks"
+          placeholder="Please provide reason why forensic audit is not conducted..." rows="6" pSize="small"
+          class="w-full"></textarea>
       </div>
       <div class="flex justify-end">
-        <p-button label="Save" severity="danger" (click)="saveRemarks()" class="text-sm" />
+        <p-button label="Save" severity="danger" (click)="saveRemarks()" class="text-sm" size="small" />
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-4">
+
+    <!--Yes Option - Search and Add Button -->
+    <div *ngIf="isForensicAuditDone === true" class="bg-white rounded-lg shadow-sm p-6">
+      <div class="flex items-center justify-between gap-4">
+        <p-iconfield class="flex-1 max-w-md">
+          <p-inputicon class="pi pi-search" />
+          <input class="w-full bg-white!" type="text" pInputText [(ngModel)]="searchText"
+            placeholder="Search forensic audit..." pSize="small" />
+        </p-iconfield>
+
+        <p-button label="Add Forensic Audit" icon="pi pi-plus" severity="danger" class="text-sm" (click)="openDialog()"
+          size="small" />
       </div>
     </div>
 
     <!-- Yes Option - Table Section -->
-    <div *ngIf="isForensicAuditDone === true" class="space-y-4">
-      <!-- Search and Add Button -->
-      <div class="flex items-center justify-between gap-4">
-        <p-iconfield class="flex-1 max-w-md">
-          <p-inputicon class="pi pi-search" />
-          <input
-            class="w-full bg-white!"
-            type="text"
-            pInputText
-            [(ngModel)]="searchText"
-            placeholder="Search forensic audit..."
-          />
-        </p-iconfield>
-
-        <p-button
-          label="Add Forensic Audit"
-          icon="pi pi-plus"
-          severity="danger"
-          class="text-sm"
-          (click)="openDialog()"
-        />
-      </div>
-
+    <div *ngIf="isForensicAuditDone === true" class="bg-white rounded-lg! shadow-sm! outline-hidden! ">
       <!-- Table -->
-      <p-table
-        [value]="forensicAudits"
-        showGridlines
-        [tableStyle]="{ 'min-width': '100%' }"
-        class="forensic-audit-table"
-      >
+      <p-table [value]="forensicAudits" showGridlines [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
         <ng-template pTemplate="header">
           <tr>
             <th class="text-left">Conducted By</th>
@@ -111,138 +90,84 @@
   </div>
 
   <!-- Add Forensic Audit Dialog -->
-  <p-dialog
-    header="Add Forensic Audit Details"
-    [(visible)]="showDialog"
-    [modal]="true"
-    [closable]="true"
-    [style]="{ width: '900px' }"
-    [draggable]="false"
-    [resizable]="false"
-  >
-    <p class="text-gray-600 text-sm mb-6">Fill in the forensic audit information</p>
+  <p-dialog header="Add Forensic Audit Details" [(visible)]="showDialog" [modal]="true" [closable]="true"
+    [style]="{ width: '40vw' }" [draggable]="false" [resizable]="false">
+    <p class="page-subheading">Fill in the forensic audit information</p>
+
+    <p-divider></p-divider>
 
     <div class="grid grid-cols-2 gap-4">
       <!-- Conducted By -->
       <div class="flex flex-col gap-2">
-        <label class="text-gray-900 font-medium text-sm">
+        <label class="field-label">
           Conducted By <span class="text-red-500">*</span>
         </label>
-        <p-select
-          [options]="conductedByOptions"
-          [(ngModel)]="formData.conductedBy"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select bank"
-          class="w-full"
-        />
+        <p-select [options]="conductedByOptions" [(ngModel)]="formData.conductedBy" optionLabel="label"
+          optionValue="value" placeholder="Select bank" class="w-full" size="small" />
       </div>
 
       <!-- Date of Allotment -->
       <div class="flex flex-col gap-2">
-        <label class="text-gray-900 font-medium text-sm">
+        <label class="field-label">
           Date of Allotment <span class="text-red-500">*</span>
         </label>
-        <p-datepicker
-          [(ngModel)]="formData.dateOfAllotment"
-          dateFormat="dd-M-yy"
-          placeholder="dd-----yyyy"
-          [showIcon]="true"
-          class="w-full"
-        />
+        <p-datepicker [(ngModel)]="formData.dateOfAllotment" dateFormat="dd-M-yy" placeholder="dd-----yyyy"
+          [showIcon]="true" class="w-full" size="small" />
       </div>
 
       <!-- Auditor Name -->
       <div class="flex flex-col gap-2">
-        <label class="text-gray-900 font-medium text-sm">
+        <label class="field-label">
           Auditor Name <span class="text-red-500">*</span>
         </label>
-        <input
-          type="text"
-          pInputText
-          [(ngModel)]="formData.auditorName"
-          placeholder="Enter forensic auditor name"
-          class="w-full"
-        />
+        <input type="text" pInputText [(ngModel)]="formData.auditorName" placeholder="Enter forensic auditor name"
+          class="w-full" pSize="small" />
       </div>
 
       <!-- Status -->
       <div class="flex flex-col gap-2">
-        <label class="text-gray-900 font-medium text-sm">
+        <label class="field-label">
           Status <span class="text-red-500">*</span>
         </label>
-        <p-select
-          [options]="statusOptions"
-          [(ngModel)]="formData.status"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select status"
-          class="w-full"
-        />
+        <p-select [options]="statusOptions" [(ngModel)]="formData.status" optionLabel="label" optionValue="value"
+          placeholder="Select status" class="w-full" size="small" />
       </div>
 
       <!-- Date of Report -->
       <div class="flex flex-col gap-2">
-        <label class="text-gray-900 font-medium text-sm">
+        <label class="field-label">
           Date of Report <span class="text-red-500">*</span>
         </label>
-        <p-datepicker
-          [(ngModel)]="formData.dateOfReport"
-          dateFormat="dd-M-yy"
-          placeholder="dd-----yyyy"
-          [showIcon]="true"
-          class="w-full"
-        />
+        <p-datepicker [(ngModel)]="formData.dateOfReport" dateFormat="dd-M-yy" placeholder="dd-----yyyy"
+          [showIcon]="true" class="w-full" size="small" />
       </div>
 
       <!-- Date of Completion -->
       <div class="flex flex-col gap-2">
-        <label class="text-gray-900 font-medium text-sm">
+        <label class="field-label">
           Date of Completion <span class="text-red-500">*</span>
         </label>
-        <p-datepicker
-          [(ngModel)]="formData.dateOfCompletion"
-          dateFormat="dd-M-yy"
-          placeholder="18-Oct-2025"
-          [showIcon]="true"
-          class="w-full"
-        />
+        <p-datepicker [(ngModel)]="formData.dateOfCompletion" dateFormat="dd-M-yy" placeholder="18-Oct-2025"
+          [showIcon]="true" class="w-full" size="small" />
       </div>
     </div>
 
     <!-- Auditor Remarks/Conclusion -->
     <div class="flex flex-col gap-2 mt-4">
-      <label class="text-gray-900 font-medium text-sm">
+      <label class="field-label">
         Auditor Remarks/Conclusion <span class="text-red-500">*</span>
       </label>
-      <textarea
-        pInputTextarea
-        [(ngModel)]="formData.auditorRemarks"
-        placeholder="Enter auditor's remarks or conclusion..."
-        rows="5"
-        class="w-full"
-        maxlength="5000"
-      ></textarea>
+      <textarea pInputTextarea [(ngModel)]="formData.auditorRemarks"
+        placeholder="Enter auditor's remarks or conclusion..." rows="5" class="w-full" maxlength="5000"
+        pSize="small"></textarea>
       <div class="text-xs text-gray-500 text-right">{{ getCharacterCount() }}/5000 characters</div>
     </div>
 
     <ng-template pTemplate="footer">
       <div class="flex justify-end gap-3 mt-4">
-        <p-button
-          label="Cancel"
-          [outlined]="true"
-          severity="secondary"
-          (click)="closeDialog()"
-          class="text-sm"
-        />
-        <p-button
-          label="Add Forensic Audit"
-          icon="pi pi-plus"
-          severity="danger"
-          (click)="addForensicAudit()"
-          [disabled]="!isFormValid()"
-          class="text-sm"
-        />
+        <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="closeDialog()" size="small" />
+        <p-button label="Add Forensic Audit" icon="pi pi-plus" severity="danger" (click)="addForensicAudit()"
+          [disabled]="!isFormValid()" size="small" />
       </div>
     </ng-template>
   </p-dialog>

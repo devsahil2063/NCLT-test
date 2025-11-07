@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
 
 @Component({
   selector: 'app-bob-claim',
@@ -18,6 +19,7 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     RadioButtonModule,
     ToastModule,
+    Card
   ],
   providers: [MessageService],
   templateUrl: './bob-claim.html',

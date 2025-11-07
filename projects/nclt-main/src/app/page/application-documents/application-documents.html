@@ -5,8 +5,8 @@
     <p-card class="shadow-sm">
         <!-- Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold mb-1 page-heading">Documents</h2>
-            <p class="text-sm text-body">Upload required documents for CIRP application</p>
+            <h2 class="section-heading">Documents</h2>
+            <p class="section-subheading">Upload required documents for CIRP application</p>
         </div>
 
         <p-divider></p-divider>
@@ -15,7 +15,7 @@
         <div class="flex flex-col gap-6 mt-6">
             <!-- Loan Agreement -->
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium field-label">
+                <label class="field-label">
                     Loan Agreement <span class="text-red-500">*</span>
                 </label>
                 <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50 transition-colors"
@@ -40,7 +40,7 @@
 
             <!-- Account Statement -->
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium field-label">
+                <label class="field-label">
                     Account Statement <span class="text-red-500">*</span>
                 </label>
                 <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
@@ -65,7 +65,7 @@
 
             <!-- Board Resolution (Bank) -->
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium field-label">
+                <label class="field-label">
                     Board Resolution (Bank) <span class="text-red-500">*</span>
                 </label>
                 <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
@@ -91,7 +91,7 @@
             <!-- Demand Notices -->
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
-                    <label class="text-sm font-medium field-label">Demand Notices</label>
+                    <label class="field-label">Demand Notices</label>
                     <span class="text-xs text-gray-500">Multiple files allowed</span>
                 </div>
                 <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
@@ -116,7 +116,7 @@
 
             <!-- NCLT Application Copy -->
             <div class="flex flex-col gap-2">
-                <label class="text-sm font-medium field-label">
+                <label class="field-label">
                     NCLT Application Copy <span class="text-red-500">*</span>
                 </label>
                 <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
@@ -143,7 +143,7 @@
             <!-- Other Supporting Documents -->
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
-                    <label class="text-sm font-medium field-label">Other Supporting Documents</label>
+                    <label class="field-label">Other Supporting Documents</label>
                     <span class="text-xs text-gray-500">Multiple files allowed</span>
                 </div>
                 <div class="relative flex flex-col items-center justify-center py-12 border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-pointer hover:border-red-300 hover:bg-red-50  transition-colors"
@@ -170,8 +170,9 @@
 
         <!-- Action Buttons -->
         <div class="mt-8 flex justify-end gap-3">
-            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
-            <p-button label="Upload Documents" severity="danger" (onClick)="onUploadDocuments()"></p-button>
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()" size="small"></p-button>
+            <p-button label="Upload Documents" severity="danger" (onClick)="onUploadDocuments()"
+                size="small"></p-button>
         </div>
     </p-card>
 </div>

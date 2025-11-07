@@ -1,15 +1,15 @@
 <!-- Customer Header - Only shown when sub-sidebar is open and on cases route -->
-@if (showCustomerHeader$ | async) {
+<div class="app-layout border-t-[1px] border-gray-200">
+  <!-- Mobile header with hamburger menu -->
+  <app-header></app-header>
+  @if (showCustomerHeader$ | async) {
   <div class="bg-white border-b border-gray-200 px-6 py-4">
     <h1 class="page-heading">ABC Manufacturing Ltd</h1>
     <p class="page-subheading">
       Customer ID: 456789 • Customer Since: 12-Jan-2019 • NPA Date: 2023-06-10
     </p>
   </div>
-}
-<div class="app-layout border-t-[1px] border-gray-200">
-  <!-- Mobile header with hamburger menu -->
-  <app-header></app-header>
+  }
 
   <div class="app-layout__main">
     <!-- Sidebars container with backdrop -->
@@ -20,9 +20,9 @@
     <div class="app-layout__content bg-[#f9f9f9]">
       <!-- Warning Banner -->
       @if (showWarningBanner$ | async) {
-        <div class="mb-4 bg-red-50 border-l-4 border-red-500 p-3">
-          <p class="text-red-700 text-sm">* Changes will require checker's approval</p>
-        </div>
+      <div class="mb-4 bg-red-50 border-l-4 border-red-500 p-3">
+        <p class="text-red-700 text-sm">* Changes will require checker's approval</p>
+      </div>
       }
 
       <router-outlet />

@@ -5,6 +5,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from "primeng/card";
 
 @Component({
   selector: 'app-coc-formation',
@@ -14,6 +15,7 @@ import { MessageService } from 'primeng/api';
     DatePickerModule,
     ButtonModule,
     ToastModule,
+    Card
   ],
   providers: [MessageService],
   templateUrl: './coc-formation.html',

@@ -9,6 +9,8 @@ import { InputNumber } from 'primeng/inputnumber';
 import { Select } from 'primeng/select';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
+import { Divider } from 'primeng/divider';
 
 interface FinancialCreditor {
   srNo: number;
@@ -31,6 +33,8 @@ interface FinancialCreditor {
     InputNumber,
     Select,
     ToastModule,
+    Card,
+    Divider
   ],
   providers: [MessageService],
   templateUrl: './financial-creditors.html',
@@ -74,7 +78,7 @@ export class FinancialCreditors {
     isSecured: null as boolean | null,
   };
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService) { }
 
   openAddDialog(): void {
     this.editMode = false;

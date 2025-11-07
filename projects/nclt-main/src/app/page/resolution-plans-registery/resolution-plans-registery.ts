@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Card } from 'primeng/card';
 
 interface ResolutionPlan {
   srNo: number;
@@ -30,7 +31,7 @@ interface ResolutionPlan {
     ButtonModule,
     InputTextModule,
     InputNumberModule,
-    ToastModule,
+    ToastModule, Card
   ],
   providers: [MessageService],
   templateUrl: './resolution-plans-registery.html',

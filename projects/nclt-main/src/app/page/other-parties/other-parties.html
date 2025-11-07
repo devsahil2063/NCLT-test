@@ -3,24 +3,12 @@
   <div class="flex items-center justify-between gap-4 mb-4">
     <p-iconfield class="min-w-lg">
       <p-inputicon class="pi pi-search" />
-      <input
-        class="w-full bg-white!"
-        type="text"
-        variant="filled"
-        pInputText
-        placeholder="Search by Name, PAN..."
-      />
+      <input class="w-full bg-white!" type="text" variant="filled" pInputText placeholder="Search by Name, PAN..."
+        pSize="small" />
     </p-iconfield>
 
-    <p-select
-      [(ngModel)]="selectedRelation"
-      [options]="relations"
-      optionLabel="label"
-      optionValue="value"
-      placeholder="Relation"
-      class="bg-white!"
-      (onChange)="onRelationChange()"
-    />
+    <p-select [(ngModel)]="selectedRelation" [options]="relations" optionLabel="label" optionValue="value"
+      placeholder="Relation" class="bg-white!" (onChange)="onRelationChange()" size="small" />
   </div>
 
   <!-- Table Card -->

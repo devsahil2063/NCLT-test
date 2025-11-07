@@ -1,16 +1,16 @@
 <div class="p-2 bg-gray-50 min-h-screen">
-    <div class="bg-white rounded-lg shadow-sm p-6">
+    <p-card class="shadow-sm">
         <!-- Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold text-gray-900">Bank of Baroda's Claim</h2>
-            <p class="text-sm text-gray-500 mt-1">Our claim details and voting rights in Committee of Creditors</p>
+            <h2 class="section-heading">Bank of Baroda's Claim</h2>
+            <p class="section-subheading">Our claim details and voting rights in Committee of Creditors</p>
         </div>
 
         <!-- Form -->
         <div class="grid grid-cols-2 gap-4">
             <!-- Our Claim Amount -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Our Claim Amount <span class="text-red-500">*</span>
                 </label>
                 <p-inputnumber [(ngModel)]="claimAmount" mode="currency" currency="INR" locale="en-IN"
@@ -19,7 +19,7 @@
 
             <!-- Our Admitted Amount -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Our Admitted Amount <span class="text-red-500">*</span>
                 </label>
                 <p-inputnumber [(ngModel)]="admittedAmount" size="small" mode="currency" currency="INR" locale="en-IN"
@@ -28,7 +28,7 @@
 
             <!-- Our Voting Share % -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Our Voting Share %
                 </label>
                 <input type="text" pInputText [value]="votingShare" pSize="small" [disabled]="true"
@@ -38,7 +38,7 @@
 
             <!-- Our Security Interest -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Our Security Interest <span class="text-red-500">*</span>
                 </label>
                 <div class="flex gap-4">
@@ -57,7 +57,7 @@
 
             <!-- CoC Representative Name -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     CoC Representative Name <span class="text-red-500">*</span>
                 </label>
                 <input type="text" pInputText pSize="small" [(ngModel)]="representativeName"
@@ -66,7 +66,7 @@
 
             <!-- Representative Contact -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Representative Contact <span class="text-red-500">*</span>
                 </label>
                 <input type="text" pInputText pSize="small" [(ngModel)]="representativeContact"
@@ -76,9 +76,9 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-end gap-3 mt-6">
-            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" class="text-sm" />
+            <p-button label="Cancel" [outlined]="true" severity="secondary" (click)="onCancel()" size="small" />
             <p-button label="Save Claim Details" severity="danger" (click)="onSave()" [disabled]="!isFormValid()"
-                class="text-sm" />
+                size="small" />
         </div>
-    </div>
+    </p-card>
 </div>

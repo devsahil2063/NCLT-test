@@ -1,41 +1,21 @@
-// Timeline Dashboard Styles
+// Custom table styles using theme variables
 ::ng-deep {
-  .timeline-table {
-    border: 1px solid var(--p-table-row-border-color);
-    border-radius: 0.5rem;
-    overflow: hidden;
+  .custom-table {
+    overflow: hidden !important;
+    border-radius: 0.5rem !important;
 
-    .p-datatable-tbody > tr {
-      background-color: var(--p-table-row-background);
-      transition: background-color 0.15s ease;
-
-      &:hover {
-        background-color: var(--p-table-row-hover-background);
-      }
-
-      > td {
-        padding: 1rem;
-        font-size: 0.875rem;
-        color: var(--p-table-cell-color);
-        border-bottom: 1px solid var(--p-table-row-border-color);
-
-        &:first-child {
-          font-weight: 500;
-        }
-      }
+    .p-datatable-thead > tr > th {
+      background-color: var(--p-table-header-background);
+      border: 1px solid var(--p-table-header-border-color) !important;
+      padding: 1.5rem !important;
     }
 
-    // Remove default PrimeNG borders
-    // .p-datatable-table {
-    //   border-collapse: collapse;
-    // }
+    .p-datatable-tbody > tr {
+      border: 1px solid var(--p-table-header-border-color) !important;
 
-    // .p-datatable-tbody > tr > td {
-    //   border: none;
-    // }
-
-    // .p-datatable-thead {
-    //   display: none;
-    // }
+      > td {
+        padding: 0.75rem;
+      }
+    }
   }
 }

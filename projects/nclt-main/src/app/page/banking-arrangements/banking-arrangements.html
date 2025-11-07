@@ -5,53 +5,27 @@
     <div class="flex items-center justify-between gap-4 p-4">
       <p-iconfield class="flex-1 max-w-md">
         <p-inputicon class="pi pi-search" />
-        <input
-          class="w-full bg-white!"
-          type="text"
-          variant="filled"
-          pInputText
-          placeholder="Search by ID, Type, Authority..."
-        />
+        <input class="w-full bg-white!" type="text" variant="filled" pInputText pSize="small"
+          placeholder="Search by ID, Type, Authority..." />
       </p-iconfield>
 
       <div class="flex items-center gap-2">
         <!-- Type Filter Popover -->
-        <p-button
-          (click)="typePopover.toggle($event)"
-          label="Type"
-          [outlined]="true"
-          icon="pi pi-filter"
-          iconPos="left"
-          class="text-sm bg-white!"
-        />
+        <p-button (click)="typePopover.toggle($event)" label="Type" [outlined]="true" icon="pi pi-filter" iconPos="left"
+          class="text-sm bg-white!" size="small" />
 
         <!-- Status Filter Popover -->
-        <p-button
-          (click)="statusPopover.toggle($event)"
-          label="Status"
-          [outlined]="true"
-          icon="pi pi-filter"
-          iconPos="left"
-          class="text-sm bg-white!"
-        />
+        <p-button (click)="statusPopover.toggle($event)" label="Status" [outlined]="true" icon="pi pi-filter"
+          iconPos="left" class="text-sm bg-white!" size="small" />
 
         <!-- Add Bank Button -->
-        <p-button
-          label="Add Bank"
-          icon="pi pi-plus"
-          severity="danger"
-          class="text-sm"
-          (click)="showDialog()"
-        />
+        <p-button label="Add Bank" icon="pi pi-plus" severity="danger" class="text-sm" (click)="showDialog()"
+          size="small" />
       </div>
     </div>
 
     <!-- Table -->
-    <p-table
-      [value]="bankingArrangements"
-      [tableStyle]="{ 'min-width': '100%' }"
-      class="custom-table"
-    >
+    <p-table [value]="bankingArrangements" [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
       <ng-template pTemplate="header">
         <tr>
           <th class="text-left">ID</th>
@@ -68,25 +42,19 @@
           <td>{{ arrangement.arrangementType }}</td>
           <td>{{ arrangement.sanctionAuthority }}</td>
           <td>
-            <span
-              class="custom-status-badge"
-              [ngClass]="{
+            <span class="custom-status-badge" [ngClass]="{
                 'status-active': arrangement.runningStatus === 'Active',
                 'status-npa': arrangement.runningStatus === 'NPA',
                 'status-default':
                   arrangement.runningStatus !== 'Active' && arrangement.runningStatus !== 'NPA',
-              }"
-            >
+              }">
               {{ arrangement.runningStatus }}
             </span>
           </td>
           <td>{{ arrangement.sanctionDate }}</td>
           <td class="text-center">
             <p-menu #menu [model]="getMenuItems(arrangement)" [popup]="true" appendTo="body" />
-            <button
-              (click)="menu.toggle($event)"
-              class="py-1 px-2 hover:bg-gray-100 rounded transition-colors"
-            >
+            <button (click)="menu.toggle($event)" class="py-1 px-2 hover:bg-gray-100 rounded transition-colors">
               <i class="pi pi-ellipsis-h text-gray-600"></i>
             </button>
           </td>
@@ -96,84 +64,44 @@
   </div>
 
   <!-- Add Banking Arrangement Dialog -->
-  <p-dialog
-    header="Add Banking Arrangement"
-    [modal]="true"
-    [(visible)]="dialogVisible"
-    [style]="{ width: '40rem' }"
-    [contentStyle]="{ overflow: 'visible' }"
-  >
+  <p-dialog header="Add Banking Arrangement" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '40rem' }"
+    [contentStyle]="{ overflow: 'visible' }">
     <p class="text-gray-500 mb-6">Fill in the banking arrangement details below</p>
 
     <div class="grid grid-cols-2 gap-6">
       <!-- Banking Arrangement Type -->
       <div class="flex flex-col gap-2">
-        <label for="arrangementType" class="font-semibold text-gray-900"
-          >Banking Arrangement Type</label
-        >
-        <p-select
-          id="arrangementType"
-          [(ngModel)]="selectedArrangementType"
-          [options]="arrangementTypes"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select arrangement type"
-          class="w-full"
-        />
+        <label for="arrangementType" class="field-label">Banking Arrangement Type</label>
+        <p-select id="arrangementType" [(ngModel)]="selectedArrangementType" [options]="arrangementTypes"
+          optionLabel="label" optionValue="value" placeholder="Select arrangement type" class="w-full" size="small" />
       </div>
 
       <!-- Original Sanction Authority -->
       <div class="flex flex-col gap-2">
-        <label for="sanctionAuthority" class="font-semibold text-gray-900"
-          >Original Sanction Authority</label
-        >
-        <input
-          pInputText
-          id="sanctionAuthority"
-          [(ngModel)]="sanctionAuthority"
-          placeholder="Enter sanction authority"
-          class="w-full"
-        />
+        <label for="sanctionAuthority" class="field-label">Original Sanction Authority</label>
+        <input pInputText id="sanctionAuthority" [(ngModel)]="sanctionAuthority" placeholder="Enter sanction authority"
+          class="w-full" pSize="small" />
       </div>
 
       <!-- Running Status -->
       <div class="flex flex-col gap-2">
-        <label for="runningStatus" class="font-semibold text-gray-900">Running Status</label>
-        <p-select
-          id="runningStatus"
-          [(ngModel)]="selectedRunningStatus"
-          [options]="runningStatuses"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Select running status"
-          class="w-full"
-        />
+        <label for="runningStatus" class="field-label">Running Status</label>
+        <p-select id="runningStatus" [(ngModel)]="selectedRunningStatus" [options]="runningStatuses" optionLabel="label"
+          optionValue="value" placeholder="Select running status" class="w-full" size="small" />
       </div>
 
       <!-- BOB Original Sanction Date -->
       <div class="flex flex-col gap-2">
-        <label for="sanctionDate" class="font-semibold text-gray-900"
-          >BOB Original Sanction Date</label
-        >
-        <p-datepicker
-          id="sanctionDate"
-          [(ngModel)]="sanctionDate"
-          dateFormat="dd-mm-yy"
-          placeholder="dd----yyyy"
-          [showIcon]="false"
-          class="w-full"
-        />
+        <label for="sanctionDate" class="field-label">BOB Original Sanction Date</label>
+        <p-datepicker id="sanctionDate" [(ngModel)]="sanctionDate" dateFormat="dd-mm-yy" placeholder="dd----yyyy"
+          [showIcon]="false" class="w-full" size="small" />
       </div>
     </div>
 
     <ng-template pTemplate="footer">
       <div class="flex justify-end gap-3">
-        <p-button label="Cancel" [outlined]="true" (click)="dialogVisible = false" />
-        <p-button
-          label="Add Banking Arrangement"
-          severity="danger"
-          (click)="dialogVisible = false"
-        />
+        <p-button label="Cancel" [outlined]="true" (click)="dialogVisible = false" size="small" />
+        <p-button label="Add Banking Arrangement" severity="danger" (click)="dialogVisible = false" size="small" />
       </div>
     </ng-template>
   </p-dialog>

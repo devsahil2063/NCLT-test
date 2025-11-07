@@ -1,67 +1,30 @@
 <div class="p-2 bg-gray-50 max-h-screen">
 
     <!-- Table Card -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-4">
         <!-- Search and Filter Bar -->
         <div class="flex items-center justify-between gap-4 p-4">
             <p-iconfield class="flex-1 max-w-md">
                 <p-inputicon class="pi pi-search" />
                 <input class="w-full bg-white!" type="text" variant="filled" pInputText
-                    placeholder="Search SARFAESI details..." />
+                    placeholder="Search SARFAESI details..." pSize="small" />
             </p-iconfield>
 
             <div class="flex items-center gap-2">
                 <!-- Status Filter Popover -->
                 <p-button (click)="statusPopover.toggle($event)" label="Status" [outlined]="true" icon="pi pi-filter"
-                    iconPos="left" class="text-sm bg-white!" />
-                <p-popover #statusPopover>
-                    <div class="flex flex-col gap-3 p-2 min-w-[200px]">
-                        <span class="font-semibold text-gray-900 text-lg">Filter by Status</span>
-                        <div class="flex flex-col gap-2">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" class="rounded" />
-                                <span class="text-gray-700">Pending</span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" class="rounded" />
-                                <span class="text-gray-700">Approved</span>
-                            </label>
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="checkbox" class="rounded" />
-                                <span class="text-gray-700">Rejected</span>
-                            </label>
-                        </div>
-                        <div class="w-full flex justify-between mt-2">
-                            <p-button label="Clear" [outlined]="true" (click)="clearStatusFilter()" />
-                            <p-button label="Apply" (click)="applyStatusFilter()" severity="danger" />
-                        </div>
-                    </div>
-                </p-popover>
+                    iconPos="left" class="bg-white!" size="small" />
 
                 <!-- Date Range Filter Popover -->
                 <p-button (click)="dateRangePopover.toggle($event)" label="Date Range" [outlined]="true"
-                    icon="pi pi-calendar" iconPos="left" class="text-sm bg-white!" />
-                <p-popover #dateRangePopover>
-                    <div class="flex flex-col gap-3 p-2 min-w-[250px]">
-                        <span class="font-semibold text-gray-900 text-lg">Filter by Date Range</span>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-gray-700 text-sm">From Date</label>
-                            <input type="date" class="p-2 border rounded" />
-                            <label class="text-gray-700 text-sm mt-2">To Date</label>
-                            <input type="date" class="p-2 border rounded" />
-                        </div>
-                        <div class="w-full flex justify-between mt-2">
-                            <p-button label="Clear" [outlined]="true" (click)="clearDateRangeFilter()" />
-                            <p-button label="Apply" (click)="applyDateRangeFilter()" severity="danger" />
-                        </div>
-                    </div>
-                </p-popover>
+                    icon="pi pi-calendar" iconPos="left" class="bg-white!" size="small" />
             </div>
         </div>
+    </div>
+    <div class="bg-white rounded-lg shadow-sm! overflow-hidden!">
 
         <!-- Table -->
-        <p-table [value]="sarfaesiData" showGridlines [tableStyle]="{ 'min-width': '100%' }"
-            class="sarfaesi-details-table">
+        <p-table [value]="sarfaesiData" showGridlines [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
             <ng-template pTemplate="header">
                 <tr>
                     <th class="text-left" rowspan="2">Sr. No</th>
@@ -83,7 +46,7 @@
             <ng-template pTemplate="body" let-data>
                 <tr class="cursor-pointer">
                     <td>{{ data.srNo }}</td>
-                    <td class="primary-text underline">{{ data.detailedAddress }}</td>
+                    <td class="text-primary! underline">{{ data.detailedAddress }}</td>
                     <td>{{ data.ownerName }}</td>
                     <td>{{ data.relationType }}</td>
                     <td>{{ data.demandNoticeDate }}</td>
@@ -103,3 +66,44 @@
         </p-table>
     </div>
 </div>
+
+<!-- Popovers -->
+<p-popover #statusPopover>
+    <div class="flex flex-col gap-3 p-2 min-w-[200px]">
+        <span class="font-semibold text-gray-900 text-lg">Filter by Status</span>
+        <div class="flex flex-col gap-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded" />
+                <span class="text-gray-700">Pending</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded" />
+                <span class="text-gray-700">Approved</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded" />
+                <span class="text-gray-700">Rejected</span>
+            </label>
+        </div>
+        <div class="w-full flex justify-between mt-2">
+            <p-button label="Clear" [outlined]="true" (click)="clearStatusFilter()" />
+            <p-button label="Apply" (click)="applyStatusFilter()" severity="danger" />
+        </div>
+    </div>
+</p-popover>
+
+<p-popover #dateRangePopover>
+    <div class="flex flex-col gap-3 p-2 min-w-[250px]">
+        <span class="font-semibold text-gray-900 text-lg">Filter by Date Range</span>
+        <div class="flex flex-col gap-2">
+            <label class="text-gray-700 text-sm">From Date</label>
+            <input type="date" class="p-2 border rounded" />
+            <label class="text-gray-700 text-sm mt-2">To Date</label>
+            <input type="date" class="p-2 border rounded" />
+        </div>
+        <div class="w-full flex justify-between mt-2">
+            <p-button label="Clear" [outlined]="true" (click)="clearDateRangeFilter()" />
+            <p-button label="Apply" (click)="applyDateRangeFilter()" severity="danger" />
+        </div>
+    </div>
+</p-popover>

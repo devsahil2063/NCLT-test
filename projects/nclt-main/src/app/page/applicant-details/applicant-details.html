@@ -3,8 +3,8 @@
     <p-card class="shadow-sm">
         <!-- Header -->
         <div class="mb-6">
-            <h2 class="text-xl font-semibold mb-1 page-heading">Applicant Details</h2>
-            <p class="text-sm text-body">Bank and authorized officer information</p>
+            <h2 class="section-heading">Applicant Details</h2>
+            <p class="section-subheading">Bank and authorized officer information</p>
         </div>
 
         <p-divider></p-divider>
@@ -13,7 +13,7 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mt-6">
             <!-- Applicant Name -->
             <div class="flex flex-col gap-2">
-                <label for="applicantName" class="text-sm font-medium field-label">
+                <label for="applicantName" class="field-label">
                     Applicant Name <span class="text-red-500">*</span>
                 </label>
                 <input id="applicantName" type="text" pInputText pSize="small" [(ngModel)]="applicantName"
@@ -22,7 +22,7 @@
 
             <!-- Filing Branch -->
             <div class="flex flex-col gap-2">
-                <label for="filingBranch" class="text-sm font-medium field-label">
+                <label for="filingBranch" class="field-label">
                     Filing Branch <span class="text-red-500">*</span>
                 </label>
                 <p-select id="filingBranch" [(ngModel)]="filingBranch" [options]="filingBranchOptions"
@@ -32,7 +32,7 @@
 
             <!-- Branch Code -->
             <div class="flex flex-col gap-2">
-                <label for="branchCode" class="text-sm font-medium field-label">
+                <label for="branchCode" class="field-label">
                     Branch Code
                 </label>
                 <input id="branchCode" type="text" pInputText pSize="small" [(ngModel)]="branchCode"
@@ -41,7 +41,7 @@
 
             <!-- Authorized Officer Name -->
             <div class="flex flex-col gap-2">
-                <label for="authorizedOfficerName" class="text-sm font-medium field-label">
+                <label for="authorizedOfficerName" class="field-label">
                     Authorized Officer Name <span class="text-red-500">*</span>
                 </label>
                 <input id="authorizedOfficerName" type="text" pSize="small" pInputText
@@ -50,7 +50,7 @@
 
             <!-- Authorized Officer Designation -->
             <div class="flex flex-col gap-2">
-                <label for="authorizedOfficerDesignation" class="text-sm font-medium field-label">
+                <label for="authorizedOfficerDesignation" class="field-label">
                     Authorized Officer Designation <span class="text-red-500">*</span>
                 </label>
                 <input id="authorizedOfficerDesignation" type="text" pSize="small" pInputText
@@ -59,7 +59,7 @@
 
             <!-- Authorized Officer Contact -->
             <div class="flex flex-col gap-2">
-                <label for="authorizedOfficerContact" class="text-sm font-medium field-label">
+                <label for="authorizedOfficerContact" class="field-label">
                     Authorized Officer Contact <span class="text-red-500">*</span>
                 </label>
                 <input id="authorizedOfficerContact" type="text" pSize="small" pInputText
@@ -68,7 +68,7 @@
 
             <!-- Authorized Officer Email -->
             <div class="flex flex-col gap-2 md:col-span-2">
-                <label for="authorizedOfficerEmail" class="text-sm font-medium field-label">
+                <label for="authorizedOfficerEmail" class="field-label">
                     Authorized Officer Email <span class="text-red-500">*</span>
                 </label>
                 <input id="authorizedOfficerEmail" type="email" pSize="small" pInputText
@@ -78,8 +78,8 @@
 
         <!-- Action Buttons -->
         <div class="mt-8 flex justify-end gap-3">
-            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()"></p-button>
-            <p-button label="Save Details" severity="danger" (onClick)="onSave()"></p-button>
+            <p-button label="Cancel" [outlined]="true" (onClick)="onCancel()" size="small"></p-button>
+            <p-button label="Save Details" severity="danger" (onClick)="onSave()" size="small"></p-button>
         </div>
     </p-card>
 </div>

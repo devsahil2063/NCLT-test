@@ -5,25 +5,14 @@
     <div class="flex items-center justify-between gap-4 p-4">
       <p-iconfield class="flex-1 max-w-md">
         <p-inputicon class="pi pi-search" />
-        <input
-          class="w-full bg-white!"
-          type="text"
-          variant="filled"
-          pInputText
-          placeholder="Search by Name, Type..."
-        />
+        <input class="w-full bg-white!" type="text" variant="filled" pSize="small" pInputText
+          placeholder="Search by Name, Type..." />
       </p-iconfield>
 
       <div class="flex items-center gap-2">
         <!-- Type Filter Popover -->
-        <p-button
-          (click)="typePopover.toggle($event)"
-          label="Type"
-          [outlined]="true"
-          icon="pi pi-filter"
-          iconPos="left"
-          class="text-sm bg-white!"
-        />
+        <p-button (click)="typePopover.toggle($event)" label="Type" [outlined]="true" icon="pi pi-filter" iconPos="left"
+          class="text-sm bg-white!" size="small" />
         <p-popover #typePopover>
           <div class="flex flex-col gap-3 p-2 min-w-[200px]">
             <span class="font-semibold text-gray-900 text-lg">Filter by Type</span>
@@ -51,12 +40,7 @@
     </div>
 
     <!-- Table -->
-    <p-table
-      [value]="guarantors"
-      showGridlines
-      [tableStyle]="{ 'min-width': '100%' }"
-      class="custom-table"
-    >
+    <p-table [value]="guarantors" showGridlines [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
       <ng-template pTemplate="header">
         <tr>
           <th class="text-left" rowspan="2">Name</th>

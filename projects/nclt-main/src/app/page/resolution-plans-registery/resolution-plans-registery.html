@@ -1,16 +1,16 @@
 <div class="p-2 bg-gray-50 min-h-screen">
     <!-- Header Card -->
     <div class="mb-6">
-        <h2 class="text-xl font-semibold text-gray-900">Resolution Plans Registry</h2>
-        <p class="text-sm text-gray-500 mt-1">Track all submitted resolution plans</p>
+        <h2 class="section-heading">Resolution Plans Registry</h2>
+        <p class="section-subheading">Track all submitted resolution plans</p>
     </div>
-    <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
+    <p-card class="shadow-sm mb-4">
 
         <!-- Form Fields -->
         <div class="grid grid-cols-2 gap-4">
             <!-- Name of Resolution Applicant -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Name of Resolution Applicant <span class="text-red-500">*</span>
                 </label>
                 <input type="text" pSize="small" pInputText [(ngModel)]="applicantName"
@@ -19,26 +19,25 @@
 
             <!-- Total No. of Resolution Plans Submitted -->
             <div class="flex flex-col gap-2">
-                <label class="text-gray-900 font-medium text-sm">
+                <label class="field-label">
                     Total No. of Resolution Plans Submitted
                 </label>
                 <p-inputnumber size="small" [(ngModel)]="totalPlansSubmitted" [disabled]="true" placeholder="3"
                     class="w-full" />
             </div>
         </div>
-    </div>
+    </p-card>
 
     <!-- Table Card -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <p-card class="shadow-sm custom-card">
         <!-- Table Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-900">Resolution Plans</h3>
-            <p-button label="Add Plan" icon="pi pi-plus" severity="danger" (click)="addPlan()" class="text-sm" />
+            <h3 class="section-heading">Resolution Plans</h3>
+            <p-button label="Add Plan" icon="pi pi-plus" severity="danger" (click)="addPlan()" size="small" />
         </div>
 
         <!-- Table -->
-        <p-table [value]="resolutionPlans" showGridlines [tableStyle]="{ 'min-width': '100%' }"
-            class="resolution-plans-table">
+        <p-table [value]="resolutionPlans" showGridlines [tableStyle]="{ 'min-width': '100%' }" class="custom-table">
             <ng-template pTemplate="header">
                 <tr>
                     <th class="text-left">Sr. No</th>
@@ -58,13 +57,13 @@
             <ng-template pTemplate="body" let-plan>
                 <tr>
                     <td>{{ plan.srNo }}</td>
-                    <td class="font-medium">{{ plan.applicantName }}</td>
-                    <td class="primary-text font-medium">{{ formatCurrency(plan.amountOffered) }}</td>
-                    <td class="primary-text font-medium">{{ formatCurrency(plan.upfrontPayment) }}</td>
+                    <td class="text-(--p-text-sectionheading)!">{{ plan.applicantName }}</td>
+                    <td>{{ formatCurrency(plan.amountOffered) }}</td>
+                    <td>{{ formatCurrency(plan.upfrontPayment) }}</td>
                     <td>{{ plan.paymentTimeline }}</td>
-                    <td class="primary-text font-medium">{{ formatCurrency(plan.amountToBoB) }}</td>
-                    <td class="text-green-600 font-medium">{{ plan.bobRecoveryPercent }}%</td>
-                    <td class="text-red-600 font-medium">{{ plan.bobHaircutPercent }}%</td>
+                    <td class="text-(--p-text-sectionheading)!">{{ formatCurrency(plan.amountToBoB) }}</td>
+                    <td class="text-green-600! font-medium">{{ plan.bobRecoveryPercent }}%</td>
+                    <td class="text-red-600! font-medium">{{ plan.bobHaircutPercent }}%</td>
                     <td>{{ plan.gistOfPlan }}</td>
                     <td>
                         <span [class]="getRecommendationClass(plan.rpRecommendation)">
@@ -99,5 +98,5 @@
                 </tr>
             </ng-template>
         </p-table>
-    </div>
+    </p-card>
 </div>

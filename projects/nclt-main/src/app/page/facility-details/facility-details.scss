@@ -3,12 +3,15 @@
     .p-datatable-thead > tr > th {
       background-color: white;
       border-bottom: 1px solid var(--p-table-header-border-color) !important;
+      white-space: nowrap;
+      min-width: 120px;
     }
 
     .p-datatable-tbody > tr {
       > td {
         border-bottom: 1px solid var(--p-table-header-border-color) !important;
         padding: 1rem;
+        white-space: nowrap;
       }
     }
   }

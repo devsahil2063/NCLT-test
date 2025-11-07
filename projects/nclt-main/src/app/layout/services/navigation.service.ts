@@ -78,6 +78,13 @@ export class NavigationService implements OnDestroy {
     private readonly activeRouteSubject = new BehaviorSubject<string | null>(null);
     private readonly previousDisplayModeSubject = new BehaviorSubject<'normal' | 'compact' | null>(null);
 
+    // State preservation for viewport transitions
+    private savedSubSidebarState: {
+        items: MenuItem[];
+        title: string;
+        parentRoute: string | null;
+    } | null = null;
+
     // Subject for cleanup
     private readonly destroy$ = new Subject<void>();
 
@@ -475,13 +482,21 @@ export class NavigationService implements OnDestroy {
             // In overlay mode, sidebar should be hidden by default
             this.hideMainSidebar();
 
-            // If sub-sidebar is open, ensure main sidebar is in compact mode
+            // Save and close sub-sidebar when transitioning to mobile view
             if (this.isSubSidebarOpenSubject.value) {
-                this.setDisplayMode('compact');
-            } else {
-                // Default to normal mode in overlay when sub-sidebar is closed
-                this.setDisplayMode('normal');
+                // Save the current sub-sidebar state
+                this.savedSubSidebarState = {
+                    items: this.subSidebarItemsSubject.value,
+                    title: this.subSidebarTitleSubject.value,
+                    parentRoute: this.subSidebarParentRouteSubject.value,
+                };
+
+                // Close sub-sidebar without navigating
+                this.closeSubSidebar(false);
             }
+
+            // Default to normal mode in overlay
+            this.setDisplayMode('normal');
         }
 
         // When transitioning to relative mode (desktop)
@@ -489,15 +504,26 @@ export class NavigationService implements OnDestroy {
             // In relative mode, sidebar should be visible
             this.showMainSidebar();
 
-            // Restore previous display mode if available, otherwise default to normal
-            const previousMode = this.previousDisplayModeSubject.value;
-            if (previousMode && !this.isSubSidebarOpenSubject.value) {
-                this.setDisplayMode(previousMode);
-            } else if (this.isSubSidebarOpenSubject.value) {
-                // Keep compact mode if sub-sidebar is open
-                this.setDisplayMode('compact');
+            // Restore sub-sidebar if it was open before transitioning to mobile
+            if (this.savedSubSidebarState) {
+                this.openSubSidebar(
+                    this.savedSubSidebarState.items,
+                    this.savedSubSidebarState.title,
+                    this.savedSubSidebarState.parentRoute || undefined
+                );
+                // Clear saved state after restoration
+                this.savedSubSidebarState = null;
             } else {
-                this.setDisplayMode('normal');
+                // Restore previous display mode if available, otherwise default to normal
+                const previousMode = this.previousDisplayModeSubject.value;
+                if (previousMode && !this.isSubSidebarOpenSubject.value) {
+                    this.setDisplayMode(previousMode);
+                } else if (this.isSubSidebarOpenSubject.value) {
+                    // Keep compact mode if sub-sidebar is open
+                    this.setDisplayMode('compact');
+                } else {
+                    this.setDisplayMode('normal');
+                }
             }
         }
     }
@@ -620,13 +646,15 @@ export class NavigationService implements OnDestroy {
 
     /**
      * Closes the sub-sidebar and restores the previous display mode
-     * Navigates to the parent route if available
+     * @param navigateToParent - Whether to navigate back to the parent route (default: true)
      */
-    public closeSubSidebar(): void {
-        // Navigate to parent route if available
-        const parentRoute = this.subSidebarParentRouteSubject.value;
-        if (parentRoute) {
-            this.router.navigate([parentRoute]);
+    public closeSubSidebar(navigateToParent: boolean = true): void {
+        // Navigate to parent route if available and requested
+        if (navigateToParent) {
+            const parentRoute = this.subSidebarParentRouteSubject.value;
+            if (parentRoute) {
+                this.router.navigate([parentRoute]);
+            }
         }
 
         this.isSubSidebarOpenSubject.next(false);

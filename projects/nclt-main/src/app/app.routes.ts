@@ -34,7 +34,7 @@ import { CocApproval } from './page/coc-approval/coc-approval';
 import { NcltFinalApproval } from './page/nclt-final-approval/nclt-final-approval';
 import { Hearing } from './page/hearing/hearing';
 import { CustomerList } from './page/customers/components/customer-list/customer-list';
-import { CasesList } from './page/cases/components/search/cases-list';
+import { CasesList } from './page/cases/components/cases-list/cases-list';
 
 export const routes: Routes = [
   {

@@ -86,7 +86,7 @@ body {
 
 // Custom Tab Component
 .custom-tab {
-  @apply py-2 px-4 rounded-md text-[1rem] font-medium transition-all duration-200 ease-in-out bg-white cursor-pointer border border-(--p-tab-hover-border) text-(--p-tab-inactive-color) hover:bg-(--p-tab-hover-bg);
+  @apply py-1 px-2 md:py-2 md:px-4 rounded-sm md:rounded-md text-sm md:text-[1rem] font-medium transition-all duration-200 ease-in-out bg-white cursor-pointer border border-(--p-tab-hover-border) text-(--p-tab-inactive-color) hover:bg-(--p-tab-hover-bg);
 
   &.active {
     @apply text-(--p-tab-active-color) border-(--p-tab-active-border);
@@ -131,7 +131,7 @@ body {
 // Custome Class for Tables
 .custom-table {
   .p-datatable-thead > tr > th {
-    @apply border-b border-(--p-table-header-border-color)! p-4! text-sm font-semibold text-(--p-text-sectionheading) leading-[0.05em];
+    @apply border-b border-(--p-table-header-border-color)! p-4! text-sm font-semibold text-(--p-text-sectionheading) leading-[0.05em] text-nowrap;
   }
 
   .p-datatable-tbody > tr {

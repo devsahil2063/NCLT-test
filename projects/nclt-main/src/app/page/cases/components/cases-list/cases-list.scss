@@ -1,0 +1,17 @@
+// Custom table styles using theme variables
+::ng-deep {
+  // Customer selection table styles
+  .custom-table {
+    .p-datatable-thead > tr > th {
+      background-color: #fff;
+      white-space: nowrap;
+      min-width: 120px;
+    }
+
+    .p-datatable-tbody > tr {
+      > td {
+        white-space: nowrap;
+      }
+    }
+  }
+}

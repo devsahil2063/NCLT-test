@@ -3,40 +3,15 @@
   <div class="bg-white rounded-lg shadow-sm overflow-hidden">
     <!-- Search and Filter Bar -->
     <div class="flex items-center justify-between gap-4 p-4">
-      <p-iconfield class="flex-1 max-w-md">
+      <p-iconfield class="w-full sm:md-min-md md:max-w-lg">
         <p-inputicon class="pi pi-search" />
         <input class="w-full bg-white!" type="text" variant="filled" pSize="small" pInputText
           placeholder="Search by Name, Type..." />
       </p-iconfield>
 
-      <div class="flex items-center gap-2">
-        <!-- Type Filter Popover -->
-        <p-button (click)="typePopover.toggle($event)" label="Type" [outlined]="true" icon="pi pi-filter" iconPos="left"
-          class="text-sm bg-white!" size="small" />
-        <p-popover #typePopover>
-          <div class="flex flex-col gap-3 p-2 min-w-[200px]">
-            <span class="font-semibold text-gray-900 text-lg">Filter by Type</span>
-            <div class="flex flex-col gap-2">
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="rounded" />
-                <span class="text-gray-700">Personal Guarantee</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="rounded" />
-                <span class="text-gray-700">Corporate Guarantee</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" class="rounded" />
-                <span class="text-gray-700">Bank Guarantee</span>
-              </label>
-            </div>
-            <div class="w-full flex justify-between mt-2">
-              <p-button label="Clear" [outlined]="true" (click)="clearTypeFilter()" />
-              <p-button label="Apply" (click)="applyTypeFilter()" severity="danger" />
-            </div>
-          </div>
-        </p-popover>
-      </div>
+      <!-- Type Filter Popover -->
+      <p-button (click)="typePopover.toggle($event)" label="Type" [outlined]="true" icon="pi pi-filter" iconPos="left"
+        class="text-sm bg-white!" size="small" />
     </div>
 
     <!-- Table -->
@@ -71,3 +46,28 @@
     </p-table>
   </div>
 </div>
+
+<!-- Popovers -->
+<p-popover #typePopover>
+  <div class="flex flex-col gap-3 p-2 min-w-[200px]">
+    <span class="font-semibold text-gray-900 text-lg">Filter by Type</span>
+    <div class="flex flex-col gap-2">
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="rounded" />
+        <span class="text-gray-700">Personal Guarantee</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="rounded" />
+        <span class="text-gray-700">Corporate Guarantee</span>
+      </label>
+      <label class="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" class="rounded" />
+        <span class="text-gray-700">Bank Guarantee</span>
+      </label>
+    </div>
+    <div class="w-full flex justify-between mt-2">
+      <p-button label="Clear" [outlined]="true" (click)="clearTypeFilter()" />
+      <p-button label="Apply" (click)="applyTypeFilter()" severity="danger" />
+    </div>
+  </div>
+</p-popover>

@@ -137,9 +137,9 @@ export class AppSidebarComponent implements OnInit, OnDestroy {
      * Closes both main sidebar and sub-sidebar when clicking on the backdrop
      */
     onBackdropClick(): void {
-        // Close sub-sidebar if open
+        // Close sub-sidebar if open (without navigating back)
         if (this.navigationService.isSubSidebarOpen()) {
-            this.navigationService.closeSubSidebar();
+            this.navigationService.closeSubSidebar(false);
         }
         // Hide main sidebar
         this.navigationService.hideMainSidebar();

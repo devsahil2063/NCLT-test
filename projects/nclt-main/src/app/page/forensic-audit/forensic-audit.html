@@ -17,9 +17,9 @@
 
 
     <!-- No Option - Remarks Section -->
-    <div *ngIf="isForensicAuditDone === false" class="space-y-4">
-      <div>
-        <label class="section-heading">
+    <div *ngIf="isForensicAuditDone === false">
+      <div class="flex flex-col gap-2">
+        <label class="field-label">
           Remarks (Why FA is not done) <span class="text-red-500">*</span>
         </label>
         <textarea pInputTextarea [(ngModel)]="remarks"
@@ -36,8 +36,8 @@
 
     <!--Yes Option - Search and Add Button -->
     <div *ngIf="isForensicAuditDone === true" class="bg-white rounded-lg shadow-sm p-6">
-      <div class="flex items-center justify-between gap-4">
-        <p-iconfield class="flex-1 max-w-md">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <p-iconfield class="w-full sm:md-min-md md:max-w-lg">
           <p-inputicon class="pi pi-search" />
           <input class="w-full bg-white!" type="text" pInputText [(ngModel)]="searchText"
             placeholder="Search forensic audit..." pSize="small" />

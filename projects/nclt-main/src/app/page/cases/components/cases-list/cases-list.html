@@ -1,11 +1,12 @@
 <div class="p-2 bg-gray-50 min-h-screen">
     <!-- Header Section -->
-    <div class="mb-6 flex items-center justify-between">
-        <div>
+    <div
+        class="mb-6 flex flex-col md:flex-row items-center md:items-start justify-start md:justify-between gap-4 md:gap-0">
+        <div class="flex flex-col items-start w-full md:w-fit">
             <h1 class="page-heading">Cases</h1>
             <p class="page-subheading">Manage NCLT cases and proceedings</p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 w-full md:w-fit justify-between">
             <div class="flex items-center gap-2">
                 <p-button (click)="totalOSPopover.toggle($event)" label="Total O/S" [outlined]="true" size="small"
                     icon="pi pi-chevron-down" iconPos="right" class="text-sm bg-white!" />
@@ -17,17 +18,19 @@
     </div>
 
     <!-- Search and Filter Bar -->
-    <div class="flex items-center gap-4 mb-4">
-        <p-iconfield class="bg-white min-w-lg">
-            <p-inputicon class="pi pi-search" />
-            <input class="w-full bg-white!" type="text" pSize="small" variant="filled" pInputText
-                placeholder="Search by Case ID, Customer Name, PAN..." />
-        </p-iconfield>
-    </div>
+    <div
+        class="w-full flex flex-col sm:flex-row md:flex-col items-start sm:items-center md:items-start justify-between md gap-4 mb-4">
 
-    <!-- Tabs -->
-    <div class="mb-4">
-        <div class="flex gap-3">
+        <div class="flex items-center gap-4 w-full">
+            <p-iconfield class="bg-white w-full sm:md-min-md md:max-w-lg">
+                <p-inputicon class="pi pi-search" />
+                <input class="w-full bg-white!" type="text" pSize="small" variant="filled" pInputText
+                    placeholder="Search by Case ID, Customer Name, PAN..." />
+            </p-iconfield>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-1.5 md:gap-3">
             <button *ngFor="let tab of tabs" (click)="activeTab = tab.value" class="custom-tab"
                 [class.active]="activeTab === tab.value">
                 {{ tab.label }}
@@ -85,7 +88,7 @@
             </ng-template>
         </p-table>
     </div>
-    <div class="py-4 flex items-center justify-between">
+    <div class="py-4 flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 justify-between">
         <div class="pagination-text">Showing 1 to 10 of {{ totalRecords }} customers</div>
         <p-paginator [first]="first" [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)"
             [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>

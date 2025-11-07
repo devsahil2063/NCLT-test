@@ -72,6 +72,10 @@ export class AppSubSidebarComponent implements OnInit, OnDestroy {
                 if (!open) {
                     this.expandedItems.clear();
                 } else {
+                    // Expand to selected item when sub-sidebar opens
+                    if (this.selectedItemId) {
+                        this.expandToSelectedItem(this.selectedItemId);
+                    }
                     // Focus first menu item when sub-sidebar opens
                     this.focusFirstMenuItem();
                 }
@@ -103,6 +107,10 @@ export class AppSubSidebarComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe((id) => {
                 this.selectedItemId = id;
+                // Expand all parent groups to the selected item
+                if (id && this.isOpen) {
+                    this.expandToSelectedItem(id);
+                }
             });
     }
 
@@ -153,6 +161,34 @@ export class AppSubSidebarComponent implements OnInit, OnDestroy {
         } else {
             this.expandedItems.add(itemId);
         }
+    }
+
+    /**
+     * Expands all parent groups leading to the selected item
+     * Recursively searches through the menu tree and expands ancestors
+     */
+    private expandToSelectedItem(selectedId: string): void {
+        const findAndExpandParents = (items: MenuItem[], targetId: string, parentIds: string[] = []): boolean => {
+            for (const item of items) {
+                if (item.id === targetId) {
+                    // Found the target item - expand all parents
+                    parentIds.forEach(parentId => this.expandedItems.add(parentId));
+                    return true;
+                }
+
+                if (item.children && item.children.length > 0) {
+                    // Recursively search in children
+                    const found = findAndExpandParents(item.children, targetId, [...parentIds, item.id]);
+                    if (found) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        // Search through all items and expand parents
+        findAndExpandParents(this.items, selectedId);
     }
 
     /**

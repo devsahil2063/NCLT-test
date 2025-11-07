@@ -1,6 +1,6 @@
 <div class="sub-sidebar-item" [class.sub-sidebar-item--selected]="isSelected"
     [class.sub-sidebar-item--has-children]="hasChildren" [class.sub-sidebar-item--disabled]="item.disabled"
-    [attr.data-nesting-level]="nestingLevel" [style.padding-left.rem]="nestingLevel > 1 ? nestingLevel * 0.25 : null">
+    [attr.data-nesting-level]="nestingLevel">
     <button class="sub-sidebar-item__button" (click)="onClick()" [attr.aria-label]="item.label"
         [attr.aria-expanded]="hasChildren ? isExpanded : null" [attr.aria-current]="isSelected ? 'page' : null"
         [attr.aria-disabled]="item.disabled ? 'true' : null" [disabled]="item.disabled" pRipple>

@@ -1,15 +1,14 @@
 <div class="min-h-screen bg-page p-2">
   <!-- Header Section -->
-  <div class="bg-white rounded-lg shadow-sm p-6 flex items-center justify-between mb-4">
+  <div
+    class="bg-white rounded-lg shadow-sm p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-4">
     <!-- Search Bar -->
-    <div class="mb-4 flex items-center gap-4">
-      <p-iconfield class="bg-white min-w-lg">
-        <p-inputicon class="pi pi-search" />
-        <input class="w-full bg-white" type="text" pInputText [(ngModel)]="searchTerm" placeholder="Search hearings..."
-          pSize="small" />
-      </p-iconfield>
-    </div>
-    <div class="flex items-center gap-3">
+    <p-iconfield class="w-full sm:md-min-md md:max-w-lg">
+      <p-inputicon class="pi pi-search" />
+      <input class="w-full bg-white" type="text" pInputText [(ngModel)]="searchTerm" placeholder="Search hearings..."
+        pSize="small" />
+    </p-iconfield>
+    <div class="flex flex-row items-center flex-wrap gap-3 w-full lg:w-fit">
       <p-button label="Outcome" [outlined]="true" icon="pi pi-filter" styleClass="bg-white" size="small" />
       <p-button label="Date Range" [outlined]="true" icon="pi pi-calendar" styleClass="bg-white" size="small" />
       <p-button label="Add Hearing" icon="pi pi-plus" severity="danger" (onClick)="showAddDialog()" size="small" />

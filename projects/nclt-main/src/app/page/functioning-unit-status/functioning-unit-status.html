@@ -13,7 +13,7 @@
       <p class="text-sm">Provide details about the operational status of the unit</p>
       <p-divider></p-divider>
 
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-3">
         <!-- Status Dropdown -->
         <div class="flex flex-col gap-2">
           <label for="status" class="field-label">
@@ -33,7 +33,7 @@
         </div>
 
         <!-- Remarks (conditional - shown for all except Running) -->
-        <div class="flex flex-col gap-2" [ngClass]="{ 'md:col-span-2': status !== 'Not Running' }"
+        <div class="flex flex-col gap-2" [ngClass]="{ 'md:col-span-2 ': status !== 'Not Running' }"
           *ngIf="status && status !== 'Running'">
           <label for="remarks" class="field-label">
             Remarks <span class="text-red-500">*</span>

@@ -8,25 +8,24 @@
   </div>
 
   <!-- Search and Filter Bar -->
-  <div class="flex items-center justify-between gap-4 mb-4">
-    <p-iconfield class="min-w-lg">
+  <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
+    <p-iconfield class="w-full sm:md-min-md md:max-w-lg">
       <p-inputicon class="pi pi-search" />
       <input class="w-full bg-white!" type="text" variant="filled" pInputText
         placeholder="Search by Facility ID, Type..." pSize="small" />
     </p-iconfield>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center justify-between gap-2 w-full md:w-fit">
       <!-- Facility Type Filter -->
-      <p-select [(ngModel)]="selectedFacilityType" [options]="facilityTypeOptions" optionLabel="label"
-        optionValue="value" placeholder="Facility Type" class="text-sm bg-white!" size="small" />
-
-      <!-- Branch Code Filter -->
-      <p-select [(ngModel)]="selectedBranchCode" [options]="branchCodeOptions" optionLabel="label" optionValue="value"
-        placeholder="Branch Code" class="text-sm bg-white!" size="small" />
-
-      <div>
-        <p-button label="Add Facility" icon="pi pi-plus" severity="danger" (click)="showDialog()" size="small" />
+      <div class="flex items-center gap-2">
+        <p-select [(ngModel)]="selectedFacilityType" [options]="facilityTypeOptions" optionLabel="label"
+          optionValue="value" placeholder="Facility Type" class="text-sm bg-white!" size="small" />
+        <!-- Branch Code Filter -->
+        <p-select [(ngModel)]="selectedBranchCode" [options]="branchCodeOptions" optionLabel="label" optionValue="value"
+          placeholder="Branch Code" class="text-sm bg-white!" size="small" />
       </div>
+
+      <p-button label="Add Facility" icon="pi pi-plus" severity="danger" (click)="showDialog()" size="small" />
     </div>
   </div>
 
@@ -67,13 +66,12 @@
   </div>
 
   <!-- Footer with Pagination -->
-  <div class="py-4 flex items-center justify-between">
-    <div class="text-md font-semibold text-muted text-gray-500!">
+  <div class="py-4 flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-0 justify-between">
+    <div class="pagination-text">
       Showing 1 to 10 of {{ filteredFacilities.length }} facilities
     </div>
     <p-paginator [first]="first" [rows]="rows" [totalRecords]="filteredFacilities.length"
-      (onPageChange)="onPageChange($event)" [showPageLinks]="true" [showFirstLastIcon]="true"
-      class="text-md font-semibold"></p-paginator>
+      (onPageChange)="onPageChange($event)" [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
   </div>
 
   <!-- Add New Facility Dialog -->

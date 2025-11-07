@@ -1,27 +1,20 @@
 <!-- Main Sidebar Component Template -->
 <!-- Backdrop for overlay mode - only shown when sidebar is visible in overlay mode -->
 @if (positioningMode === 'overlay' && isVisible) {
-  <div class="sidebar-backdrop" (click)="onBackdropClick()"></div>
+<div class="sidebar-backdrop" (click)="onBackdropClick()"></div>
 }
 
-<aside
-  class="sidebar"
-  [class.sidebar--normal]="displayMode === 'normal'"
-  [class.sidebar--compact]="displayMode === 'compact'"
-  [class.sidebar--relative]="positioningMode === 'relative'"
-  [class.sidebar--overlay]="positioningMode === 'overlay'"
-  [class.sidebar--visible]="isVisible"
-  role="navigation"
-  aria-label="Main navigation"
-  [attr.inert]="positioningMode === 'overlay' && !isVisible ? true : null"
->
+<aside class="sidebar" [class.sidebar--normal]="displayMode === 'normal'"
+  [class.sidebar--compact]="displayMode === 'compact'" [class.sidebar--relative]="positioningMode === 'relative'"
+  [class.sidebar--overlay]="positioningMode === 'overlay'" [class.sidebar--visible]="isVisible" role="navigation"
+  aria-label="Main navigation" [attr.inert]="positioningMode === 'overlay' && !isVisible ? true : null">
   <!-- Header -->
   <div class="sidebar__header">
     <div class="sidebar__logo flex flex-col items-center justify-center w-full!">
-      <img src="/logo.webp" alt="NCLT" class="max-h-10" />
-      <span class="sidebar__logo-text text-xs! text-(--p-text-sectionheading)!"
-        >NCLT Case Tracking Module</span
-      >
+      <img src="/logo.webp" alt="NCLT" class="max-h-11 " />
+      <span *ngIf="displayMode !== 'compact'" class="sidebar__logo-text text-xs! text-(--p-text-sectionheading)!">NCLT
+        Case Tracking
+        Module</span>
     </div>
     <!-- @if (positioningMode === 'relative') {
         <button class="sidebar__toggle" (click)="toggleMode()" pButton [text]="true" [rounded]="true"
@@ -36,22 +29,16 @@
   <!-- Navigation -->
   <nav class="sidebar__nav" aria-label="Primary menu" #sidebarNav>
     @for (section of menuSections; track section.title) {
-      <div class="sidebar__section">
-        <h3 class="sidebar__section-title" [attr.aria-hidden]="displayMode === 'compact'">
-          {{ section.title }}
-        </h3>
-        @for (item of section.items; track item.id) {
-          <app-sidebar-menu-item
-            [item]="item"
-            [isCompact]="displayMode === 'compact'"
-            [isSelected]="isItemSelected(item.id)"
-            [nestingLevel]="1"
-            [selectedItemId]="selectedItemId"
-            [expandedItemIds]="expandedItems"
-            (itemClick)="onItemClick($event)"
-          ></app-sidebar-menu-item>
-        }
-      </div>
+    <div class="sidebar__section">
+      <h3 class="sidebar__section-title" [attr.aria-hidden]="displayMode === 'compact'">
+        {{ section.title }}
+      </h3>
+      @for (item of section.items; track item.id) {
+      <app-sidebar-menu-item [item]="item" [isCompact]="displayMode === 'compact'"
+        [isSelected]="isItemSelected(item.id)" [nestingLevel]="1" [selectedItemId]="selectedItemId"
+        [expandedItemIds]="expandedItems" (itemClick)="onItemClick($event)"></app-sidebar-menu-item>
+      }
+    </div>
     }
   </nav>
 

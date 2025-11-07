@@ -1,0 +1,29 @@
+// Custom table styles using theme variables
+::ng-deep {
+  // Customer selection table styles
+  .customer-selection-table {
+    .p-datatable-thead > tr > th {
+      background-color: var(--p-table-header-background);
+      border-bottom: 1px solid var(--p-table-header-border-color) !important;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--p-text-sectionheading);
+    }
+
+    .p-datatable-tbody > tr {
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+
+      &:hover {
+        background-color: var(--p-table-row-hover-background);
+      }
+
+      > td {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        color: var(--p-text-body);
+      }
+    }
+  }
+}

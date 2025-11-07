@@ -33,201 +33,84 @@ import { InternalAssesment } from './page/internal-assesment/internal-assesment'
 import { CocApproval } from './page/coc-approval/coc-approval';
 import { NcltFinalApproval } from './page/nclt-final-approval/nclt-final-approval';
 import { Hearing } from './page/hearing/hearing';
+import { CustomerList } from './page/customers/components/customer-list/customer-list';
+import { CasesList } from './page/cases/components/search/cases-list';
 
 export const routes: Routes = [
   {
     path: 'customers',
     component: Customers,
     children: [
-      // { path: 'basic-details', component: BasicDetails },
-      // { path: 'facility-details', component: Customers },
-      // { path: 'other-parties', component: Customers },
-      // { path: 'security-details', component: Customers },
-      // { path: 'functioning-unit-status', component: Customers },
+      { path: '', component: CustomerList },
+      { path: 'basic-details', component: BasicDetails },
+      { path: 'facility-details', component: FacilityDetails },
+      { path: 'other-parties', component: OtherParties },
+      { path: 'security-details', component: SecurityDetails },
+      { path: 'functioning-unit-status', component: FunctioningUnitStatus },
     ],
   },
   {
     path: 'cases',
     component: Cases,
-    // children: [
-    //     { path: 'banking-arrangement', component: Cases },
-    //     { path: 'guarantor', component: Cases },
-    //     { path: 'security', component: Cases },
-    //     { path: 'forensic-audit', component: Cases },
-    //     { path: 'look-out-circular', component: Cases },
-    //     { path: 'sarfaesi-details', component: Cases },
-    //     { path: 'drt-suit', component: Cases },
-    //     {
-    //         path: 'cirp',
-    //         children: [
-    //             {
-    //                 path: 'admission',
-    //                 children: [
-    //                     { path: 'filing', component: Cases },
-    //                     {
-    //                         path: 'order',
-    //                         children: [
-    //                             { path: 'nclt', component: Cases },
-    //                             { path: 'irp', component: Cases },
-    //                             { path: 'moratorium', component: Cases },
-    //                             { path: 'timeline', component: Cases },
-    //                         ]
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 path: 'claims',
-    //                 children: [
-    //                     { path: 'bank-baroda', component: Cases },
-    //                     { path: 'coc-formation', component: Cases },
-    //                     { path: 'financial-creditors', component: Cases },
-    //                     { path: 'operational-creditors', component: Cases },
-    //                     { path: 'other-claims', component: Cases },
-    //                     { path: 'summary-stats', component: Cases },
-    //                 ]
-    //             },
-    //             {
-    //                 path: 'eoi',
-    //                 children: [
-    //                     { path: 'expression', component: Cases },
-    //                     { path: 'registry', component: Cases },
-    //                     { path: 'comparative-analysis', component: Cases },
-    //                     { path: 'bank-assessment', component: Cases },
-    //                     { path: 'coc-approval', component: Cases },
-    //                     { path: 'nclt-approval', component: Cases },
-    //                 ]
-    //             },
-    //             { path: 'hearings', component: Cases },
-    //         ]
-    //     }
-    // ]
+    children: [
+      { path: '', component: CasesList },
+      { path: 'banking-arrangements', component: BankingArrangements },
+      { path: 'guarantor', component: Guarantor },
+      { path: 'security', component: Security },
+      { path: 'forensic-audit', component: ForensicAudit },
+      { path: 'look-out-circular', component: LookOutCircular },
+      { path: 'sarfaesi-details', component: SARFAESIDetails },
+      { path: 'drt-suit', component: DrtSuit },
+      {
+        path: 'cirp',
+        children: [
+          {
+            path: 'admission',
+            children: [
+              {
+                path: 'filing', children: [
+                  { path: 'details', component: ApplicationDetails },
+                  { path: 'applicant', component: ApplicantDetails },
+                  { path: 'documents', component: ApplicationDocuments },
+                ]
+              },
+              {
+                path: 'order',
+                children: [
+                  { path: 'nclt', component: NcltOrderDetails },
+                  { path: 'irp', component: IrpAppointments },
+                  { path: 'moratorium', component: Moratorium },
+                  { path: 'timeline', component: TimelineDashboard },
+                ]
+              }
+            ]
+          },
+          {
+            path: 'claims',
+            children: [
+              { path: 'bank-baroda', component: BobClaim },
+              { path: 'coc-formation', component: CocFormation },
+              { path: 'financial-creditors', component: FinancialCreditors },
+              { path: 'operational-creditors', component: OperationalCreditors },
+              { path: 'other-claims', component: OtherClaims },
+              { path: 'summary-stats', component: SummaryStats },
+            ]
+          },
+          {
+            path: 'eoi',
+            children: [
+              { path: 'expression', component: ExpressionInterest },
+              { path: 'registry', component: ResolutionPlansRegistery },
+              { path: 'comparative-analysis', component: ComparativeAnalysis },
+              { path: 'bank-assessment', component: InternalAssesment },
+              { path: 'coc-approval', component: CocApproval },
+              { path: 'nclt-approval', component: NcltFinalApproval },
+            ]
+          },
+        ]
+      },
+      { path: 'hearings', component: Hearing },
+    ]
   },
-  {
-    path: 'customers/basic-details',
-    component: BasicDetails,
-  },
-  {
-    path: 'customers/facility-details',
-    component: FacilityDetails,
-  },
-  {
-    path: 'customers/other-parties',
-    component: OtherParties,
-  },
-  {
-    path: 'customers/security-details',
-    component: SecurityDetails,
-  },
-  {
-    path: 'customers/functioning-unit-status',
-    component: FunctioningUnitStatus,
-  },
-  {
-    path: 'cases/banking-arrangements',
-    component: BankingArrangements,
-  },
-  {
-    path: 'cases/guarantor',
-    component: Guarantor,
-  },
-  {
-    path: 'cases/security',
-    component: Security,
-  },
-  {
-    path: 'cases/forensic-audit',
-    component: ForensicAudit,
-  },
-  {
-    path: 'cases/look-out-circular',
-    component: LookOutCircular,
-  },
-  {
-    path: 'cases/sarfaesi-details',
-    component: SARFAESIDetails,
-  },
-  {
-    path: 'cases/drt-suit',
-    component: DrtSuit,
-  },
-  {
-    path: 'cases/cirp/application/details',
-    component: ApplicationDetails,
-  },
-  {
-    path: 'cases/cirp/application/applicant',
-    component: ApplicantDetails,
-  },
-  {
-    path: 'cases/cirp/application/documents',
-    component: ApplicationDocuments,
-  },
-  {
-    path: 'cases/cirp/admission/order/nclt',
-    component: NcltOrderDetails,
-  },
-  {
-    path: 'cases/cirp/admission/order/irp',
-    component: IrpAppointments,
-  },
-  {
-    path: 'cases/cirp/admission/order/moratorium',
-    component: Moratorium,
-  },
-  {
-    path: 'cases/cirp/admission/order/timeline',
-    component: TimelineDashboard,
-  },
-  {
-    path: 'cases/cirp/claims/bank-baroda',
-    component: BobClaim,
-  },
-  {
-    path: 'cases/cirp/claims/coc-formation',
-    component: CocFormation,
-  },
-  {
-    path: 'cases/cirp/claims/financial-creditors',
-    component: FinancialCreditors,
-  },
-  {
-    path: 'cases/cirp/claims/operational-creditors',
-    component: OperationalCreditors,
-  },
-  {
-    path: 'cases/cirp/claims/other-claims',
-    component: OtherClaims,
-  },
-  {
-    path: 'cases/cirp/claims/summary-stats',
-    component: SummaryStats,
-  },
-  {
-    path: 'cases/cirp/eoi/expression',
-    component: ExpressionInterest,
-  },
-  {
-    path: 'cases/cirp/eoi/registry',
-    component: ResolutionPlansRegistery,
-  },
-  {
-    path: 'cases/cirp/eoi/comparative-analysis',
-    component: ComparativeAnalysis,
-  },
-  {
-    path: 'cases/cirp/eoi/bank-assessment',
-    component: InternalAssesment,
-  },
-  {
-    path: 'cases/cirp/eoi/coc-approval',
-    component: CocApproval,
-  },
-  {
-    path: 'cases/cirp/eoi/nclt-approval',
-    component: NcltFinalApproval,
-  },
-  {
-    path: 'cases/cirp/hearings',
-    component: Hearing,
-  },
+
 ];
